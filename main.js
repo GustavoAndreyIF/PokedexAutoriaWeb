@@ -55,12 +55,105 @@ class PokemonCard {
 		};
 	}
 
-	// Método para renderizar o card na home (simulação para front-end)
+	// Método para renderizar o card na home (integrado com front-end)
 	renderCard() {
 		const cardData = this.getCardData();
 
-		// Simular inserção de HTML do card
+		// Log para debug
 		console.log(`🎨 RENDERIZANDO CARD - Pokemon #${cardData.pokedexnumber}:`);
+
+		// Verificar se estamos no browser e há um container
+		if (typeof document !== "undefined") {
+			const pokemonGrid = document.getElementById("pokemon-grid");
+			if (pokemonGrid) {
+				// Criar HTML do card usando classes do Bootstrap
+				const primaryType = cardData.types[0].toLowerCase(); // Primeiro tipo para o fundo
+				const cardHTML = `
+<div class="col-12 col-md-6 col-lg-3">
+	<div
+		class="card shadow-sm border-0 rounded-1 position-relative overflow-hidden"
+		data-pokemon-id="${cardData.id}"
+		style="cursor: pointer; transition: all 0.3s ease; min-height: 120px"
+	>
+		<!-- Fundo semi-circular baseado no tipo -->
+		<div
+			class="position-absolute top-0 end-0 h-100"
+			style="
+				width: 120px;
+				background-image: url('img/${primaryType}.png');
+				background-size: cover;
+				background-position: center;
+				border-radius: 100% 0 0 100%;
+				opacity: 0.6;
+				z-index: 1;
+			"
+		></div>
+
+		<div
+			class="card-body position-relative"
+			style="z-index: 2; padding-right: 130px;"
+		>
+			<!-- Informações principais -->
+			<div >
+				<!-- Número da Pokédex -->
+				<small
+					class="badge bg-dark bg-opacity-10 text-muted fw-bold mb-1 d-block"
+					style="font-size: 0.7rem; width: fit-content"
+				>
+					#${cardData.pokedexnumber}
+				</small>
+
+				<!-- Nome do Pokémon -->
+				<h5
+					class="card-title fw-bold mb-1 text-dark"
+					style="font-size: 1.2rem; line-height: 1.2"
+				>
+					${cardData.name}
+				</h5>
+
+				<!-- Tipos com ícones -->
+				<div class="d-flex flex-wrap">
+					${cardData.types
+						.map(
+							(type) => `<span
+						class="badge type-${type.toLowerCase()} text-white px-2 py-1 rounded-pill small d-flex align-items-center gap-1"
+						style="font-size: 0.7rem"
+					>
+						<img
+							src="img/icons/${type.toLowerCase()}.png"
+							alt="${type}"
+							style="width: 14px; height: 14px"
+						/>
+						${type} </span
+					>`
+						)
+						.join("")}
+				</div>
+			</div>
+
+			<!-- Sprite do Pokémon -->
+			<div class="position-absolute" style="top: 0; right: 0;">
+				<img
+					src="${cardData.sprite}"
+					alt="${cardData.name}"
+					style="width: 120px; height: 120px;"
+				/>
+			</div>
+		</div>
+	</div>
+</div>
+
+				`;
+
+				// Inserir no DOM
+				pokemonGrid.innerHTML += cardHTML;
+
+				console.log(`✅ Card inserido no DOM: ${cardData.name}`);
+				return cardData;
+			}
+		}
+
+		// Fallback: log simulado (para debug ou ambientes sem DOM)
 		console.log(`
 		<!-- Card do ${cardData.name} -->
 		<div class="pokemon-card" data-pokemon-id="${cardData.id}">
@@ -77,10 +170,6 @@ class PokemonCard {
 		</div>
 		`);
 
-		// TO DO: Front-end deve implementar:
-		// const cardContainer = document.querySelector('.pokemon-grid');
-		// cardContainer.innerHTML += [HTML do card acima];
-
 		return cardData;
 	}
 }
@@ -90,7 +179,7 @@ class HomeManager {
 	constructor() {
 		this.pokemons = [];
 		this.currentOffset = 0;
-		this.limit = 32;
+		this.limit = 36;
 		this.isLoading = false;
 		this.hasMore = true;
 		this.baseUrl = "https://pokeapi.co/api/v2/pokemon";
@@ -116,16 +205,13 @@ class HomeManager {
 		}
 	}
 
-	// Fetch específico para carregar pokemons da home
+	// Fetch específico para carregar pokemons da home (integrado com front-end)
 	async fetchPokemonsForHome() {
 		if (this.isLoading) {
 			console.log("⏳ Carregamento já em andamento, aguarde...");
 
-			// TO DO: Front-end deve implementar:
-			// const loadButton = document.querySelector('.load-more-btn');
-			// loadButton.disabled = true;
-			// loadButton.textContent = 'Carregando...';
-
+			// Atualizar UI se disponível
+			this.updateLoadingUI(true);
 			return [];
 		}
 
@@ -135,19 +221,8 @@ class HomeManager {
 				`🔄 Carregando pokemons para home - offset: ${this.currentOffset}`
 			);
 
-			// Exibir estado de carregamento
-			console.log(`📊 ATUALIZANDO UI - Estado de carregamento:`);
-			console.log(`
-			<!-- Mostrar loading state -->
-			<div class="loading-indicator">
-				<span>Carregando pokémons...</span>
-				<div class="spinner"></div>
-			</div>
-			`);
-
-			// TO DO: Front-end deve implementar:
-			// const loadingIndicator = document.querySelector('.loading-indicator');
-			// loadingIndicator.style.display = 'block';
+			// Atualizar UI de loading
+			this.updateLoadingUI(true);
 
 			const url = `${this.baseUrl}?offset=${this.currentOffset}&limit=${this.limit}`;
 			const listData = await this.makeApiRequest(url);
@@ -179,36 +254,81 @@ class HomeManager {
 			// Atualizar estado do botão "Carregar Mais"
 			this.updateLoadMoreButton();
 
-			// Esconder loading
-			console.log(`🎨 REMOVENDO LOADING:`);
-			console.log(`<!-- Remover loading indicator -->`);
-
-			// TO DO: Front-end deve implementar:
-			// const loadingIndicator = document.querySelector('.loading-indicator');
-			// loadingIndicator.style.display = 'none';
+			// Remover loading
+			this.updateLoadingUI(false);
 
 			return newPokemons;
 		} catch (error) {
 			console.error("❌ Erro ao carregar pokemons para home:", error);
 
 			// Mostrar erro na UI
-			console.log(`🚨 EXIBINDO ERRO NA UI:`);
-			console.log(`
-			<div class="error-message">
-				<span>❌ Erro ao carregar pokémons. Tente novamente.</span>
-				<button onclick="homeManager.fetchPokemonsForHome()">Tentar Novamente</button>
-			</div>
-			`);
-
-			// TO DO: Front-end deve implementar:
-			// const errorContainer = document.querySelector('.error-container');
-			// errorContainer.innerHTML = [HTML do erro acima];
-			// errorContainer.style.display = 'block';
-
+			this.showError(error.message);
 			throw error;
 		} finally {
 			this.isLoading = false;
 		}
+	}
+
+	// Método para atualizar UI de loading
+	updateLoadingUI(loading) {
+		if (typeof document !== "undefined") {
+			const loadingIndicator = document.getElementById("loading-indicator");
+			const loadMoreBtn = document.getElementById("load-more-btn");
+			const errorContainer = document.getElementById("error-container");
+
+			if (loadingIndicator) {
+				loadingIndicator.style.display = loading ? "block" : "none";
+			}
+
+			if (loadMoreBtn) {
+				if (loading) {
+					loadMoreBtn.disabled = true;
+					loadMoreBtn.innerHTML =
+						'<i class="fas fa-spinner fa-spin me-2"></i>Carregando...';
+				} else {
+					loadMoreBtn.disabled = false;
+					loadMoreBtn.innerHTML =
+						'<i class="fas fa-plus-circle me-2"></i>Carregar Mais Pokémons';
+				}
+			}
+
+			// Esconder erros durante carregamento
+			if (loading && errorContainer) {
+				errorContainer.style.display = "none";
+			}
+		}
+
+		// Log para ambientes sem DOM
+		console.log(
+			`🎨 ATUALIZANDO UI - Estado de carregamento: ${
+				loading ? "ATIVO" : "INATIVO"
+			}`
+		);
+	}
+
+	// Método para mostrar erros na UI
+	showError(message) {
+		if (typeof document !== "undefined") {
+			const errorContainer = document.getElementById("error-container");
+			if (errorContainer) {
+				errorContainer.innerHTML = `
+					<div class="d-flex align-items-center">
+						<i class="fas fa-exclamation-triangle text-danger me-3"></i>
+						<div class="flex-grow-1">
+							<h5 class="mb-1">Erro ao carregar pokémons</h5>
+							<p class="mb-2">${message}</p>
+							<button class="btn btn-outline-danger btn-sm" onclick="homeManager.fetchPokemonsForHome()">
+								<i class="fas fa-redo me-1"></i>Tentar Novamente
+							</button>
+						</div>
+					</div>
+				`;
+				errorContainer.style.display = "block";
+			}
+		}
+
+		// Log de erro
+		console.log(`🚨 EXIBINDO ERRO NA UI: ${message}`);
 	}
 
 	// Método para renderizar novos cards na home
@@ -224,7 +344,7 @@ class HomeManager {
 		// TO DO: Front-end deve implementar a lógica de adicionar à grid
 	}
 
-	// Método para atualizar o botão "Carregar Mais"
+	// Método para atualizar o botão "Carregar Mais" (integrado com front-end)
 	updateLoadMoreButton() {
 		const canLoadMore = this.hasMore && !this.isLoading;
 
@@ -234,16 +354,37 @@ class HomeManager {
 			`Texto: ${this.isLoading ? "Carregando..." : "Carregar Mais Pokémons"}`
 		);
 
-		if (!this.hasMore) {
-			console.log(`🎨 ESCONDENDO BOTÃO - Todos os pokémons foram carregados`);
-			console.log(`<!-- Esconder botão ou mostrar mensagem de fim -->`);
-		}
+		// Atualizar UI se disponível
+		if (typeof document !== "undefined") {
+			const loadMoreBtn = document.getElementById("load-more-btn");
+			const endMessage = document.getElementById("end-message");
 
-		// TO DO: Front-end deve implementar:
-		// const loadButton = document.querySelector('.load-more-btn');
-		// loadButton.disabled = !canLoadMore;
-		// loadButton.textContent = this.isLoading ? 'Carregando...' : 'Carregar Mais Pokémons';
-		// if (!this.hasMore) loadButton.style.display = 'none';
+			if (loadMoreBtn) {
+				loadMoreBtn.disabled = !canLoadMore;
+
+				if (!this.hasMore) {
+					loadMoreBtn.style.display = "none";
+					console.log(
+						`🎨 ESCONDENDO BOTÃO - Todos os pokémons foram carregados`
+					);
+
+					// Mostrar mensagem de fim
+					if (endMessage) {
+						endMessage.style.display = "block";
+						const endText = endMessage.querySelector("p");
+						if (endText) {
+							endText.textContent = `Total carregado: ${this.pokemons.length} pokémons`;
+						}
+					}
+				}
+			}
+		} else {
+			// Log para ambientes sem DOM
+			if (!this.hasMore) {
+				console.log(`🎨 ESCONDENDO BOTÃO - Todos os pokémons foram carregados`);
+				console.log(`<!-- Esconder botão ou mostrar mensagem de fim -->`);
+			}
+		}
 	}
 
 	// Método para obter dados de um pokemon por ID
