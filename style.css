@@ -60,21 +60,11 @@
 	background-color: #ee99ac !important;
 }
 
-/* Gradientes personalizados */
-.bg-gradient-purple {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-}
-.bg-gradient-blue {
-	background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
-}
-
 /* Efeitos especiais para os cards */
 .card[data-pokemon-id]:hover {
 	transform: translateY(-8px) scale(1.02);
 	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
 }
-
-
 
 /* Fallback para imagens de tipo não encontradas */
 .card[data-pokemon-id] .position-absolute:first-of-type {
