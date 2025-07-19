@@ -1,0 +1,347 @@
+/* =============================================================================
+   POKÉDEX - EFEITOS DE CARDS E ANIMAÇÕES
+   ============================================================================= */
+
+/* Base para todos os cards */
+.card[data-pokemon-id] {
+	transition: all var(--transition-fast);
+	border: 2px solid transparent;
+}
+
+/* Efeitos nos sprites dos Pokémon */
+.card[data-pokemon-id] img {
+	transition: all var(--transition-fast);
+	filter: drop-shadow(var(--shadow-light));
+}
+
+.card[data-pokemon-id]:hover img {
+	transform: var(--sprite-scale);
+	filter: drop-shadow(var(--shadow-medium));
+}
+
+/* Hover genérico para fallback */
+.card[data-pokemon-id]:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	border-color: #6c757d;
+}
+
+/* Fallback para imagens de tipo não encontradas */
+.card[data-pokemon-id] .position-absolute:first-of-type {
+	background-color: rgba(108, 117, 125, 0.1);
+	background-image: linear-gradient(
+		135deg,
+		rgba(108, 117, 125, 0.1) 0%,
+		rgba(173, 181, 189, 0.1) 100%
+	);
+}
+
+/* =============================================================================
+   ANIMAÇÕES ESPECÍFICAS POR TIPO DE POKÉMON
+   ============================================================================= */
+
+/* FIRE */
+.pokemon-type-fire:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: fireBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes fireBorder {
+	0%,
+	100% {
+		border-color: var(--color-fire);
+	}
+	50% {
+		border-color: var(--color-fire-light);
+	}
+}
+
+/* WATER */
+.pokemon-type-water:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: waterBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes waterBorder {
+	0%,
+	100% {
+		border-color: var(--color-water);
+	}
+	50% {
+		border-color: var(--color-water-light);
+	}
+}
+
+/* ELECTRIC */
+.pokemon-type-electric:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: electricBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes electricBorder {
+	0%,
+	100% {
+		border-color: var(--color-electric);
+	}
+	50% {
+		border-color: var(--color-electric-light);
+	}
+}
+
+/* GRASS */
+.pokemon-type-grass:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: grassBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes grassBorder {
+	0%,
+	100% {
+		border-color: var(--color-grass);
+	}
+	50% {
+		border-color: var(--color-grass-light);
+	}
+}
+
+/* ICE */
+.pokemon-type-ice:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: iceBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes iceBorder {
+	0%,
+	100% {
+		border-color: var(--color-ice);
+	}
+	50% {
+		border-color: var(--color-ice-light);
+	}
+}
+
+/* FIGHTING */
+.pokemon-type-fighting:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: fightingBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes fightingBorder {
+	0%,
+	100% {
+		border-color: var(--color-fighting);
+	}
+	50% {
+		border-color: var(--color-fighting-light);
+	}
+}
+
+/* POISON */
+.pokemon-type-poison:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: poisonBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes poisonBorder {
+	0%,
+	100% {
+		border-color: var(--color-poison);
+	}
+	50% {
+		border-color: var(--color-poison-light);
+	}
+}
+
+/* GROUND */
+.pokemon-type-ground:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: groundBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes groundBorder {
+	0%,
+	100% {
+		border-color: var(--color-ground);
+	}
+	50% {
+		border-color: var(--color-ground-light);
+	}
+}
+
+/* FLYING */
+.pokemon-type-flying:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: flyingBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes flyingBorder {
+	0%,
+	100% {
+		border-color: var(--color-flying);
+	}
+	50% {
+		border-color: var(--color-flying-light);
+	}
+}
+
+/* PSYCHIC */
+.pokemon-type-psychic:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: psychicBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes psychicBorder {
+	0%,
+	100% {
+		border-color: var(--color-psychic);
+	}
+	50% {
+		border-color: var(--color-psychic-light);
+	}
+}
+
+/* BUG */
+.pokemon-type-bug:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: bugBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes bugBorder {
+	0%,
+	100% {
+		border-color: var(--color-bug);
+	}
+	50% {
+		border-color: var(--color-bug-light);
+	}
+}
+
+/* ROCK */
+.pokemon-type-rock:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: rockBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes rockBorder {
+	0%,
+	100% {
+		border-color: var(--color-rock);
+	}
+	50% {
+		border-color: var(--color-rock-light);
+	}
+}
+
+/* GHOST */
+.pokemon-type-ghost:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: ghostBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes ghostBorder {
+	0%,
+	100% {
+		border-color: var(--color-ghost);
+	}
+	50% {
+		border-color: var(--color-ghost-light);
+	}
+}
+
+/* DRAGON */
+.pokemon-type-dragon:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: dragonBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes dragonBorder {
+	0%,
+	100% {
+		border-color: var(--color-dragon);
+	}
+	50% {
+		border-color: var(--color-dragon-light);
+	}
+}
+
+/* DARK */
+.pokemon-type-dark:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: darkBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes darkBorder {
+	0%,
+	100% {
+		border-color: var(--color-dark);
+	}
+	50% {
+		border-color: var(--color-dark-light);
+	}
+}
+
+/* STEEL */
+.pokemon-type-steel:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: steelBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes steelBorder {
+	0%,
+	100% {
+		border-color: var(--color-steel);
+	}
+	50% {
+		border-color: var(--color-steel-light);
+	}
+}
+
+/* FAIRY */
+.pokemon-type-fairy:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: fairyBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes fairyBorder {
+	0%,
+	100% {
+		border-color: var(--color-fairy);
+	}
+	50% {
+		border-color: var(--color-fairy-light);
+	}
+}
+
+/* NORMAL */
+.pokemon-type-normal:hover {
+	transform: var(--hover-translate) var(--hover-scale);
+	box-shadow: var(--shadow-card) !important;
+	animation: normalBorder var(--animation-duration) var(--animation-timing) infinite;
+}
+
+@keyframes normalBorder {
+	0%,
+	100% {
+		border-color: var(--color-normal);
+	}
+	50% {
+		border-color: var(--color-normal-light);
+	}
+}

@@ -70,21 +70,22 @@ export class PokemonCard {
 				const cardHTML = `
 <div class="col-12 col-md-6 col-lg-3">
 	<div
-		class="card shadow-sm border-0 rounded-1 position-relative overflow-hidden"
+		class="card shadow-sm rounded-2 position-relative overflow-hidden pokemon-type-${primaryType}"
 		data-pokemon-id="${cardData.id}"
+		data-pokemon-type="${primaryType}"
 		style="cursor: pointer; transition: all 0.3s ease; min-height: 120px"
 	>
 		<!-- Fundo semi-circular baseado no tipo -->
 		<div
 			class="position-absolute top-0 end-0 h-100"
 			style="
-				width: 120px;
+				width: 160px;
 				background-image: url('img/backgrounds/${primaryType}.png');
 				background-size: cover;
 				background-position: center;
-				border-radius: 100% 0 0 100%;
 				opacity: 0.6;
 				z-index: 1;
+				clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
 			"
 		></div>
 
@@ -111,7 +112,7 @@ export class PokemonCard {
 				</h5>
 
 				<!-- Tipos com ícones -->
-				<div class="d-flex flex-wrap">
+				<div class="d-flex flex-wrap gap-1">
 					${cardData.types
 						.map(
 							(type) => `<span
@@ -151,23 +152,6 @@ export class PokemonCard {
 				return cardData;
 			}
 		}
-
-		// Fallback: log simulado (para debug ou ambientes sem DOM)
-		console.log(`
-		<!-- Card do ${cardData.name} -->
-		<div class="pokemon-card" data-pokemon-id="${cardData.id}">
-			<div class="pokemon-number">#${cardData.pokedexnumber}</div>
-			<img src="${cardData.sprite}" alt="${cardData.name}" class="pokemon-sprite">
-			<h3 class="pokemon-name">${cardData.name}</h3>
-			<div class="pokemon-types">
-				${cardData.types
-					.map(
-						(type) => `<span class="type-badge type-${type}">${type}</span>`
-					)
-					.join("")}
-			</div>
-		</div>
-		`);
 
 		return cardData;
 	}

@@ -1,0 +1,61 @@
+/* =============================================================================
+   POKÉDX - VARIÁVEIS CSS
+   ============================================================================= */
+
+:root {
+	/* Cores dos tipos de Pokémon */
+	--color-normal: #9199a1;
+	--color-fire: #ff9d55;
+	--color-water: #4d91d7;
+	--color-electric: #f3d33c;
+	--color-grass: #61bb59;
+	--color-ice: #71cfbe;
+	--color-fighting: #cf4069;
+	--color-poison: #aa6ac7;
+	--color-ground: #db7645;
+	--color-flying: #8ea9df;
+	--color-psychic: #fb7075;
+	--color-bug: #91c22e;
+	--color-rock: #c7b78a;
+	--color-ghost: #5568aa;
+	--color-dragon: #0a6dc8;
+	--color-dark: #595265;
+	--color-steel: #598fa2;
+	--color-fairy: #ef8fe7;
+
+	/* Variações mais claras para efeitos */
+	--color-fire-light: #ffb366;
+	--color-water-light: #66a3e0;
+	--color-electric-light: #f5dc5a;
+	--color-grass-light: #7cc773;
+	--color-ice-light: #8dd7c9;
+	--color-fighting-light: #d65a7d;
+	--color-poison-light: #b97dd1;
+	--color-ground-light: #e18a5e;
+	--color-flying-light: #a3b8e5;
+	--color-psychic-light: #fc8a8e;
+	--color-bug-light: #a3cc4f;
+	--color-rock-light: #d0c29d;
+	--color-ghost-light: #6b7bb5;
+	--color-dragon-light: #2980d1;
+	--color-dark-light: #6b657a;
+	--color-steel-light: #6ea1b0;
+	--color-fairy-light: #f2a5ea;
+	--color-normal-light: #a5acb3;
+
+	/* Animações e transições */
+	--transition-fast: 0.3s ease;
+	--transition-medium: 0.5s ease;
+	--animation-duration: 4s;
+	--animation-timing: ease-in-out;
+
+	/* Sombras e efeitos */
+	--shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+	--shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.25);
+	--shadow-card: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+	/* Transformações */
+	--hover-translate: translateY(-8px);
+	--hover-scale: scale(1.02);
+	--sprite-scale: scale(1.15);
+}
