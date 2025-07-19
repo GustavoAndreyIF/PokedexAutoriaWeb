@@ -121,8 +121,6 @@ async function initializePokemonDetails(pokemonId) {
 
 		throw new Error("Falha ao carregar dados do Pokemon");
 	} catch (error) {
-		console.error("❌ ERRO NA INICIALIZAÇÃO DA PÁGINA DE DETALHES:", error);
-
 		detailsManager.setErrorState(true, error.message);
 
 		return {
@@ -181,11 +179,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	const urlParams = new URLSearchParams(window.location.search);
 	const pokemonId = urlParams.get("id") || urlParams.get("pokemon");
 
-	if (pokemonId) {
-		initializePokemonDetails(pokemonId).catch((error) => {
-			console.error("💥 Falha crítica na inicialização dos detalhes:", error);
-		});
-	} else {
+	// Só inicializar automaticamente se estivermos na página home (index.html)
+	// A página detalhes.html gerencia sua própria inicialização
+	if (
+		(!pokemonId && window.location.pathname.includes("index.html")) ||
+		window.location.pathname === "/"
+	) {
 		initializeHome().catch((error) => {
 			console.error("💥 Falha crítica na inicialização:", error);
 		});
