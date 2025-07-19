@@ -79,7 +79,7 @@ export class PokemonCard {
 			class="position-absolute top-0 end-0 h-100"
 			style="
 				width: 120px;
-				background-image: url('img/${primaryType}.png');
+				background-image: url('img/backgrounds/${primaryType}.png');
 				background-size: cover;
 				background-position: center;
 				border-radius: 100% 0 0 100%;

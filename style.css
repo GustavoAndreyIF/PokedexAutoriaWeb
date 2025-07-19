@@ -4,60 +4,60 @@
 
 /* Apenas cores dos tipos de Pokémon (não disponível no Bootstrap) */
 .type-normal {
-	background-color: #a8a878 !important;
+	background-color: #9199a1 !important;
 }
 .type-fire {
-	background-color: #f08030 !important;
+	background-color: #ff9d55 !important;
 }
 .type-water {
-	background-color: #6890f0 !important;
+	background-color: #4d91d7 !important;
 }
 .type-electric {
-	background-color: #f8d030 !important;
+	background-color: #f3d33c !important;
 	color: #000 !important;
 }
 .type-grass {
-	background-color: #78c850 !important;
+	background-color: #61bb59 !important;
 }
 .type-ice {
-	background-color: #98d8d8 !important;
+	background-color: #71cfbe !important;
 }
 .type-fighting {
-	background-color: #c03028 !important;
+	background-color: #cf4069 !important;
 }
 .type-poison {
-	background-color: #a040a0 !important;
+	background-color: #aa6ac7 !important;
 }
 .type-ground {
-	background-color: #e0c068 !important;
+	background-color: #db7645 !important;
 	color: #000 !important;
 }
 .type-flying {
-	background-color: #a890f0 !important;
+	background-color: #8ea9df !important;
 }
 .type-psychic {
-	background-color: #f85888 !important;
+	background-color: #fb7075 !important;
 }
 .type-bug {
-	background-color: #a8b820 !important;
+	background-color: #91c22e !important;
 }
 .type-rock {
-	background-color: #b8a038 !important;
+	background-color: #c7b78a !important;
 }
 .type-ghost {
-	background-color: #705898 !important;
+	background-color: #5568aa !important;
 }
 .type-dragon {
-	background-color: #7038f8 !important;
+	background-color: #0a6dc8 !important;
 }
 .type-dark {
-	background-color: #705848 !important;
+	background-color: #595265 !important;
 }
 .type-steel {
-	background-color: #b8b8d0 !important;
+	background-color: #598fa2 !important;
 }
 .type-fairy {
-	background-color: #ee99ac !important;
+	background-color: #ef8fe7 !important;
 }
 
 /* Efeitos especiais para os cards */
