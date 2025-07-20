@@ -8,16 +8,19 @@
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 			rel="stylesheet"
 		/>
+		<!-- Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
 		<!-- CSS personalizado (apenas cores dos tipos) -->
 		<link href="style.css" rel="stylesheet" />
 	</head>
-<body class="bg-light d-flex flex-column min-vh-100">
+	<body class="bg-light d-flex flex-column min-vh-100">
 		<!-- Conteúdo principal -->
 		<header class="bg-danger text-white py-4 mb-4">
 			<div class="container">
-				<h1 class="mb-0">
-					Pokédex
-				</h1>
+				<h1 class="mb-0">Pokédex</h1>
 				<p class="lead mb-0">Descubra todos os pokémons!</p>
 			</div>
 		</header>
@@ -71,14 +74,27 @@
 			<div class="bg-dark text-white py-3">
 				<div class="container text-center">
 					<p class="mb-0">
-						Copyright &copy; 2025 GustavoAndreyIF, Leonardo1234321, TrojanN63
+						Copyright &copy; 2025 GustavoAndreyIF, Leonardo1234321,
+						TrojanN63
 					</p>
 					<p class="mb-0">
-						Desenvolvido por <a href="https://github.com/GustavoAndreyIF" target="_blank">Gustavo Andrey</a>
-						<a href="https://github.com/Leonardo1234321" target="_blank">Leonardo Furtado</a>
-						<a href="https://github.com/TrojanN63" target="_blank">Arthur Alves</a>
+						Desenvolvido por
+						<a href="https://github.com/GustavoAndreyIF" target="_blank"
+							>Gustavo Andrey</a
+						>
+						<a href="https://github.com/Leonardo1234321" target="_blank"
+							>Leonardo Furtado</a
+						>
+						<a href="https://github.com/TrojanN63" target="_blank"
+							>Arthur Alves</a
+						>
 					</p>
-					<p class="mb-0">Link da API: <a href="https://pokeapi.co/" target="_blank">https://pokeapi.co/</a></p>
+					<p class="mb-0">
+						Link da API:
+						<a href="https://pokeapi.co/" target="_blank"
+							>https://pokeapi.co/</a
+						>
+					</p>
 				</div>
 			</div>
 		</footer>
@@ -88,68 +104,5 @@
 
 		<!-- JavaScript da aplicação -->
 		<script type="module" src="main.js"></script>
-
-		<script>
-			// =============================================================================
-			// INTEGRAÇÃO FRONT-END com main.js
-			// =============================================================================
-
-			console.log("🚀 INICIALIZANDO FRONT-END DA HOME");
-
-			// Event listener para cards de pokemon (navegação)
-			document.addEventListener("click", (event) => {
-				const pokemonCard = event.target.closest(".card[data-pokemon-id]");
-				if (pokemonCard) {
-					const pokemonId = parseInt(pokemonCard.dataset.pokemonId);
-					console.log(`🎯 CLIQUE NO CARD: Pokemon ID ${pokemonId}`);
-
-					// Efeito visual no clique
-					pokemonCard.style.transform = "scale(0.98)";
-					setTimeout(() => {
-						pokemonCard.style.transform = "";
-					}, 150);
-
-					// Navegar para página de detalhes
-					window.location.href = `detalhes.html?id=${pokemonId}`;
-				}
-			});
-
-			// Adicionar efeitos hover nos cards
-			document.addEventListener("mouseover", (event) => {
-				const pokemonCard = event.target.closest(".card[data-pokemon-id]");
-				if (pokemonCard) {
-					pokemonCard.style.transform = "translateY(-5px)";
-					pokemonCard.classList.add("shadow");
-				}
-			});
-
-			document.addEventListener("mouseout", (event) => {
-				const pokemonCard = event.target.closest(".card[data-pokemon-id]");
-				if (pokemonCard) {
-					pokemonCard.style.transform = "";
-					pokemonCard.classList.remove("shadow");
-				}
-			}); // Event listener para botão "Carregar Mais"
-			document.addEventListener("DOMContentLoaded", () => {
-				const loadMoreBtn = document.getElementById("load-more-btn");
-				if (loadMoreBtn) {
-					loadMoreBtn.addEventListener("click", () => {
-						console.log("🔄 CLIQUE NO BOTÃO: Carregar Mais");
-						loadMorePokemons();
-					});
-				}
-			});
-
-			// Aguardar carregamento do main.js e inicializar
-			window.addEventListener("load", () => {
-				// Verificar se homeManager foi carregado
-				if (typeof homeManager !== "undefined") {
-					console.log("✅ homeManager carregado, aplicação pronta!");
-					console.log("📊 Status inicial:", homeManager.getStatus());
-				} else {
-					console.error("❌ main.js não foi carregado corretamente");
-				}
-			});
-		</script>
 	</body>
 </html>
