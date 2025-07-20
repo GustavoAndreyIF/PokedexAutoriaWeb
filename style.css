@@ -1,4 +1,4 @@
 /* Importações dos módulos CSS */
-@import url("./css/variables.css");
-@import url("./css/types.css");
-@import url("./css/effects.css");
+@import url("./src/css/variables.css");
+@import url("./src/css/types.css");
+@import url("./src/css/effects.css");

@@ -7,10 +7,17 @@
 const DOMUtils = {
 	/**
 	 * 🔍 Encontra um elemento no DOM de forma segura
+	 * Aceita tanto IDs (sem #) quanto seletores CSS completos
 	 */
 	findElement(selector, parent = document) {
 		try {
-			return parent.querySelector(selector);
+			// Se não começar com #, ., [, :, ou espaço, assumir que é um ID
+			const normalizedSelector =
+				selector.match(/^[#.\[:]/g) || selector.includes(" ")
+					? selector
+					: `#${selector}`;
+
+			return parent.querySelector(normalizedSelector);
 		} catch (error) {
 			console.warn(`⚠️ Erro ao buscar elemento '${selector}':`, error);
 			return null;

@@ -96,7 +96,7 @@ const PokemonTypes = {
 	 */
 	getIconPath(type) {
 		const normalizedType = type?.toLowerCase() || "normal";
-		return `./src/images/icons/${normalizedType}.png`;
+		return `./src/assets/images/icons/${normalizedType}.png`;
 	},
 
 	/**

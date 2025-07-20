@@ -59,11 +59,11 @@ class PokemonCard {
 
 		return `
             <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                <div class="card shadow-sm rounded-2 position-relative overflow-hidden"
+                <div class="card shadow-sm rounded-2 position-relative overflow-hidden pokemon-type-${primaryType}"
                      data-pokemon-id="${id}" 
                      data-pokemon-type="${primaryType}"
-                     style="cursor: pointer; transition: all 0.3s ease; min-height: 120px; border: none;">
-                    
+                     style="cursor: pointer; transition: all 0.3s ease; min-height: 120px; border: 2px solid transparent;">
+
                     <!-- Fundo semi-circular baseado no tipo -->
                     <div class="position-absolute top-0 end-0 h-100"
                          style="
@@ -143,8 +143,7 @@ class PokemonCard {
 				const typeColor = PokemonTypes.getColor(typeName);
 				const iconPath = PokemonTypes.getIconPath(typeName);
 				const emojiFallback = PokemonTypes.getEmoji(typeName);
-				const displayName =
-					typeName.charAt(0).toUpperCase() + typeName.slice(1);
+				const displayName = TextFormatter.capitalize(typeName);
 
 				return `
 					<span class="badge text-white px-2 py-1 rounded-pill small d-flex align-items-center gap-1"

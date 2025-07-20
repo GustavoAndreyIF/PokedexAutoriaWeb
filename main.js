@@ -8,15 +8,15 @@
 // 📦 IMPORTS
 // ========================================
 
-import { PokemonTypes } from "./src/utils/index.js";
+import { PokemonTypes, TextFormatter, DOMUtils } from "./src/utils/index.js";
 import PokemonCard from "./src/components/PokemonCard.js";
 
 // ========================================
 // 🌐 CONFIGURAÇÕES DA API
 // ========================================
 
-const API_BASE = "https://pokeapi.co/api/v2";
-const POKEMON_PER_PAGE = 20;
+const api_base = "https://pokeapi.co/api/v2";
+const pokemon_per_page = 36;
 let currentOffset = 0;
 let isLoading = false;
 
@@ -27,10 +27,10 @@ let isLoading = false;
 /**
  * 🔍 Busca lista de Pokémon da API
  */
-async function fetchPokemonList(offset = 0, limit = POKEMON_PER_PAGE) {
+async function fetchPokemonList(offset = 0, limit = pokemon_per_page) {
 	try {
 		const response = await fetch(
-			`${API_BASE}/pokemon?offset=${offset}&limit=${limit}`
+			`${api_base}/pokemon?offset=${offset}&limit=${limit}`
 		);
 		const data = await response.json();
 		return data;
@@ -74,7 +74,7 @@ function createPokemonCard(pokemon) {
  * 🎨 Renderiza cards no grid
  */
 function renderPokemonCards(pokemonList) {
-	const grid = document.getElementById("pokemon-grid");
+	const grid = DOMUtils.findElement("#pokemon-grid");
 	pokemonList.forEach((pokemon) => {
 		grid.insertAdjacentHTML("beforeend", createPokemonCard(pokemon));
 	});
@@ -84,8 +84,8 @@ function renderPokemonCards(pokemonList) {
  * ⏳ Mostra/esconde loading
  */
 function setLoadingState(show) {
-	const loadingIndicator = document.getElementById("loading-indicator");
-	const loadMoreBtn = document.getElementById("load-more-btn");
+	const loadingIndicator = DOMUtils.findElement("#loading-indicator");
+	const loadMoreBtn = DOMUtils.findElement("#load-more-btn");
 
 	if (loadingIndicator) {
 		loadingIndicator.style.display = show ? "block" : "none";
@@ -103,7 +103,7 @@ function setLoadingState(show) {
  * 🚨 Mostra erro
  */
 function showError(message) {
-	const errorContainer = document.getElementById("error-container");
+	const errorContainer = DOMUtils.findElement("#error-container");
 	if (errorContainer) {
 		errorContainer.style.display = "block";
 		errorContainer.innerHTML = `
@@ -122,13 +122,13 @@ async function loadInitialPokemons() {
 	try {
 		setLoadingState(true);
 
-		const data = await fetchPokemonList(0, POKEMON_PER_PAGE);
+		const data = await fetchPokemonList(0, pokemon_per_page);
 		const pokemonPromises = data.results.map((p) => fetchPokemonDetails(p.url));
 		const pokemonList = await Promise.all(pokemonPromises);
 		const validPokemons = pokemonList.filter((p) => p !== null);
 
 		renderPokemonCards(validPokemons);
-		currentOffset = POKEMON_PER_PAGE;
+		currentOffset = pokemon_per_page;
 
 		setLoadingState(false);
 		console.log(`✅ ${validPokemons.length} Pokémons carregados`);
@@ -149,13 +149,13 @@ async function loadMorePokemons() {
 		isLoading = true;
 		setLoadingState(true);
 
-		const data = await fetchPokemonList(currentOffset, POKEMON_PER_PAGE);
+		const data = await fetchPokemonList(currentOffset, pokemon_per_page);
 		const pokemonPromises = data.results.map((p) => fetchPokemonDetails(p.url));
 		const pokemonList = await Promise.all(pokemonPromises);
 		const validPokemons = pokemonList.filter((p) => p !== null);
 
 		renderPokemonCards(validPokemons);
-		currentOffset += POKEMON_PER_PAGE;
+		currentOffset += pokemon_per_page;
 
 		setLoadingState(false);
 		console.log(`✅ ${validPokemons.length} Pokémons adicionais carregados`);
@@ -177,7 +177,7 @@ async function loadMorePokemons() {
  */
 async function fetchFullPokemonDetails(pokemonId) {
 	try {
-		const response = await fetch(`${API_BASE}/pokemon/${pokemonId}`);
+		const response = await fetch(`${api_base}/pokemon/${pokemonId}`);
 		if (!response.ok) {
 			throw new Error("Pokémon não encontrado");
 		}
@@ -215,11 +215,11 @@ async function fetchFullPokemonDetails(pokemonId) {
  * 🎨 Renderiza página de detalhes
  */
 function renderPokemonDetails(pokemon) {
-	const container = document.getElementById("pokemon-details-container");
+	const container = DOMUtils.findElement("#pokemon-details-container");
 	if (!container) return;
 
-	const formattedId = String(pokemon.id).padStart(3, "0");
-	const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+	const formattedId = TextFormatter.formatNumber(pokemon.id, 3);
+	const formattedName = TextFormatter.capitalize(pokemon.name);
 	const pokemonImage = pokemon.images?.official || pokemon.images?.front || "";
 
 	// 🎨 Tipo principal para background
@@ -232,7 +232,7 @@ function renderPokemonDetails(pokemon) {
 			const typeName = type.name;
 			const typeColor = PokemonTypes.getColor(typeName);
 			const emoji = PokemonTypes.getEmoji(typeName);
-			const displayName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
+			const displayName = TextFormatter.capitalize(typeName);
 
 			return `
 			<span class="badge text-white px-3 py-2 rounded-pill me-2"
@@ -247,7 +247,7 @@ function renderPokemonDetails(pokemon) {
 	// 📊 Stats com barras coloridas
 	const statsList = pokemon.stats
 		.map((stat) => {
-			const statName = stat.name.charAt(0).toUpperCase() + stat.name.slice(1);
+			const statName = TextFormatter.capitalize(stat.name);
 			const percentage = Math.min((stat.value / 180) * 100, 100);
 
 			return `
@@ -379,7 +379,7 @@ async function initializeDetailsPage() {
 		return;
 	}
 
-	const container = document.getElementById("pokemon-details-container");
+	const container = DOMUtils.findElement("#pokemon-details-container");
 	if (!container) return;
 
 	try {
@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		loadInitialPokemons();
 
 		// 🔘 Event listener para botão "Carregar Mais"
-		const loadMoreBtn = document.getElementById("load-more-btn");
+		const loadMoreBtn = DOMUtils.findElement("#load-more-btn");
 		if (loadMoreBtn) {
 			loadMoreBtn.addEventListener("click", loadMorePokemons);
 		}

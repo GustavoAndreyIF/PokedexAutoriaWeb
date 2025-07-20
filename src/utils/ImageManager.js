@@ -5,7 +5,7 @@
  * Usa as funções do Utils.js para cores e emojis
  */
 
-import { PokemonTypes } from "./index.js";
+import { PokemonTypes, TextFormatter } from "./index.js";
 
 /**
  * 🖼️ Gerencia caminhos de imagens para cards
@@ -20,7 +20,7 @@ class ImageManager {
 		const type = typeName.toLowerCase();
 
 		// 📂 Tentar caminho da imagem específica
-		const imagePath = `src/images/backgroundCard/${type}.png`;
+		const imagePath = `src/assets/images/backgroundCard/${type}.png`;
 
 		// 🎨 Se não existir, usar gradiente CSS baseado na cor do tipo
 		const typeColor = PokemonTypes.getColor(type);
@@ -42,7 +42,7 @@ class ImageManager {
 		const type = typeName.toLowerCase();
 
 		// 📂 Caminho do ícone
-		const iconPath = `src/images/icons/${type}.png`;
+		const iconPath = `src/assets/images/icons/${type}.png`;
 
 		// 🎨 Emoji fallback usando Utils
 		const emoji = PokemonTypes.getEmoji(type);
@@ -88,7 +88,7 @@ class ImageManager {
 		const type = typeName.toLowerCase();
 		const typeIcon = this.getTypeIcon(type);
 		const typeColor = PokemonTypes.getColor(type);
-		const displayName = typeName.charAt(0).toUpperCase() + typeName.slice(1); // metodo de texto
+		const displayName = TextFormatter.capitalize(typeName);
 
 		// 🎨 Opções de estilo personalizáveis
 		const {
