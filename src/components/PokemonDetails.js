@@ -1,445 +1,564 @@
-/**
- * 📱 POKEMONDETAILS.JS - COMPONENTE DE DETALHES DO POKÉMON
- *
- * Componente para renderizar página completa de detalhes do Pokémon.
- * Baseado no HTML existente em detalhes.html.
- *
- */
+// ========================================
+// POKEMON DETAILS - Classe para representar um Pokemon com detalhes completos
+// ========================================
 
-import { TextFormatter, PokemonTypes, DOMUtils } from "../utils/index.js";
-
-/**
- * 📱 Componente de detalhes do Pokémon
- */
-class PokemonDetails {
-	/**
-	 * Construtor do componente
-	 * @param {Object} pokemon - Dados completos do Pokémon
-	 */
-	constructor(pokemon) {
-		this.pokemon = pokemon;
-		this.element = null;
-		this.audioElement = null;
-		this.isPlayingAudio = false;
+export class PokemonDetails {
+	constructor(name, url) {
+		this.name = name;
+		this.url = url;
+		this.id = null;
+		this.sprite = null;
+		this.types = [];
+		this.species = null;
+		this.isSpeciesLoaded = false;
+		this.isDetailsLoaded = false;
+		this.details = null;
+		this.speciesUrl = null;
+		this.audioUrl = null; // URL do áudio do Pokémon
+		this.isPlayingAudio = false; // Flag para controlar se áudio está tocando
 	}
 
-	/**
-	 * 🎨 Renderiza o HTML completo dos detalhes
-	 * @returns {string} HTML dos detalhes
-	 */
-	render() {
-		const {
-			id,
-			name,
-			formattedName,
-			images,
-			types,
-			height,
-			weight,
-			stats,
-			abilities,
-		} = this.pokemon;
+	// Override do fetchDetails para salvar dados completos
+	async fetchDetails() {
+		try {
+			const response = await fetch(this.url);
+			if (!response.ok) {
+				throw new Error(`Erro HTTP: ${response.status}`);
+			}
 
-		return `
-            <div class="pokemon-details-container">
-                ${this._renderHeader()}
-                ${this._renderMainContent()}
-                ${this._renderStatsSection()}
-                ${this._renderAbilitiesSection()}
-            </div>
-        `;
-	}
+			const data = await response.json();
 
-	/**
-	 * 🎨 Renderiza o cabeçalho com imagem e informações básicas
-	 * @returns {string} HTML do cabeçalho
-	 * @private
-	 */
-	_renderHeader() {
-		const { id, formattedName, images, types } = this.pokemon;
-		const pokedexNumber = TextFormatter.formatNumber(id, 3);
-		const primaryType = types[0]?.name || "normal";
-		const typeColor = PokemonTypes.getColor(primaryType);
-		const pokemonImage = images?.official || images?.home || images?.front || "";
+			// Salvar dados completos
+			this.details = data;
+			this.isDetailsLoaded = true;
 
-		return `
-            <!-- Header Section -->
-            <div class="position-relative overflow-hidden mb-4" 
-                 style="background: linear-gradient(135deg, ${typeColor}, ${typeColor}dd); min-height: 300px;">
-                
-                <!-- Navigation -->
-                <div class="container-fluid px-4 py-3">
-                    <div class="row align-items-center">
-                        <div class="col-8 d-flex align-items-center">
-                            <button class="btn text-white me-3 p-0" 
-                                    onclick="window.history.back()" 
-                                    style="font-size: 2rem;" 
-                                    title="Voltar">
-                                <i class="bi bi-arrow-left"></i>
-                            </button>
-                            <h1 class="mb-0 text-white fw-bold">${formattedName}</h1>
-                        </div>
-                        <div class="col-4 text-end">
-                            <span class="badge bg-dark bg-opacity-75 text-white fs-5 px-3 py-2 rounded-pill">
-                                #${pokedexNumber}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+			// Extrair informações básicas (herdado do PokemonCard)
+			this.id = data.id;
+			this.name = data.name;
+			this.sprite = data.sprites.front_default;
+			this.types = data.types.map((typeInfo) => typeInfo.type.name);
 
-                <!-- Pokemon Image and Types -->
-                <div class="container-fluid px-4 pb-4">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 text-center">
-                            <!-- Pokemon Image -->
-                            <div class="position-relative d-inline-block">
-                                ${
-									pokemonImage
-										? `
-                                    <img src="${pokemonImage}" 
-                                         alt="${formattedName}"
-                                         class="img-fluid pokemon-main-image"
-                                         style="max-height: 250px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));"
-                                         onclick="this.parentNode.querySelector('.audio-btn').click()">
-                                `
-										: `
-                                    <div class="d-flex align-items-center justify-content-center bg-white bg-opacity-20 rounded-circle" 
-                                         style="width: 200px; height: 200px;">
-                                        <span style="font-size: 4rem;">❓</span>
-                                    </div>
-                                `
-								}
-                                
-                                <!-- Audio Button -->
-                                <button class="btn btn-light btn-sm rounded-circle position-absolute audio-btn"
-                                        style="bottom: 10px; right: 10px; width: 40px; height: 40px;"
-                                        onclick="this.closest('.pokemon-details-container').dispatchEvent(new CustomEvent('playAudio'))"
-                                        title="Ouvir som do Pokémon">
-                                    <i class="bi bi-volume-up"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <!-- Types -->
-                            <div class="mb-3">
-                                <h5 class="text-white mb-2">Tipos</h5>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    ${this._renderTypeBadges(types)}
-                                </div>
-                            </div>
-                            
-                            <!-- Physical Info -->
-                            <div class="row text-white">
-                                <div class="col-6">
-                                    <div class="bg-white bg-opacity-20 rounded-3 p-3 text-center">
-                                        <div class="fw-bold">${(height / 10).toFixed(
-											1
-										)} m</div>
-                                        <small class="opacity-75">Altura</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="bg-white bg-opacity-20 rounded-3 p-3 text-center">
-                                        <div class="fw-bold">${(weight / 10).toFixed(
-											1
-										)} kg</div>
-                                        <small class="opacity-75">Peso</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-	}
+			// Extrair áudio do Pokémon (cries)
+			this.audioUrl = null;
+			if (data.cries) {
+				// Priorizar latest, depois legacy
+				this.audioUrl = data.cries.latest || data.cries.legacy || null;
+				console.log(`🔊 Áudio detectado para ${this.name}:`, this.audioUrl);
+			} else {
+				console.log(`🔇 Nenhum cries encontrado para ${this.name}`);
+			}
 
-	/**
-	 * 🎨 Renderiza o conteúdo principal
-	 * @returns {string} HTML do conteúdo principal
-	 * @private
-	 */
-	_renderMainContent() {
-		return `
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Navigation tabs seria aqui se necessário -->
-                    </div>
-                </div>
-            </div>
-        `;
-	}
+			// Configurar URL da espécie
+			this.speciesUrl = data.species.url;
 
-	/**
-	 * 📊 Renderiza seção de estatísticas
-	 * @returns {string} HTML das estatísticas
-	 * @private
-	 */
-	_renderStatsSection() {
-		const { stats } = this.pokemon;
-
-		if (!stats || stats.length === 0) {
-			return '<div class="container"><p class="text-muted">Estatísticas não disponíveis</p></div>';
+			return this;
+		} catch (error) {
+			console.error(`❌ Erro ao carregar detalhes para ${this.name}:`, error);
+			throw error;
 		}
-
-		const statNames = {
-			hp: "HP",
-			attack: "Ataque",
-			defense: "Defesa",
-			"special-attack": "Atq. Esp.",
-			"special-defense": "Def. Esp.",
-			speed: "Velocidade",
-		};
-
-		return `
-            <div class="container mb-4">
-                <h3 class="mb-3">📊 Estatísticas Base</h3>
-                <div class="card">
-                    <div class="card-body">
-                        ${stats
-							.map((stat) => {
-								const statName =
-									statNames[stat.name] ||
-									TextFormatter.formatPokemonName(stat.name);
-								const percentage = Math.min(
-									(stat.value / 200) * 100,
-									100
-								);
-
-								return `
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <span class="fw-semibold">${statName}</span>
-                                        <span class="badge bg-secondary">${stat.value}</span>
-                                    </div>
-                                    <div class="progress" style="height: 10px;">
-                                        <div class="progress-bar bg-primary" 
-                                             role="progressbar" 
-                                             style="width: ${percentage}%"
-                                             aria-valuenow="${stat.value}" 
-                                             aria-valuemin="0" 
-                                             aria-valuemax="200">
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-							})
-							.join("")}
-                    </div>
-                </div>
-            </div>
-        `;
 	}
 
-	/**
-	 * 🎯 Renderiza seção de habilidades
-	 * @returns {string} HTML das habilidades
-	 * @private
-	 */
-	_renderAbilitiesSection() {
-		const { abilities } = this.pokemon;
-
-		if (!abilities || abilities.length === 0) {
-			return '<div class="container"><p class="text-muted">Habilidades não disponíveis</p></div>';
-		}
-
-		return `
-            <div class="container mb-4">
-                <h3 class="mb-3">🎯 Habilidades</h3>
-                <div class="row g-3">
-                    ${abilities
-						.map(
-							(ability) => `
-                        <div class="col-md-6">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title d-flex align-items-center">
-                                        ${ability.formatted}
-                                        ${
-											ability.isHidden
-												? `
-                                            <span class="badge bg-warning text-dark ms-2 small">Oculta</span>
-                                        `
-												: ""
-										}
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                    `
-						)
-						.join("")}
-                </div>
-            </div>
-        `;
-	}
-
-	/**
-	 * 🏷️ Renderiza badges dos tipos
-	 * @param {Array} types - Array de tipos
-	 * @returns {string} HTML dos badges
-	 * @private
-	 */
-	_renderTypeBadges(types) {
-		return types
-			.map((type) => {
-				const typeColor = PokemonTypes.getColor(type.name);
-				return `
-                <span class="badge px-3 py-2 rounded-pill" 
-                      style="background-color: ${typeColor}; color: white; font-weight: 500;">
-                    ${type.formatted}
-                </span>
-            `;
-			})
-			.join("");
-	}
-
-	/**
-	 * 🎯 Renderiza o componente em um container
-	 * @param {Element|string} container - Container onde renderizar
-	 */
-	mount(container) {
-		const containerElement =
-			typeof container === "string" ? DOMUtils.findElement(container) : container;
-
-		if (!containerElement) {
-			console.error("❌ Container não encontrado para renderizar detalhes");
-			return;
-		}
-
-		// 🧹 Limpar container
-		DOMUtils.clearElement(containerElement);
-
-		// 🎨 Inserir HTML
-		containerElement.innerHTML = this.render();
-
-		// 🔍 Encontrar elemento criado
-		this.element = containerElement.querySelector(".pokemon-details-container");
-
-		// 👂 Adicionar event listeners
-		this._attachEvents();
-
-		console.log(`✅ Detalhes do ${this.pokemon.formattedName} renderizados`);
-	}
-
-	/**
-	 * 👂 Adiciona event listeners
-	 * @private
-	 */
-	_attachEvents() {
-		if (!this.element) return;
-
-		// 🎵 Event listener para áudio
-		this.element.addEventListener("playAudio", () => {
-			this._playPokemonCry();
-		});
-	}
-
-	/**
-	 * 🎵 Reproduz o som do Pokémon
-	 * @private
-	 */
-	async _playPokemonCry() {
+	// Método para tocar o áudio do Pokémon
+	async playPokemonCry() {
+		// Verificar se áudio já está tocando
 		if (this.isPlayingAudio) {
-			console.log("🎵 Áudio já está sendo reproduzido");
-			return;
+			console.log(
+				`🔊 Áudio de ${this.name} já está tocando, ignorando nova tentativa`
+			);
+			return false;
 		}
+
+		if (!this.audioUrl) {
+			console.log(`🔇 Nenhum áudio disponível para ${this.name}`);
+			return false;
+		}
+
+		const audioIndicator = document.getElementById("audio-indicator");
+		const sprite = document.getElementById("pokemon-main-sprite");
 
 		try {
-			const audioBtn = this.element.querySelector(".audio-btn i");
-			const originalClass = audioBtn.className;
-
-			// 🎵 Indicar que está carregando
-			audioBtn.className = "bi bi-three-dots";
+			// Marcar como tocando
 			this.isPlayingAudio = true;
+			console.log(`🔊 Tocando áudio de ${this.name}:`, this.audioUrl);
 
-			// 🌐 Buscar URL do áudio
-			const pokemonAPI = window.pokemonAPI;
-			if (!pokemonAPI) {
-				throw new Error("PokemonAPI não disponível");
+			// Mostrar indicador visual
+			if (audioIndicator) {
+				audioIndicator.style.display = "block";
+				audioIndicator.classList.add("pulse");
 			}
 
-			const audioUrl = await pokemonAPI.getPokemonAudio(this.pokemon.id);
-
-			if (!audioUrl) {
-				throw new Error("Áudio não encontrado para este Pokémon");
+			// Adicionar classe de áudio tocando no sprite
+			if (sprite) {
+				sprite.classList.add("audio-playing");
 			}
 
-			// 🎵 Reproduzir áudio
-			if (this.audioElement) {
-				this.audioElement.pause();
-			}
+			// Criar e tocar áudio
+			const audio = new Audio(this.audioUrl);
+			audio.volume = 0.6; // Volume moderado
 
-			this.audioElement = new Audio(audioUrl);
+			// Promise para aguardar o áudio terminar
+			await new Promise((resolve, reject) => {
+				audio.onended = () => {
+					console.log(`✅ Áudio de ${this.name} finalizado`);
+					// Esconder indicador quando áudio termina
+					if (audioIndicator) {
+						audioIndicator.style.display = "none";
+						audioIndicator.classList.remove("pulse");
+					}
+					// Remover classe de áudio tocando do sprite
+					if (sprite) {
+						sprite.classList.remove("audio-playing");
+					}
+					// Liberar flag de áudio
+					this.isPlayingAudio = false;
+					resolve();
+				};
 
-			// 🎵 Configurar eventos do áudio
-			this.audioElement.onplay = () => {
-				audioBtn.className = "bi bi-volume-up-fill";
-				console.log(`🎵 Reproduzindo som do ${this.pokemon.formattedName}`);
-			};
+				audio.onerror = (error) => {
+					console.error(`❌ Erro ao tocar áudio de ${this.name}:`, error);
+					// Esconder indicador em caso de erro
+					if (audioIndicator) {
+						audioIndicator.style.display = "none";
+						audioIndicator.classList.remove("pulse");
+					}
+					// Remover classe de áudio tocando do sprite
+					if (sprite) {
+						sprite.classList.remove("audio-playing");
+					}
+					// Liberar flag de áudio
+					this.isPlayingAudio = false;
+					reject(error);
+				};
 
-			this.audioElement.onended = () => {
-				audioBtn.className = originalClass;
-				this.isPlayingAudio = false;
-				console.log("🎵 Reprodução finalizada");
-			};
+				audio.play().catch(reject);
+			});
 
-			this.audioElement.onerror = () => {
-				audioBtn.className = "bi bi-volume-mute";
-				this.isPlayingAudio = false;
-				console.error("❌ Erro ao reproduzir áudio");
-			};
-
-			await this.audioElement.play();
+			return true;
 		} catch (error) {
-			console.error("❌ Erro ao reproduzir som:", error);
-
-			// 🔄 Resetar botão
-			const audioBtn = this.element.querySelector(".audio-btn i");
-			if (audioBtn) {
-				audioBtn.className = "bi bi-volume-mute";
+			console.error(`❌ Erro ao reproduzir áudio de ${this.name}:`, error);
+			// Esconder indicador em caso de erro
+			if (audioIndicator) {
+				audioIndicator.style.display = "none";
+				audioIndicator.classList.remove("pulse");
 			}
+			// Remover classe de áudio tocando do sprite
+			if (sprite) {
+				sprite.classList.remove("audio-playing");
+			}
+			// Liberar flag de áudio
 			this.isPlayingAudio = false;
+			return false;
 		}
 	}
 
-	/**
-	 * 🧹 Remove o componente do DOM
-	 */
-	unmount() {
-		if (this.audioElement) {
-			this.audioElement.pause();
-			this.audioElement = null;
-		}
+	// Carregar dados específicos do pokemon-species
+	async fetchSpeciesData() {
+		try {
+			if (this.isSpeciesLoaded) {
+				return this.species;
+			}
 
-		if (this.element && this.element.parentNode) {
-			this.element.parentNode.removeChild(this.element);
-			this.element = null;
-		}
+			// Se não tem URL da espécie, construir baseado no ID
+			if (!this.speciesUrl && this.id) {
+				this.speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${this.id}`;
+			}
 
-		this.isPlayingAudio = false;
+			if (!this.speciesUrl) {
+				throw new Error("URL da espécie não disponível");
+			}
+
+			const response = await fetch(this.speciesUrl);
+			if (!response.ok) {
+				throw new Error(`Erro ao buscar espécie: ${response.status}`);
+			}
+
+			this.species = await response.json();
+			this.isSpeciesLoaded = true;
+
+			return this.species;
+		} catch (error) {
+			console.error(`❌ Erro ao carregar espécie para ${this.name}:`, error);
+			throw error;
+		}
 	}
 
-	/**
-	 * 📊 Retorna status do componente
-	 * @returns {Object} Status atual
-	 */
-	getStatus() {
+	// Obter o primeiro flavor_text em inglês
+	getFlavorText() {
+		if (!this.species || !this.species.flavor_text_entries) {
+			return "Descrição não disponível";
+		}
+
+		const englishFlavor = this.species.flavor_text_entries.find(
+			(entry) => entry.language.name === "en"
+		);
+
+		if (englishFlavor) {
+			// Limpar caracteres especiais (\n, \f) e normalizar espaços
+			return englishFlavor.flavor_text
+				.replace(/\n/g, " ")
+				.replace(/\f/g, " ")
+				.replace(/\s+/g, " ")
+				.trim();
+		}
+
+		return "Descrição não disponível";
+	}
+
+	// Obter cor da espécie
+	getSpeciesColor() {
+		return this.species?.color?.name || "unknown";
+	}
+
+	// Obter habitat
+	getHabitat() {
+		return this.species?.habitat?.name || "unknown";
+	}
+
+	// Obter taxa de captura
+	getCaptureRate() {
+		return this.species?.capture_rate || 0;
+	}
+
+	// Obter taxa de felicidade base
+	getBaseHappiness() {
+		return this.species?.base_happiness || 0;
+	}
+
+	// Obter se é pokemon lendário
+	isLegendary() {
+		return this.species?.is_legendary || false;
+	}
+
+	// Obter se é pokemon mítico
+	isMythical() {
+		return this.species?.is_mythical || false;
+	}
+
+	// Obter altura
+	getHeight() {
+		return this.details?.height || 0;
+	}
+
+	// Obter peso
+	getWeight() {
+		return this.details?.weight || 0;
+	}
+
+	// Obter estatísticas base
+	getStats() {
+		if (!this.details?.stats) return [];
+
+		return this.details.stats.map((stat) => ({
+			name: stat.stat.name,
+			value: stat.base_stat,
+		}));
+	}
+
+	// Obter habilidades
+	getAbilities() {
+		if (!this.details?.abilities) return [];
+
+		return this.details.abilities.map((ability) => ({
+			name: ability.ability.name,
+			is_hidden: ability.is_hidden,
+		}));
+	}
+
+	// Obter dados básicos do card (método que estava sendo herdado)
+	getCardData() {
 		return {
-			pokemonId: this.pokemon?.id,
-			pokemonName: this.pokemon?.name,
-			isMounted: !!this.element,
-			isPlayingAudio: this.isPlayingAudio,
-			element: this.element,
+			id: this.id,
+			name: this.name,
+			sprite: this.sprite,
+			types: this.types,
+			url: this.url,
 		};
 	}
+
+	// Obter dados completos dos detalhes
+	getDetailsData() {
+		return {
+			// Dados básicos (herdados)
+			...this.getCardData(),
+
+			// Dados de detalhes completos
+			height: this.getHeight(),
+			weight: this.getWeight(),
+			stats: this.getStats(),
+			abilities: this.getAbilities(),
+
+			// Dados específicos da espécie
+			flavorText: this.getFlavorText(),
+			color: this.getSpeciesColor(),
+			habitat: this.getHabitat(),
+			captureRate: this.getCaptureRate(),
+			baseHappiness: this.getBaseHappiness(),
+			isLegendary: this.isLegendary(),
+			isMythical: this.isMythical(),
+
+			// Informações de status
+			speciesLoaded: this.isSpeciesLoaded,
+			detailsLoaded: this.isDetailsLoaded,
+		};
+	}
+
+	// Método para renderizar toda a página de detalhes
+	renderDetailsPage() {
+		const data = this.getDetailsData();
+
+		// Renderizar HTML no container
+		const container = document.getElementById("pokemon-details-container");
+		if (!container) {
+			console.error("❌ Container pokemon-details-container não encontrado");
+			return;
+		}
+
+		// Popular container com HTML estruturado
+		this.populatePageContainer(container, data);
+
+		return data;
+	}
+
+	// Método para popular o container principal
+	populatePageContainer(container, data) {
+		const formattedId = `#${String(data.id).padStart(3, "0")}`;
+		const formattedName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+		const primaryType = data.types[0]?.toLowerCase() || "normal";
+		const headerBackground = this.getTypeColor(primaryType);
+
+		// Tipos com ícones
+		const typeBadges = data.types
+			.map((type) => {
+				const typeColor = this.getTypeColor(type.toLowerCase());
+				return `<span class="badge text-white px-3 py-2 rounded-pill me-2 d-flex align-items-center"
+					  style="background-color: ${typeColor}; font-size: 0.9rem; width: fit-content;">
+					<img src="./src/assets/images/icons/${type.toLowerCase()}.png" 
+						 alt="${type}" 
+						 style="width: 16px; height: 16px; margin-right: 6px;"
+						 onerror="this.style.display='none'">
+					${type}
+				</span>`;
+			})
+			.join("");
+
+		// Stats com barras coloridas
+		const statsList = data.stats
+			.map((stat) => {
+				const statName =
+					stat.name.charAt(0).toUpperCase() +
+					stat.name.slice(1).replace("-", " ");
+				const percentage = Math.min((stat.value / 180) * 100, 100);
+
+				return `<div class="mb-3">
+					<div class="d-flex justify-content-between mb-1">
+						<small class="fw-bold">${statName}</small>
+						<small class="badge bg-secondary">${stat.value}</small>
+					</div>
+					<div class="progress" style="height: 8px; border-radius: 4px;">
+						<div class="progress-bar" 
+							 style="width: ${percentage}%; background: linear-gradient(90deg, ${headerBackground}66, ${headerBackground});"
+							 role="progressbar"></div>
+					</div>
+				</div>`;
+			})
+			.join("");
+
+		container.innerHTML = `
+			<div class="row g-0">
+				<!-- Coluna da Esquerda: Header + Imagem + Info Básica -->
+				<div class="col-lg-6">
+					<!-- Header com Background -->
+					<div class="position-relative text-white py-4" style="background: linear-gradient(135deg, ${headerBackground}, ${headerBackground}cc); min-height: 100vh;">
+						<!-- Navigation -->
+						<div class="container-fluid px-4">
+							<div class="row align-items-center mb-4">
+								<div class="col">
+									<button class="text-white me-3 btn p-0 border-0 bg-transparent" 
+											onclick="window.history.back()" 
+											style="font-size: 2rem;"
+											title="Voltar">
+										<i class="bi bi-x-lg"></i>
+									</button>
+									<h1 class="d-inline mb-0 fw-bold">${formattedName}</h1>
+									<span class="ms-3 opacity-75 fs-5">${formattedId}</span>
+								</div>
+							</div>
+							
+							<!-- Pokemon Image -->
+							<div class="text-center mb-4">
+								<div class="position-relative d-inline-block">
+									<!-- Audio Indicator (escondido inicialmente) -->
+									<div id="audio-indicator" 
+										 class="position-absolute top-0 end-0 bg-white text-primary rounded-circle d-flex align-items-center justify-content-center"
+										 style="width: 40px; height: 40px; z-index: 3; display: none; transform: translate(50%, -50%);">
+										<i class="bi bi-volume-up-fill"></i>
+									</div>
+									
+									<img src="${data.sprite}" 
+										 alt="${formattedName}" 
+										 class="img-fluid mb-3" 
+										 style="max-height: 300px; cursor: pointer; transition: transform 0.3s ease; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));"
+										 onclick="pokemonDetails.playPokemonCry()"
+										 onmouseover="this.style.transform='scale(1.05)'"
+										 onmouseout="this.style.transform='scale(1)'">
+								</div>
+							</div>
+							
+							<!-- Tipos -->
+							<div class="text-center mb-4">
+								<div class="d-flex justify-content-center gap-2 flex-wrap">
+									${typeBadges}
+								</div>
+							</div>
+							
+							<!-- Informações Físicas -->
+							<div class="row text-center">
+								<div class="col-6 mb-3">
+									<div class="bg-white bg-opacity-20 rounded-4 p-3">
+										<h4 class="mb-0">${(data.height / 10).toFixed(1)} m</h4>
+										<small class="opacity-75">Altura</small>
+									</div>
+								</div>
+								<div class="col-6 mb-3">
+									<div class="bg-white bg-opacity-20 rounded-4 p-3">
+										<h4 class="mb-0">${(data.weight / 10).toFixed(1)} kg</h4>
+										<small class="opacity-75">Peso</small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Coluna da Direita: Conteúdo com Abas -->
+				<div class="col-lg-6">
+					<div class="h-100 bg-light">
+						<!-- Navigation Tabs -->
+						<div class="p-4">
+							<div class="card border-0 shadow-sm rounded-4">
+								<div class="card-header bg-white border-0 rounded-top-4 p-4">
+									<div class="btn-group w-100" role="group">
+										<button type="button" class="btn btn-outline-primary active" onclick="switchTab('stats')">
+											<i class="bi bi-bar-chart-fill me-2"></i>Stats
+										</button>
+										<button type="button" class="btn btn-outline-primary" onclick="switchTab('evolution')">
+											<i class="bi bi-arrow-repeat me-2"></i>Evolution
+										</button>
+										<button type="button" class="btn btn-outline-primary" onclick="switchTab('moves')">
+											<i class="bi bi-lightning-fill me-2"></i>Moves
+										</button>
+										<button type="button" class="btn btn-outline-primary" onclick="switchTab('location')">
+											<i class="bi bi-geo-alt-fill me-2"></i>Location
+										</button>
+									</div>
+								</div>
+								
+								<!-- Tab Content -->
+								<div class="card-body p-4">
+									<!-- Stats Tab (Ativo por padrão) -->
+									<div id="stats-content" class="tab-content-section">
+										<h5 class="fw-semibold mb-3">⚡ Estatísticas Base</h5>
+										${statsList}
+									</div>
+									
+									<!-- Evolution Tab -->
+									<div id="evolution-content" class="tab-content-section d-none">
+										<h5 class="fw-semibold mb-3">🔄 Cadeia Evolutiva</h5>
+										<p class="text-muted">Informações de evolução serão exibidas aqui.</p>
+									</div>
+									
+									<!-- Moves Tab -->
+									<div id="moves-content" class="tab-content-section d-none">
+										<h5 class="fw-semibold mb-3">⚔️ Movimentos</h5>
+										<p class="text-muted">Lista de movimentos será exibidas aqui.</p>
+									</div>
+									
+									<!-- Location Tab -->
+									<div id="location-content" class="tab-content-section d-none">
+										<h5 class="fw-semibold mb-3">🗺️ Localização</h5>
+										<p class="text-muted">Informações de localização serão exibidas aqui.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+
+		// Disponibilizar globalmente a instância para uso nos event handlers
+		window.pokemonDetails = this;
+		window.switchTab = this.switchTab;
+	}
+
+	// Método para obter cor do tipo
+	getTypeColor(type) {
+		const colors = {
+			normal: "#9199a1",
+			fire: "#ff9d55",
+			water: "#4d91d7",
+			electric: "#f3d33c",
+			grass: "#61bb59",
+			ice: "#71cfbe",
+			fighting: "#cf4069",
+			poison: "#aa6ac7",
+			ground: "#db7645",
+			flying: "#8ea9df",
+			psychic: "#fb7075",
+			bug: "#91c22e",
+			rock: "#c7b78a",
+			ghost: "#5568aa",
+			dragon: "#0a6dc8",
+			dark: "#595265",
+			steel: "#598fa2",
+			fairy: "#ef8fe7",
+		};
+		return colors[type] || colors.normal;
+	}
+
+	// Método para alternar abas
+	switchTab(tabName) {
+		// Remove active de todos os botões
+		document.querySelectorAll(".btn-group button").forEach((btn) => {
+			btn.classList.remove("active");
+		});
+
+		// Adiciona active ao botão que corresponde à aba
+		const activeButton = document.querySelector(
+			`button[onclick="switchTab('${tabName}')"]`
+		);
+		if (activeButton) {
+			activeButton.classList.add("active");
+		}
+
+		// Esconde todas as seções
+		document.querySelectorAll(".tab-content-section").forEach((section) => {
+			section.classList.add("d-none");
+		});
+
+		// Mostra a seção correspondente
+		const targetSection = document.getElementById(`${tabName}-content`);
+		if (targetSection) {
+			targetSection.classList.remove("d-none");
+		}
+	}
+
+	// Converter de PokemonCard para PokemonDetails (reutilizar dados já carregados)
+	static fromPokemonCard(pokemonCard) {
+		const pokemonDetails = new PokemonDetails(pokemonCard.name, pokemonCard.url);
+
+		// Copiar dados já carregados do card
+		pokemonDetails.id = pokemonCard.id;
+		pokemonDetails.sprite = pokemonCard.sprite;
+		pokemonDetails.types = pokemonCard.types;
+
+		// Marcar como básico já carregado se o card tem os dados
+		if (pokemonCard.id && pokemonCard.sprite && pokemonCard.types.length > 0) {
+			pokemonDetails.isDetailsLoaded = true;
+			// Construir URL da espécie baseada no ID
+			pokemonDetails.speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonCard.id}`;
+		}
+
+		return pokemonDetails;
+	}
 }
-
-// ========================================
-// 📤 EXPORTAÇÕES
-// ========================================
-
-export { PokemonDetails };
-export default PokemonDetails;

@@ -9,7 +9,7 @@
  */
 
 import pokemonAPI from "../services/PokemonAPI.js";
-import PokemonDetails from "../components/PokemonDetails.js";
+import PokemonDetails from "../components/PokemonDetails.js/index.js";
 import { showPageLoading } from "../components/LoadingSpinner.js";
 import { showError, showPokemonNotFound } from "../components/ErrorMessage.js";
 import { DOMUtils } from "../utils/index.js";
