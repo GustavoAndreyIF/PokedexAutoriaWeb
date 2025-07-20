@@ -10,7 +10,7 @@ import pokemonAPI from "../services/PokemonAPI.js";
 import { renderPokemonCards } from "../components/PokemonCard.js";
 import { showLoading, showPageLoading } from "../components/LoadingSpinner.js";
 import { showError, showNetworkError } from "../components/ErrorMessage.js";
-import Utils from "../core/Utils.js";
+import { TextFormatter, DOMUtils } from "../utils/index.js";
 
 /**
  * 🏠 Classe da página inicial
@@ -38,10 +38,10 @@ class HomePage {
 
 	/**
 	 * 🎯 Inicializa a página
-     * @return {Promise<boolean>} Retorna true se a inicialização for bem-sucedida
-     * @throws {Error} Se ocorrer um erro durante a inicialização
-     * @description
-     * Configura os elementos da página, carrega Pokémon iniciais 
+	 * @return {Promise<boolean>} Retorna true se a inicialização for bem-sucedida
+	 * @throws {Error} Se ocorrer um erro durante a inicialização
+	 * @description
+	 * Configura os elementos da página, carrega Pokémon iniciais
 	 */
 	async init() {
 		try {
@@ -70,11 +70,11 @@ class HomePage {
 	 * @private
 	 */
 	_findPageElements() {
-		this.pokemonGrid = Utils.findElement("#pokemon-grid");
-		this.loadMoreBtn = Utils.findElement("#load-more-btn");
-		this.loadingIndicator = Utils.findElement("#loading-indicator");
-		this.errorContainer = Utils.findElement("#error-container");
-		this.endMessage = Utils.findElement("#end-message");
+		this.pokemonGrid = DOMUtils.findElement("#pokemon-grid");
+		this.loadMoreBtn = DOMUtils.findElement("#load-more-btn");
+		this.loadingIndicator = DOMUtils.findElement("#loading-indicator");
+		this.errorContainer = DOMUtils.findElement("#error-container");
+		this.endMessage = DOMUtils.findElement("#end-message");
 
 		if (!this.pokemonGrid) {
 			throw new Error("Elemento #pokemon-grid não encontrado");
@@ -86,8 +86,8 @@ class HomePage {
 	/**
 	 * 👂 Configura event listeners da página
 	 * @private
-     * @description
-     * Configura o botão "Carregar Mais" e outros eventos necessários
+	 * @description
+	 * Configura o botão "Carregar Mais" e outros eventos necessários
 	 */
 	_setupEventListeners() {
 		// 🔘 Botão "Carregar Mais"
@@ -102,10 +102,10 @@ class HomePage {
 
 	/**
 	 * 📋 Carrega Pokémon iniciais
-     * @returns {Promise<void>}
-     * @throws {Error} Se ocorrer um erro ao carregar os Pokémon
-     * @description
-     * Busca os primeiros Pokémon e renderiza os cards na grid
+	 * @returns {Promise<void>}
+	 * @throws {Error} Se ocorrer um erro ao carregar os Pokémon
+	 * @description
+	 * Busca os primeiros Pokémon e renderiza os cards na grid
 	 */
 	async loadInitialPokemons() {
 		try {
@@ -144,11 +144,11 @@ class HomePage {
 
 	/**
 	 * 📋 Carrega mais Pokémon (paginação)
-     * @returns {Promise<void>}
-     * @throws {Error} Se ocorrer um erro ao carregar mais Pokémon
-     * @description
-     * Busca mais Pokémon a partir do offset atual e renderiza os novos cards
-     * Se já estiver carregando ou não houver mais Pokémon, não faz nada.
+	 * @returns {Promise<void>}
+	 * @throws {Error} Se ocorrer um erro ao carregar mais Pokémon
+	 * @description
+	 * Busca mais Pokémon a partir do offset atual e renderiza os novos cards
+	 * Se já estiver carregando ou não houver mais Pokémon, não faz nada.
 	 */
 	async loadMorePokemons() {
 		if (this.isLoading || !this.hasMore) {
@@ -201,12 +201,12 @@ class HomePage {
 	 * @param {Array} pokemonList - Lista básica de Pokémon
 	 * @returns {Promise<Array>} Pokémon com detalhes
 	 * @private
-     * @description
-     * Busca detalhes completos de cada Pokémon e formata os dados
-     * para renderização. Se falhar ao buscar detalhes, retorna dados básicos.
+	 * @description
+	 * Busca detalhes completos de cada Pokémon e formata os dados
+	 * para renderização. Se falhar ao buscar detalhes, retorna dados básicos.
 	 */
 	async _processPokemonData(pokemonList) {
-        // 🧹 Limpar lista existente
+		// 🧹 Limpar lista existente
 		const promises = pokemonList.map(async (pokemon) => {
 			try {
 				// 🔍 Buscar detalhes completos
@@ -218,7 +218,7 @@ class HomePage {
 				return {
 					id: pokemon.id,
 					name: pokemon.name,
-					formattedName: Utils.formatPokemonName(pokemon.name),
+					formattedName: TextFormatter.formatPokemonName(pokemon.name),
 					images: { front: null, official: null },
 					types: [],
 				};
@@ -232,9 +232,9 @@ class HomePage {
 	 * 🎨 Renderiza cards de Pokémon
 	 * @param {Array} pokemonData - Dados dos Pokémon
 	 * @private
-     * @description
-     * Renderiza os cards de Pokémon na grid da página
-     * usando o componente de card existente.
+	 * @description
+	 * Renderiza os cards de Pokémon na grid da página
+	 * usando o componente de card existente.
 	 */
 	_renderPokemonCards(pokemonData) {
 		renderPokemonCards(pokemonData, this.pokemonGrid);
@@ -244,53 +244,53 @@ class HomePage {
 	 * ⏳ Mostra loading de página completa
 	 * @param {string} message - Mensagem de loading
 	 * @private
-     * @description
-     * Mostra um indicador de carregamento na página
-     * e esconde outros elementos enquanto carrega.
+	 * @description
+	 * Mostra um indicador de carregamento na página
+	 * e esconde outros elementos enquanto carrega.
 	 */
 	_showPageLoading(message) {
-        // 🧹 Limpar grid existente
+		// 🧹 Limpar grid existente
 		if (this.loadingIndicator) {
-			Utils.showElement(this.loadingIndicator);
+			DOMUtils.showElement(this.loadingIndicator);
 		} else {
-            // 🧹 Criar novo spinner de loading
+			// 🧹 Criar novo spinner de loading
 			this.loadingSpinner = showPageLoading(message);
 		}
 
 		// 🙈 Esconder outros elementos
-		Utils.hideElement(this.pokemonGrid);
-		Utils.hideElement(this.loadMoreBtn);
-		Utils.hideElement(this.errorContainer);
+		DOMUtils.hideElement(this.pokemonGrid);
+		DOMUtils.hideElement(this.loadMoreBtn);
+		DOMUtils.hideElement(this.errorContainer);
 	}
 
 	/**
 	 * ✅ Esconde loading de página
 	 * @private
-     * @description
-     * Esconde o indicador de carregamento e mostra a grid de Pokémon
+	 * @description
+	 * Esconde o indicador de carregamento e mostra a grid de Pokémon
 	 */
 	_hidePageLoading() {
-        // 👋 Esconder loading
+		// 👋 Esconder loading
 		if (this.loadingIndicator) {
-			Utils.hideElement(this.loadingIndicator);
+			DOMUtils.hideElement(this.loadingIndicator);
 		}
 
-        // 👀 Mostrar grid
+		// 👀 Mostrar grid
 		if (this.loadingSpinner) {
 			this.loadingSpinner.remove();
 			this.loadingSpinner = null;
 		}
 
 		// 👀 Mostrar grid
-		Utils.showElement(this.pokemonGrid);
+		DOMUtils.showElement(this.pokemonGrid);
 	}
 
 	/**
 	 * ⏳ Mostra loading no botão "Carregar Mais"
 	 * @private
-     * @description
-     * Exibe um indicador de carregamento no botão
-     * enquanto busca mais Pokémon.
+	 * @description
+	 * Exibe um indicador de carregamento no botão
+	 * enquanto busca mais Pokémon.
 	 */
 	_showButtonLoading() {
 		if (this.loadMoreBtn) {
@@ -305,9 +305,9 @@ class HomePage {
 	/**
 	 * ✅ Esconde loading do botão
 	 * @private
-     * @description
-     * Remove o indicador de carregamento do botão
-     * e restaura o texto original.
+	 * @description
+	 * Remove o indicador de carregamento do botão
+	 * e restaura o texto original.
 	 */
 	_hideButtonLoading() {
 		if (this.loadMoreBtn) {
@@ -322,23 +322,23 @@ class HomePage {
 	/**
 	 * 🔘 Atualiza estado do botão "Carregar Mais"
 	 * @private
-     * @description
-     * Mostra ou esconde o botão "Carregar Mais"
-     * dependendo se há mais Pokémon para carregar.
+	 * @description
+	 * Mostra ou esconde o botão "Carregar Mais"
+	 * dependendo se há mais Pokémon para carregar.
 	 */
 	_updateLoadMoreButton() {
-        // 🔘 Verifica se o botão existe
+		// 🔘 Verifica se o botão existe
 		if (!this.loadMoreBtn) return;
 
-        // 🔘 Verifica se há mais Pokémon
+		// 🔘 Verifica se há mais Pokémon
 		if (this.hasMore) {
-            // 🔘 Mostrar botão
-			Utils.showElement(this.loadMoreBtn);
-			Utils.hideElement(this.endMessage);
+			// 🔘 Mostrar botão
+			DOMUtils.showElement(this.loadMoreBtn);
+			DOMUtils.hideElement(this.endMessage);
 		} else {
-            // 🔘 Esconder botão
-			Utils.hideElement(this.loadMoreBtn);
-			Utils.showElement(this.endMessage);
+			// 🔘 Esconder botão
+			DOMUtils.hideElement(this.loadMoreBtn);
+			DOMUtils.showElement(this.endMessage);
 		}
 	}
 
@@ -347,14 +347,14 @@ class HomePage {
 	 * @param {string} title - Título do erro
 	 * @param {string} details - Detalhes do erro
 	 * @private
-     * @description
-     * Exibe uma mensagem de erro na UI
-     * e permite que o usuário tente novamente.
-     * Se não houver container de erro, exibe um erro de rede.
+	 * @description
+	 * Exibe uma mensagem de erro na UI
+	 * e permite que o usuário tente novamente.
+	 * Se não houver container de erro, exibe um erro de rede.
 	 */
 	_showError(title, details) {
 		if (this.errorContainer) {
-			Utils.showElement(this.errorContainer);
+			DOMUtils.showElement(this.errorContainer);
 			showError(this.errorContainer, `${title}: ${details}`);
 		} else {
 			showNetworkError(this.pokemonGrid, details);
@@ -364,9 +364,9 @@ class HomePage {
 	/**
 	 * 📊 Retorna estatísticas da página
 	 * @returns {Object} Estatísticas atuais
-     * @description
-     * Retorna informações sobre o estado atual da página,
-     * como total de Pokémon carregados, offset atual e se há mais Pokémon.
+	 * @description
+	 * Retorna informações sobre o estado atual da página,
+	 * como total de Pokémon carregados, offset atual e se há mais Pokémon.
 	 */
 	getStats() {
 		return {
@@ -380,9 +380,9 @@ class HomePage {
 
 	/**
 	 * 🧹 Limpa a página (usado ao sair)
-     * @description
-     * Remove todos os elementos de carregamento e limpa a grid de Pokémon.
-     * Também remove o spinner de carregamento, se existir.
+	 * @description
+	 * Remove todos os elementos de carregamento e limpa a grid de Pokémon.
+	 * Também remove o spinner de carregamento, se existir.
 	 */
 	cleanup() {
 		if (this.loadingSpinner) {
@@ -391,7 +391,7 @@ class HomePage {
 
 		// 🧹 Limpar grid
 		if (this.pokemonGrid) {
-			Utils.clearElement(this.pokemonGrid);
+			DOMUtils.clearElement(this.pokemonGrid);
 		}
 
 		console.log("🧹 HomePage limpa");

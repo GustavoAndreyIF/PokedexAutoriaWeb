@@ -5,6 +5,13 @@
  */
 
 // ========================================
+// 📦 IMPORTS
+// ========================================
+
+import { PokemonTypes } from "./src/utils/index.js";
+import PokemonCard from "./src/components/PokemonCard.js";
+
+// ========================================
 // 🌐 CONFIGURAÇÕES DA API
 // ========================================
 
@@ -56,52 +63,11 @@ async function fetchPokemonDetails(pokemonUrl) {
 }
 
 /**
- * 🎨 Cria HTML de um card de Pokémon
+ * 🎨 Cria HTML de um card de Pokémon usando o componente
  */
 function createPokemonCard(pokemon) {
-	const pokemonImage = pokemon.images?.official || pokemon.images?.front || "";
-	const formattedId = String(pokemon.id).padStart(3, "0");
-	const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-
-	// 🏷️ Criar badges dos tipos
-	const typeBadges = pokemon.types
-		.map((type) => {
-			const typeName = type.name.charAt(0).toUpperCase() + type.name.slice(1);
-			return `<span class="badge bg-primary">${typeName}</span>`;
-		})
-		.join(" ");
-
-	return `
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card pokemon-card h-100 shadow-sm border-0" 
-                 data-pokemon-id="${pokemon.id}" 
-                 style="cursor: pointer; transition: transform 0.2s ease;">
-                
-                <!-- Número da Pokédex -->
-                <div class="position-absolute top-0 end-0 p-2">
-                    <small class="badge bg-secondary">#${formattedId}</small>
-                </div>
-                
-                <!-- Imagem do Pokémon -->
-                <div class="card-img-top d-flex align-items-center justify-content-center bg-light" 
-                     style="height: 200px;">
-                    ${
-						pokemonImage
-							? `<img src="${pokemonImage}" alt="${formattedName}" class="img-fluid" style="max-height: 180px;">`
-							: `<div class="text-muted fs-1">❓</div>`
-					}
-                </div>
-                
-                <!-- Conteúdo do card -->
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-center mb-2">${formattedName}</h5>
-                    <div class="d-flex justify-content-center gap-1 flex-wrap mt-auto">
-                        ${typeBadges}
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+	const pokemonCard = new PokemonCard(pokemon);
+	return pokemonCard.render();
 }
 
 /**
@@ -256,74 +222,134 @@ function renderPokemonDetails(pokemon) {
 	const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 	const pokemonImage = pokemon.images?.official || pokemon.images?.front || "";
 
-	// 🏷️ Tipos
+	// 🎨 Tipo principal para background
+	const primaryType = pokemon.types[0]?.name || "normal";
+	const primaryTypeColor = PokemonTypes.getColor(primaryType);
+
+	// 🏷️ Tipos com design elegante
 	const typeBadges = pokemon.types
 		.map((type) => {
-			const typeName = type.name.charAt(0).toUpperCase() + type.name.slice(1);
-			return `<span class="badge bg-primary me-1">${typeName}</span>`;
+			const typeName = type.name;
+			const typeColor = PokemonTypes.getColor(typeName);
+			const emoji = PokemonTypes.getEmoji(typeName);
+			const displayName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
+
+			return `
+			<span class="badge text-white px-3 py-2 rounded-pill me-2"
+				  style="background-color: ${typeColor}; font-size: 0.9rem;">
+				<span style="font-size: 1rem;">${emoji}</span>
+				${displayName}
+			</span>
+		`;
 		})
 		.join("");
 
-	// 📊 Stats
+	// 📊 Stats com barras coloridas
 	const statsList = pokemon.stats
 		.map((stat) => {
 			const statName = stat.name.charAt(0).toUpperCase() + stat.name.slice(1);
+			const percentage = Math.min((stat.value / 180) * 100, 100);
+
 			return `
-            <div class="mb-2">
-                <div class="d-flex justify-content-between">
-                    <small>${statName}</small>
-                    <small>${stat.value}</small>
-                </div>
-                <div class="progress" style="height: 6px;">
-                    <div class="progress-bar" style="width: ${Math.min(
-						stat.value,
-						100
-					)}%"></div>
-                </div>
-            </div>
-        `;
+			<div class="mb-3">
+				<div class="d-flex justify-content-between mb-1">
+					<small class="fw-bold">${statName}</small>
+					<small class="badge bg-secondary">${stat.value}</small>
+				</div>
+				<div class="progress" style="height: 8px; border-radius: 4px;">
+					<div class="progress-bar" 
+						 style="width: ${percentage}%; background: linear-gradient(90deg, ${primaryTypeColor}66, ${primaryTypeColor});"
+						 role="progressbar"></div>
+				</div>
+			</div>
+		`;
 		})
 		.join("");
 
+	// 🎨 Background do header
+	const headerBackground = `linear-gradient(135deg, ${primaryTypeColor}, ${primaryTypeColor}cc)`;
+
 	container.innerHTML = `
-        <div class="container-fluid bg-primary text-white py-4">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <a href="index.html" class="text-white me-3">
-                            <i class="fas fa-arrow-left fs-4"></i>
-                        </a>
-                        <h1 class="d-inline mb-0">${formattedName}</h1>
-                        <span class="ms-3 opacity-75">#${formattedId}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="container py-4">
-            <div class="row">
-                <!-- Imagem -->
-                <div class="col-md-6 text-center">
-                    <div class="bg-light rounded-4 p-4 mb-4">
-                        ${
-							pokemonImage
-								? `<img src="${pokemonImage}" alt="${formattedName}" class="img-fluid" style="max-height: 300px; cursor: pointer;" onclick="playPokemonSound(${pokemon.id})">`
-								: `<div class="text-muted" style="font-size: 8rem;">❓</div>`
-						}
-                    </div>
-                    <div class="mb-3">${typeBadges}</div>
-                    <p><strong>Altura:</strong> ${pokemon.height / 10} m</p>
-                    <p><strong>Peso:</strong> ${pokemon.weight / 10} kg</p>
-                </div>
-                
-                <!-- Stats -->
-                <div class="col-md-6">
-                    <h3>Estatísticas</h3>
-                    ${statsList}
-                </div>
-            </div>
-        </div>
-    `;
+		<div class="container-fluid text-white py-4" style="background: ${headerBackground};">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col">
+						<a href="index.html" class="text-white me-3 text-decoration-none">
+							<i class="fas fa-arrow-left fs-4"></i>
+						</a>
+						<h1 class="d-inline mb-0 fw-bold">${formattedName}</h1>
+						<span class="ms-3 opacity-75 fs-5">#${formattedId}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container py-4">
+			<div class="row">
+				<!-- Imagem e informações básicas -->
+				<div class="col-md-6 text-center">
+					<div class="position-relative bg-light rounded-4 p-4 mb-4 overflow-hidden" 
+						 style="min-height: 300px;">
+						<!-- Background decorativo -->
+						<div class="position-absolute top-0 end-0 w-100 h-100"
+							 style="background: ${headerBackground}; opacity: 0.1; z-index: 1;"></div>
+							 
+						<div class="position-relative" style="z-index: 2;">
+							${
+								pokemonImage
+									? `<img src="${pokemonImage}" 
+										alt="${formattedName}" 
+										class="img-fluid mb-3" 
+										style="max-height: 250px; cursor: pointer; transition: transform 0.3s ease;"
+										onclick="playPokemonSound(${pokemon.id})"
+										onmouseover="this.style.transform='scale(1.1)'"
+										onmouseout="this.style.transform='scale(1)'">`
+									: `<div class="d-flex align-items-center justify-content-center text-muted" 
+										style="height: 250px; font-size: 6rem;">❓</div>`
+							}
+						</div>
+					</div>
+					
+					<!-- Tipos -->
+					<div class="mb-4">
+						${typeBadges}
+					</div>
+					
+					<!-- Informações físicas -->
+					<div class="row text-center">
+						<div class="col-6">
+							<div class="card h-100 border-0 shadow-sm">
+								<div class="card-body">
+									<h6 class="card-title text-muted">Altura</h6>
+									<h4 class="mb-0">${pokemon.height / 10} m</h4>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="card h-100 border-0 shadow-sm">
+								<div class="card-body">
+									<h6 class="card-title text-muted">Peso</h6>
+									<h4 class="mb-0">${pokemon.weight / 10} kg</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Estatísticas -->
+				<div class="col-md-6">
+					<div class="card border-0 shadow-sm">
+						<div class="card-header bg-transparent border-0 py-3">
+							<h3 class="mb-0 fw-bold">⚡ Estatísticas Base</h3>
+						</div>
+						<div class="card-body">
+							${statsList}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	`;
 }
 
 /**
@@ -383,7 +409,7 @@ async function initializeDetailsPage() {
 // ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
-	console.log("🚀 Pokédx carregada!");
+	console.log("🚀 Pokédx refatorada carregada!");
 
 	const pathname = window.location.pathname;
 	const urlParams = new URLSearchParams(window.location.search);
@@ -405,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// 👆 Event listener para cliques nos cards
 		document.addEventListener("click", (event) => {
-			const card = event.target.closest(".pokemon-card[data-pokemon-id]");
+			const card = event.target.closest("[data-pokemon-id]");
 			if (card) {
 				const pokemonId = card.dataset.pokemonId;
 				window.location.href = `detalhes.html?id=${pokemonId}`;

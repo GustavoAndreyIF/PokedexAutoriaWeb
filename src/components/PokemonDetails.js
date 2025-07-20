@@ -6,7 +6,7 @@
  *
  */
 
-import Utils from "../core/Utils.js";
+import { TextFormatter, PokemonTypes, DOMUtils } from "../utils/index.js";
 
 /**
  * 📱 Componente de detalhes do Pokémon
@@ -40,7 +40,7 @@ class PokemonDetails {
 			abilities,
 		} = this.pokemon;
 
-        return `
+		return `
             <div class="pokemon-details-container">
                 ${this._renderHeader()}
                 ${this._renderMainContent()}
@@ -57,9 +57,9 @@ class PokemonDetails {
 	 */
 	_renderHeader() {
 		const { id, formattedName, images, types } = this.pokemon;
-		const pokedexNumber = Utils.formatNumber(id, 3);
+		const pokedexNumber = TextFormatter.formatNumber(id, 3);
 		const primaryType = types[0]?.name || "normal";
-		const typeColor = Utils.getPokemonTypeColor(primaryType);
+		const typeColor = PokemonTypes.getColor(primaryType);
 		const pokemonImage = images?.official || images?.home || images?.front || "";
 
 		return `
@@ -202,7 +202,7 @@ class PokemonDetails {
 							.map((stat) => {
 								const statName =
 									statNames[stat.name] ||
-									Utils.formatPokemonName(stat.name);
+									TextFormatter.formatPokemonName(stat.name);
 								const percentage = Math.min(
 									(stat.value / 200) * 100,
 									100
@@ -285,7 +285,7 @@ class PokemonDetails {
 	_renderTypeBadges(types) {
 		return types
 			.map((type) => {
-				const typeColor = Utils.getPokemonTypeColor(type.name);
+				const typeColor = PokemonTypes.getColor(type.name);
 				return `
                 <span class="badge px-3 py-2 rounded-pill" 
                       style="background-color: ${typeColor}; color: white; font-weight: 500;">
@@ -302,7 +302,7 @@ class PokemonDetails {
 	 */
 	mount(container) {
 		const containerElement =
-			typeof container === "string" ? Utils.findElement(container) : container;
+			typeof container === "string" ? DOMUtils.findElement(container) : container;
 
 		if (!containerElement) {
 			console.error("❌ Container não encontrado para renderizar detalhes");
@@ -310,7 +310,7 @@ class PokemonDetails {
 		}
 
 		// 🧹 Limpar container
-		Utils.clearElement(containerElement);
+		DOMUtils.clearElement(containerElement);
 
 		// 🎨 Inserir HTML
 		containerElement.innerHTML = this.render();

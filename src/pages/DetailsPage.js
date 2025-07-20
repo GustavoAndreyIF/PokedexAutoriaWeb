@@ -12,7 +12,7 @@ import pokemonAPI from "../services/PokemonAPI.js";
 import PokemonDetails from "../components/PokemonDetails.js";
 import { showPageLoading } from "../components/LoadingSpinner.js";
 import { showError, showPokemonNotFound } from "../components/ErrorMessage.js";
-import Utils from "../core/Utils.js";
+import { DOMUtils } from "../utils/index.js";
 
 /**
  * 📋 Classe da página de detalhes
@@ -90,11 +90,11 @@ class DetailsPage {
 	 * @private
 	 */
 	_findPageElements() {
-		this.detailsContainer = Utils.findElement(
-			"#pokemon-details-container, #details-container, main"
+		this.detailsContainer = DOMUtils.findElement(
+			"#pokemon-details, .pokemon-details, .details-container"
 		);
-		this.backButton = Utils.findElement("#back-btn, .back-button");
-		this.errorContainer = Utils.findElement("#error-container");
+		this.backButton = DOMUtils.findElement("#back-btn, .back-button");
+		this.errorContainer = DOMUtils.findElement("#error-container");
 
 		if (!this.detailsContainer) {
 			// 📝 Criar container se não existir
@@ -166,7 +166,7 @@ class DetailsPage {
 	 */
 	async _renderPokemonDetails() {
 		// 🧹 Limpar container
-		Utils.clearElement(this.detailsContainer);
+		DOMUtils.clearElement(this.detailsContainer);
 
 		// 🎨 Criar componente
 		this.pokemonDetailsComponent = new PokemonDetails(this.pokemonData);
@@ -184,7 +184,7 @@ class DetailsPage {
 	 */
 	_showPageLoading(message) {
 		// 🧹 Limpar container
-		Utils.clearElement(this.detailsContainer);
+		DOMUtils.clearElement(this.detailsContainer);
 
 		// ⏳ Mostrar spinner
 		this.loadingSpinner = showPageLoading(message);
@@ -209,7 +209,7 @@ class DetailsPage {
 	 * @private
 	 */
 	_showError(title, details) {
-		Utils.clearElement(this.detailsContainer);
+		DOMUtils.clearElement(this.detailsContainer);
 
 		const errorElement = showError(
 			this.detailsContainer,
@@ -226,7 +226,7 @@ class DetailsPage {
 	 * @private
 	 */
 	_showPokemonNotFound() {
-		Utils.clearElement(this.detailsContainer);
+		DOMUtils.clearElement(this.detailsContainer);
 
 		const errorElement = showPokemonNotFound(
 			this.detailsContainer,
@@ -336,7 +336,7 @@ class DetailsPage {
 
 		// 🧹 Limpar container
 		if (this.detailsContainer) {
-			Utils.clearElement(this.detailsContainer);
+			DOMUtils.clearElement(this.detailsContainer);
 		}
 
 		console.log("🧹 DetailsPage limpa");

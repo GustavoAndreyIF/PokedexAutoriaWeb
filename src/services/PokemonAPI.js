@@ -14,7 +14,7 @@
  *
  */
 
-import Utils from "../core/Utils.js";
+import { TextFormatter, PokemonTypes, GeneralHelpers } from "../utils/index.js";
 
 /**
  * 🔌 Classe principal para interação com a PokéAPI
@@ -32,12 +32,12 @@ class PokemonAPI {
 		this.baseUrl = "https://pokeapi.co/api/v2";
 
 		// 💾 Cache simples para evitar requests desnecessários
-        // funciona como um dicionário para armazenar respostas
-        // onde a chave é uma string única para cada solicitação
-        // exemplo: "list_0_36" para a lista de Pokémon
-        // onde o 0 e 36 são o offset e limit
-        // o offset é o índice de início e limit é a quantidade por página
-        // e "details_1" para detalhes do Pokémon com ID 1
+		// funciona como um dicionário para armazenar respostas
+		// onde a chave é uma string única para cada solicitação
+		// exemplo: "list_0_36" para a lista de Pokémon
+		// onde o 0 e 36 são o offset e limit
+		// o offset é o índice de início e limit é a quantidade por página
+		// e "details_1" para detalhes do Pokémon com ID 1
 		this.cache = new Map();
 
 		// ⚙️ Configurações da API
@@ -59,19 +59,19 @@ class PokemonAPI {
 	 *
 	 * @param {number} offset - Índice de início (padrão: 0)
 	 * @param {number} limit - Quantidade por página (padrão: 36)
-     * @param {number} pageSize - Tamanho da página (opcional, padrão: 36)
+	 * @param {number} pageSize - Tamanho da página (opcional, padrão: 36)
 	 * @returns {Promise<Object>} Lista de Pokémon com metadados
-     * @throws {Error} Se ocorrer um erro na requisição
-     * @description
-     * Busca uma lista paginada de Pokémon da PokéAPI.
+	 * @throws {Error} Se ocorrer um erro na requisição
+	 * @description
+	 * Busca uma lista paginada de Pokémon da PokéAPI.
 	 */
 	async getPokemonList(offset = 0, limit = this.config.pageSize) {
 		try {
 			console.log(`📋 Buscando lista: offset=${offset}, limit=${limit}`);
 
 			// 🔑 Chave para cache
-            // o que e cacheKey?
-            // cacheKey é uma string única que identifica a solicitação de API
+			// o que e cacheKey?
+			// cacheKey é uma string única que identifica a solicitação de API
 			const cacheKey = `list_${offset}_${limit}`;
 
 			// 💾 Verificar cache primeiro
@@ -85,8 +85,8 @@ class PokemonAPI {
 			const response = await this._fetchWithRetry(url);
 
 			// 📊 Processar resposta
-            // faz um map para transformar os resultados em objetos com id, name e url
-            // isso serve para facilitar a criação dos cards
+			// faz um map para transformar os resultados em objetos com id, name e url
+			// isso serve para facilitar a criação dos cards
 			const data = {
 				pokemons: response.results.map((pokemon, index) => ({
 					id: offset + index + 1, // ID baseado no offset
@@ -100,7 +100,7 @@ class PokemonAPI {
 			};
 
 			// 💾 Salvar no cache
-            // salva a lista de Pokémon no cache com a chave gerada
+			// salva a lista de Pokémon no cache com a chave gerada
 			this.cache.set(cacheKey, data);
 
 			console.log(`✅ Lista carregada: ${data.pokemons.length} Pokémon`);
@@ -120,18 +120,18 @@ class PokemonAPI {
 	 *
 	 * @param {number|string} idOrName - ID ou nome do Pokémon
 	 * @returns {Promise<Object>} Dados completos do Pokémon
-     * @throws {Error} Se ocorrer um erro na requisição
-     * @description
-     * Busca detalhes completos de um Pokémon, incluindo imagens, tipos, estatísticas, habilidades,
-     * e outros metadados. Utiliza cache para evitar requisições desnecessárias
+	 * @throws {Error} Se ocorrer um erro na requisição
+	 * @description
+	 * Busca detalhes completos de um Pokémon, incluindo imagens, tipos, estatísticas, habilidades,
+	 * e outros metadados. Utiliza cache para evitar requisições desnecessárias
 	 */
 	async getPokemonDetails(idOrName) {
 		try {
 			console.log(`🔍 Buscando detalhes do Pokémon: ${idOrName}`);
 
 			// 🔑 Chave para cache
-            // que foi gerada a partir do ID ou nome do Pokémon
-            // isso serve para evitar requisições desnecessárias
+			// que foi gerada a partir do ID ou nome do Pokémon
+			// isso serve para evitar requisições desnecessárias
 			const cacheKey = `details_${idOrName}`;
 
 			// 💾 Verificar cache primeiro
@@ -165,11 +165,11 @@ class PokemonAPI {
 	 *
 	 * @param {number} pokemonId - ID do Pokémon
 	 * @returns {Promise<string|null>} URL do áudio ou null se não encontrado
-     * @throws {Error} Se ocorrer um erro na requisição
-     * @description
-     * Busca o áudio do Pokémon na PokéAPI. Retorna a URL do arquivo de áudio ou null
-     * se o Pokémon não tiver áudio disponível.
-     * Utiliza a URL padrão dos cries da PokéAPI.
+	 * @throws {Error} Se ocorrer um erro na requisição
+	 * @description
+	 * Busca o áudio do Pokémon na PokéAPI. Retorna a URL do arquivo de áudio ou null
+	 * se o Pokémon não tiver áudio disponível.
+	 * Utiliza a URL padrão dos cries da PokéAPI.
 	 */
 	async getPokemonAudio(pokemonId) {
 		try {
@@ -203,16 +203,16 @@ class PokemonAPI {
 	 * @param {number} retryCount - Contador de tentativas
 	 * @returns {Promise<Object>} Dados da resposta
 	 * @private
-     * @throws {Error} Se ocorrer um erro na requisição
-     * @description
-     * Faz uma requisição para a URL especificada com suporte a retries.
-     * Utiliza um controller para timeout e implementa backoff progressivo
-     * para evitar sobrecarga no servidor.
-     * Se a requisição falhar, tenta novamente até o número máximo de tentativas.
-     * Se ainda falhar, lança um erro com detalhes.
-     * retries são incrementais (1s, 2s, 3s...)
-     * backoff progressivo são uma técnica para evitar sobrecarga no servidor
-     * e melhorar a taxa de sucesso em redes instáveis.
+	 * @throws {Error} Se ocorrer um erro na requisição
+	 * @description
+	 * Faz uma requisição para a URL especificada com suporte a retries.
+	 * Utiliza um controller para timeout e implementa backoff progressivo
+	 * para evitar sobrecarga no servidor.
+	 * Se a requisição falhar, tenta novamente até o número máximo de tentativas.
+	 * Se ainda falhar, lança um erro com detalhes.
+	 * retries são incrementais (1s, 2s, 3s...)
+	 * backoff progressivo são uma técnica para evitar sobrecarga no servidor
+	 * e melhorar a taxa de sucesso em redes instáveis.
 	 */
 	async _fetchWithRetry(url, retryCount = 0) {
 		try {
@@ -241,7 +241,7 @@ class PokemonAPI {
 				console.warn(
 					`⚠️ Tentativa ${retryCount + 1} falhou, tentando novamente...`
 				);
-				await Utils.sleep(1000 * (retryCount + 1)); // Backoff progressivo 
+				await GeneralHelpers.sleep(1000 * (retryCount + 1)); // Backoff progressivo
 				return this._fetchWithRetry(url, retryCount + 1);
 			}
 
@@ -255,20 +255,20 @@ class PokemonAPI {
 	 * @param {Object} rawData - Dados brutos da API
 	 * @returns {Object} Dados processados e organizados
 	 * @private
-     * @description
-     * Processa os dados brutos do Pokémon para extrair apenas as informações necessárias.
-     * Retorna um objeto com ID, nome formatado, imagens, tipos, estatísticas,
-     * habilidades, características físicas e outros metadados.
-     * Utiliza métodos utilitários para formatação e cores dos tipos.
-     * para adicionar mais informações
-     * ou modificar a estrutura, basta alterar este método.
+	 * @description
+	 * Processa os dados brutos do Pokémon para extrair apenas as informações necessárias.
+	 * Retorna um objeto com ID, nome formatado, imagens, tipos, estatísticas,
+	 * habilidades, características físicas e outros metadados.
+	 * Utiliza métodos utilitários para formatação e cores dos tipos.
+	 * para adicionar mais informações
+	 * ou modificar a estrutura, basta alterar este método.
 	 */
 	_processPokemonData(rawData) {
 		return {
 			// 🆔 Informações básicas
 			id: rawData.id,
 			name: rawData.name,
-			formattedName: Utils.formatPokemonName(rawData.name),
+			formattedName: TextFormatter.formatPokemonName(rawData.name),
 
 			// 🎨 Imagens
 			images: {
@@ -284,8 +284,8 @@ class PokemonAPI {
 			types:
 				rawData.types?.map((type) => ({
 					name: type.type.name,
-					formatted: Utils.formatPokemonType(type.type.name), // Nome formatado do tipo
-					color: Utils.getPokemonTypeColor(type.type.name), // Cor do tipo
+					formatted: TextFormatter.formatPokemonType(type.type.name), // Nome formatado do tipo
+					color: PokemonTypes.getColor(type.type.name), // Cor do tipo
 				})) || [],
 
 			// 📏 Características físicas
@@ -304,7 +304,7 @@ class PokemonAPI {
 			abilities:
 				rawData.abilities?.map((ability) => ({
 					name: ability.ability.name,
-					formatted: Utils.formatPokemonName(ability.ability.name),
+					formatted: TextFormatter.formatPokemonName(ability.ability.name),
 					isHidden: ability.is_hidden,
 				})) || [],
 
@@ -323,12 +323,12 @@ class PokemonAPI {
 	 * @param {string} url - URL para verificar
 	 * @returns {Promise<boolean>} True se URL existe
 	 * @private
-     * @description
-     * Faz uma requisição HEAD para verificar se a URL existe.
-     * Retorna true se a URL for acessível, false caso contrário.
-     * Utiliza fetch com método HEAD para evitar download desnecessário.
-     * Isso é útil para verificar se imagens ou áudios estão disponíveis
-     * sem precisar baixar o conteúdo completo.
+	 * @description
+	 * Faz uma requisição HEAD para verificar se a URL existe.
+	 * Retorna true se a URL for acessível, false caso contrário.
+	 * Utiliza fetch com método HEAD para evitar download desnecessário.
+	 * Isso é útil para verificar se imagens ou áudios estão disponíveis
+	 * sem precisar baixar o conteúdo completo.
 	 */
 	async _checkUrlExists(url) {
 		try {
@@ -345,8 +345,8 @@ class PokemonAPI {
 
 	/**
 	 * 🧹 Limpa o cache da API
-     * @description
-     * Limpa todo o cache armazenado na instância da API.
+	 * @description
+	 * Limpa todo o cache armazenado na instância da API.
 	 */
 	clearCache() {
 		this.cache.clear();
@@ -357,9 +357,9 @@ class PokemonAPI {
 	 * 📊 Retorna informações sobre o cache
 	 *
 	 * @returns {Object} Estatísticas do cache
-     * @description
-     * Retorna informações sobre o estado atual do cache, incluindo
-     * o tamanho e as chaves armazenadas.
+	 * @description
+	 * Retorna informações sobre o estado atual do cache, incluindo
+	 * o tamanho e as chaves armazenadas.
 	 */
 	getCacheStats() {
 		return {

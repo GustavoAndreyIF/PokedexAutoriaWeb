@@ -6,7 +6,7 @@
  *
  */
 
-import Utils from "../core/Utils.js";
+import { DOMUtils } from "../utils/index.js";
 
 /**
  * 🚨 Componente de mensagem de erro
@@ -101,7 +101,7 @@ class ErrorMessage {
 	 */
 	show(container) {
 		const containerElement =
-			typeof container === "string" ? Utils.findElement(container) : container;
+			typeof container === "string" ? DOMUtils.findElement(container) : container;
 
 		if (!containerElement) {
 			console.error("❌ Container não encontrado para exibir erro");
@@ -109,7 +109,7 @@ class ErrorMessage {
 		}
 
 		// 🧹 Limpar container
-		Utils.clearElement(containerElement);
+		DOMUtils.clearElement(containerElement);
 
 		// 🎨 Inserir mensagem de erro
 		containerElement.innerHTML = this.render();
@@ -155,7 +155,7 @@ class ErrorMessage {
 	 */
 	hide() {
 		if (this.element) {
-			Utils.hideElement(this.element);
+			DOMUtils.hideElement(this.element);
 			this.isVisible = false;
 			console.log("✅ Mensagem de erro escondida");
 		}

@@ -6,7 +6,7 @@
  *
  */
 
-import Utils from "../core/Utils.js";
+import { DOMUtils } from "../utils/index.js";
 
 /**
  * ⏳ Componente de loading spinner
@@ -75,7 +75,7 @@ class LoadingSpinner {
 	 */
 	show(container) {
 		const containerElement =
-			typeof container === "string" ? Utils.findElement(container) : container;
+			typeof container === "string" ? DOMUtils.findElement(container) : container;
 
 		if (!containerElement) {
 			console.error("❌ Container não encontrado para exibir loading");
@@ -83,7 +83,7 @@ class LoadingSpinner {
 		}
 
 		// 🧹 Limpar container
-		Utils.clearElement(containerElement);
+		DOMUtils.clearElement(containerElement);
 
 		// 🎨 Inserir spinner
 		containerElement.innerHTML = this.render();
@@ -100,7 +100,7 @@ class LoadingSpinner {
 	 */
 	hide() {
 		if (this.element) {
-			Utils.hideElement(this.element);
+			DOMUtils.hideElement(this.element);
 			this.isVisible = false;
 			console.log("✅ Loading spinner escondido");
 		}
@@ -176,8 +176,8 @@ export function showPageLoading(message = "Carregando página...") {
 
 	// 🔍 Buscar container principal
 	const container =
-		Utils.findElement("#loading-indicator") ||
-		Utils.findElement(".container") ||
+		DOMUtils.findElement("#loading-indicator") ||
+		DOMUtils.findElement(".container") ||
 		document.body;
 
 	spinner.show(container);
