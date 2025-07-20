@@ -12,6 +12,8 @@ export class PokemonDetails extends PokemonCard {
 		this.isDetailsLoaded = false;
 		this.details = null;
 		this.speciesUrl = null;
+		this.audioUrl = null; // URL do áudio do Pokémon
+		this.isPlayingAudio = false; // Flag para controlar se áudio está tocando
 	}
 
 	// Override do fetchDetails para salvar dados completos
@@ -34,6 +36,16 @@ export class PokemonDetails extends PokemonCard {
 			this.sprite = data.sprites.front_default;
 			this.types = data.types.map((typeInfo) => typeInfo.type.name);
 
+			// Extrair áudio do Pokémon (cries)
+			this.audioUrl = null;
+			if (data.cries) {
+				// Priorizar latest, depois legacy
+				this.audioUrl = data.cries.latest || data.cries.legacy || null;
+				console.log(`🔊 Áudio detectado para ${this.name}:`, this.audioUrl);
+			} else {
+				console.log(`🔇 Nenhum cries encontrado para ${this.name}`);
+			}
+
 			// Configurar URL da espécie
 			this.speciesUrl = data.species.url;
 
@@ -41,6 +53,99 @@ export class PokemonDetails extends PokemonCard {
 		} catch (error) {
 			console.error(`❌ Erro ao carregar detalhes para ${this.name}:`, error);
 			throw error;
+		}
+	}
+
+	// Método para tocar o áudio do Pokémon
+	async playPokemonCry() {
+		// Verificar se áudio já está tocando
+		if (this.isPlayingAudio) {
+			console.log(
+				`🔊 Áudio de ${this.name} já está tocando, ignorando nova tentativa`
+			);
+			return false;
+		}
+
+		if (!this.audioUrl) {
+			console.log(`🔇 Nenhum áudio disponível para ${this.name}`);
+			return false;
+		}
+
+		const audioIndicator = document.getElementById("audio-indicator");
+		const sprite = document.getElementById("pokemon-main-sprite");
+
+		try {
+			// Marcar como tocando
+			this.isPlayingAudio = true;
+			console.log(`🔊 Tocando áudio de ${this.name}:`, this.audioUrl);
+
+			// Mostrar indicador visual
+			if (audioIndicator) {
+				audioIndicator.style.display = "block";
+				audioIndicator.classList.add("pulse");
+			}
+
+			// Adicionar classe de áudio tocando no sprite
+			if (sprite) {
+				sprite.classList.add("audio-playing");
+			}
+
+			// Criar e tocar áudio
+			const audio = new Audio(this.audioUrl);
+			audio.volume = 0.6; // Volume moderado
+
+			// Promise para aguardar o áudio terminar
+			await new Promise((resolve, reject) => {
+				audio.onended = () => {
+					console.log(`✅ Áudio de ${this.name} finalizado`);
+					// Esconder indicador quando áudio termina
+					if (audioIndicator) {
+						audioIndicator.style.display = "none";
+						audioIndicator.classList.remove("pulse");
+					}
+					// Remover classe de áudio tocando do sprite
+					if (sprite) {
+						sprite.classList.remove("audio-playing");
+					}
+					// Liberar flag de áudio
+					this.isPlayingAudio = false;
+					resolve();
+				};
+
+				audio.onerror = (error) => {
+					console.error(`❌ Erro ao tocar áudio de ${this.name}:`, error);
+					// Esconder indicador em caso de erro
+					if (audioIndicator) {
+						audioIndicator.style.display = "none";
+						audioIndicator.classList.remove("pulse");
+					}
+					// Remover classe de áudio tocando do sprite
+					if (sprite) {
+						sprite.classList.remove("audio-playing");
+					}
+					// Liberar flag de áudio
+					this.isPlayingAudio = false;
+					reject(error);
+				};
+
+				audio.play().catch(reject);
+			});
+
+			return true;
+		} catch (error) {
+			console.error(`❌ Erro ao reproduzir áudio de ${this.name}:`, error);
+			// Esconder indicador em caso de erro
+			if (audioIndicator) {
+				audioIndicator.style.display = "none";
+				audioIndicator.classList.remove("pulse");
+			}
+			// Remover classe de áudio tocando do sprite
+			if (sprite) {
+				sprite.classList.remove("audio-playing");
+			}
+			// Liberar flag de áudio
+			this.isPlayingAudio = false;
+			return false;
 		}
 	}
 
@@ -214,9 +319,17 @@ export class PokemonDetails extends PokemonCard {
 		const nameElement = document.getElementById("pokemon-name");
 		const idBadge = document.getElementById("pokemon-id-badge");
 
-		if (nameElement) nameElement.textContent = data.name;
-		if (idBadge)
-			idBadge.textContent = `#${String(data.pokedexnumber).padStart(3, "0")}`;
+		console.log(`🏷️ Populando elementos: ID=${data.id}, Nome=${data.name}`);
+
+		if (nameElement) {
+			nameElement.textContent = data.name;
+			console.log(`✅ Nome definido: ${data.name}`);
+		}
+		if (idBadge) {
+			const formattedId = `#${String(data.id).padStart(3, "0")}`;
+			idBadge.textContent = formattedId;
+			console.log(`✅ Badge ID definido: ${formattedId}`);
+		}
 
 		// Sprite
 		const sprite = document.getElementById("pokemon-main-sprite");
@@ -225,13 +338,47 @@ export class PokemonDetails extends PokemonCard {
 			sprite.alt = data.name;
 		}
 
+		// Background baseado no tipo primário (usando apenas PNG, sem gradiente)
+		const background = document.getElementById("pokemon-background");
+		if (background && data.types.length > 0) {
+			const primaryType = data.types[0].toLowerCase();
+			const backgroundUrl = `img/backgrounds/${primaryType}.png`;
+
+			// Limpa qualquer estilo anterior
+			background.style.background = "";
+
+			// Aplica o background PNG específico do tipo
+			background.style.backgroundImage = `url('${backgroundUrl}')`;
+			background.style.backgroundSize = "cover";
+			background.style.backgroundPosition = "center";
+			background.style.backgroundRepeat = "no-repeat";
+
+			console.log(`🎨 Background aplicado: url('${backgroundUrl}')`);
+			console.log(`🔍 Tipo primário: ${primaryType}`);
+
+			// Verificar se a imagem carrega corretamente
+			const testImg = new Image();
+			testImg.onload = () => {
+				console.log(
+					`✅ Background PNG carregado com sucesso: ${backgroundUrl}`
+				);
+			};
+			testImg.onerror = () => {
+				console.error(`❌ Erro ao carregar background PNG: ${backgroundUrl}`);
+			};
+			testImg.src = backgroundUrl;
+		}
+
 		// Tipos
 		const typesContainer = document.getElementById("pokemon-types");
 		if (typesContainer) {
 			typesContainer.innerHTML = data.types
 				.map(
 					(type) =>
-						`<span class="badge bg-type-${type} text-white px-3 py-2 rounded-pill">${type}</span>`
+						`<span class="badge type-${type.toLowerCase()} text-white px-3 py-2 rounded-pill me-1 shadow">
+							<img src="img/icons/${type.toLowerCase()}.png" alt="${type}" style="width: 16px; height: 16px;" class="me-1">
+							${type}
+						</span>`
 				)
 				.join("");
 		}
@@ -246,14 +393,18 @@ export class PokemonDetails extends PokemonCard {
 		const basicInfo = document.getElementById("basic-info");
 		if (basicInfo) {
 			basicInfo.innerHTML = `
-				<li class="mb-2"><strong>Altura:</strong> ${data.height} dm</li>
-				<li class="mb-2"><strong>Peso:</strong> ${data.weight} hg</li>
-				<li class="mb-2"><strong>Cor:</strong> ${data.color}</li>
-				<li class="mb-2"><strong>Habitat:</strong> ${data.habitat}</li>
-				<li class="mb-2"><strong>Taxa de Captura:</strong> ${data.captureRate}</li>
-				<li class="mb-2"><strong>Felicidade Base:</strong> ${data.baseHappiness}</li>
-				<li class="mb-2"><strong>Lendário:</strong> ${data.isLegendary ? "Sim" : "Não"}</li>
-				<li class="mb-0"><strong>Mítico:</strong> ${data.isMythical ? "Sim" : "Não"}</li>
+				<li class="mb-2"><strong>Height:</strong> <span class="text-muted">${(
+					data.height / 10
+				).toFixed(1)} m</span></li>
+				<li class="mb-2"><strong>Weight:</strong> <span class="text-muted">${(
+					data.weight / 10
+				).toFixed(1)} kg</span></li>
+				<li class="mb-2"><strong>Color:</strong> <span class="text-muted text-capitalize">${
+					data.color
+				}</span></li>
+				<li class="mb-0"><strong>Habitat:</strong> <span class="text-muted text-capitalize">${
+					data.habitat
+				}</span></li>
 			`;
 		}
 
@@ -264,10 +415,15 @@ export class PokemonDetails extends PokemonCard {
 				.map(
 					(ability) => `
 					<span class="badge ${
-						ability.is_hidden ? "bg-danger" : "bg-success"
+						ability.is_hidden ? "bg-warning text-dark" : "bg-primary"
 					} px-3 py-2 rounded-pill"
-						  title="${ability.is_hidden ? "Habilidade Oculta" : "Habilidade Normal"}">
-						${ability.name}
+						  title="${ability.is_hidden ? "Hidden Ability" : "Normal Ability"}">
+						${
+							ability.is_hidden
+								? '<i class="bi bi-eye-slash me-1"></i>'
+								: '<i class="bi bi-star-fill me-1"></i>'
+						}
+						${ability.name.charAt(0).toUpperCase() + ability.name.slice(1).replace("-", " ")}
 					</span>
 				`
 				)
@@ -277,24 +433,68 @@ export class PokemonDetails extends PokemonCard {
 		// Estatísticas base
 		const baseStats = document.getElementById("base-stats");
 		if (baseStats) {
+			const statNames = {
+				hp: "HP",
+				attack: "Attack",
+				defense: "Defense",
+				"special-attack": "Sp. Attack",
+				"special-defense": "Sp. Defense",
+				speed: "Speed",
+			};
+
 			baseStats.innerHTML = data.stats
 				.map(
 					(stat) => `
 					<div class="mb-3">
-						<div class="d-flex justify-content-between mb-1">
-							<span class="fw-bold">${stat.name}</span>
-							<span class="badge bg-primary">${stat.value}</span>
+						<div class="d-flex justify-content-between align-items-center mb-2">
+							<span class="fw-semibold">${statNames[stat.name] || stat.name}</span>
+							<span class="badge bg-primary fs-6">${stat.value}</span>
 						</div>
-						<div class="progress" style="height: 20px;">
-							<div class="progress-bar" role="progressbar" 
-								 style="width: ${(stat.value / 255) * 100}%"
-								 aria-valuenow="${stat.value}" aria-valuemin="0" aria-valuemax="255">
+						<div class="progress" style="height: 8px;">
+							<div class="progress-bar bg-gradient" 
+								 role="progressbar" 
+								 style="width: ${Math.min(
+										(stat.value / 255) * 100,
+										100
+									)}%; background: linear-gradient(90deg, #28a745 0%, #ffc107 50%, #dc3545 100%);"
+								 aria-valuenow="${stat.value}" 
+								 aria-valuemin="0" 
+								 aria-valuemax="255">
 							</div>
 						</div>
 					</div>
 				`
 				)
 				.join("");
+		}
+
+		// Configurar botões de navegação
+		const prevBtn = document.getElementById("prev-pokemon-btn");
+		const nextBtn = document.getElementById("next-pokemon-btn");
+
+		// Botão Anterior - só aparecer se não for o primeiro Pokémon
+		if (prevBtn) {
+			if (data.id > 1) {
+				prevBtn.style.display = "block";
+				prevBtn.onclick = () => {
+					window.location.href = `detalhes.html?id=${data.id - 1}`;
+				};
+			} else {
+				prevBtn.style.display = "none";
+			}
+		}
+
+		// Botão Próximo - só aparecer se não for o último Pokémon
+		if (nextBtn) {
+			if (data.id < 1010) {
+				// Limite aproximado da Pokédex
+				nextBtn.style.display = "block";
+				nextBtn.onclick = () => {
+					window.location.href = `detalhes.html?id=${data.id + 1}`;
+				};
+			} else {
+				nextBtn.style.display = "none";
+			}
 		}
 	}
 

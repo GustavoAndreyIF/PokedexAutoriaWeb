@@ -114,7 +114,8 @@ async function initializePokemonDetails(pokemonId) {
 
 			return {
 				success: true,
-				pokemon: detailsData,
+				pokemon: pokemon, // Retornar o objeto pokemon em vez de detailsData
+				detailsData: detailsData, // Manter os dados de renderização
 				loadTime: performance.now(),
 			};
 		}
@@ -199,3 +200,18 @@ window.navigateToPokemonDetails = navigateToPokemonDetails;
 window.initializePokemonDetails = initializePokemonDetails;
 window.goBackToHome = goBackToHome;
 window.retryLoadPokemon = retryLoadPokemon;
+
+// ========================================
+// EXPORTAÇÕES ES6 MODULES
+// ========================================
+
+export {
+	initializeHome,
+	loadMorePokemons,
+	initializePokemonDetails,
+	navigateToPokemonDetails,
+	goBackToHome,
+	retryLoadPokemon,
+	homeManager,
+	detailsManager,
+};

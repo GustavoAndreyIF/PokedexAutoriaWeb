@@ -345,3 +345,94 @@
 		border-color: var(--color-normal-light);
 	}
 }
+
+/* =============================================================================
+   BACKGROUNDS DOS DETALHES DOS POKÉMON
+   ============================================================================= */
+
+#pokemon-background {
+	transition: all 0.5s ease;
+	/* Permite que o JavaScript aplique o background PNG */
+	background-size: cover !important;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+}
+
+/* Garantir que o texto fique legível sobre qualquer background */
+#pokemon-details .position-relative[style*="z-index: 3"] {
+	position: relative;
+	z-index: 10 !important;
+}
+
+#pokemon-details .position-relative[style*="z-index: 2"] {
+	position: relative;
+	z-index: 5 !important;
+}
+
+/* Botões de navegação de Pokémon */
+#prev-pokemon-btn,
+#next-pokemon-btn {
+	transition: all 0.3s ease;
+}
+
+#prev-pokemon-btn:hover,
+#next-pokemon-btn:hover {
+	transform: scale(1.1);
+	opacity: 1 !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* =============================================================================
+   EFEITOS DE ÁUDIO - SPRITE CLICÁVEL
+   ============================================================================= */
+
+/* Sprite principal do Pokémon na página de detalhes */
+#pokemon-main-sprite {
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+#pokemon-main-sprite:hover {
+	transform: scale(1.1);
+	filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.4)) brightness(1.1);
+}
+
+#pokemon-main-sprite:active {
+	transform: scale(1.05);
+}
+
+/* Sprite quando áudio está tocando */
+#pokemon-main-sprite.audio-playing {
+	cursor: not-allowed;
+	opacity: 0.8;
+	filter: drop-shadow(0 12px 20px rgba(0, 123, 255, 0.5)) brightness(1.1);
+}
+
+#pokemon-main-sprite.audio-playing:hover {
+	transform: scale(1.02); /* Hover mais sutil quando tocando */
+}
+
+/* Indicador de áudio */
+#audio-indicator {
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#audio-indicator.pulse {
+	animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: translate(50%, -50%) scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: translate(50%, -50%) scale(1.2);
+		opacity: 0.8;
+	}
+	100% {
+		transform: translate(50%, -50%) scale(1);
+		opacity: 1;
+	}
+}

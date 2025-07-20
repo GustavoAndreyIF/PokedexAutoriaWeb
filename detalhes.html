@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Pokédex - Detalhes</title>
+		<title>Pokédex - Details</title>
 
 		<!-- Bootstrap 5 CSS -->
 		<link
@@ -11,15 +11,18 @@
 			rel="stylesheet"
 		/>
 
-		<!-- CSS personalizado (apenas cores dos tipos) -->
+		<!-- Bootstrap Icons -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css"
+			rel="stylesheet"
+		/>
+
+		<!-- Custom CSS -->
 		<link href="style.css" rel="stylesheet" />
 	</head>
 	<body class="bg-light">
-		<!-- Header da aplicação -->
-
-
-		<!-- Conteúdo principal -->
-		<main class="container">
+		<!-- Main Content -->
+		<main class="container-fluid px-0">
 			<!-- Loading State -->
 			<div class="text-center py-5" id="loading-state">
 				<div
@@ -27,9 +30,9 @@
 					style="width: 3rem; height: 3rem"
 					role="status"
 				>
-					<span class="visually-hidden">Carregando...</span>
+					<span class="visually-hidden">Loading...</span>
 				</div>
-				<h4 class="text-muted">Carregando detalhes do Pokémon...</h4>
+				<h4 class="text-muted">Loading Pokémon details...</h4>
 			</div>
 
 			<!-- Error State -->
@@ -38,128 +41,351 @@
 				style="max-width: 600px; display: none"
 				id="error-state"
 			>
-				<i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
-				<h4>Erro ao carregar Pokémon</h4>
-				<p class="mb-3">
-					Não foi possível carregar os detalhes do Pokémon solicitado.
-				</p>
+				<i class="bi bi-exclamation-triangle-fill fs-1 mb-3"></i>
+				<h4>Error loading Pokémon</h4>
+				<p class="mb-3">Could not load the requested Pokémon details.</p>
 				<div class="d-flex gap-2 justify-content-center flex-wrap">
 					<button
 						class="btn btn-danger rounded-pill px-3"
 						onclick="location.reload()"
 					>
-						<i class="fas fa-redo me-2"></i>Tentar Novamente
+						<i class="bi bi-arrow-clockwise me-2"></i>Try Again
 					</button>
 					<a href="index.html" class="btn btn-secondary rounded-pill px-3">
-						<i class="fas fa-home me-2"></i>Voltar ao Início
+						<i class="bi bi-house-fill me-2"></i>Back to Home
 					</a>
 				</div>
 			</div>
 
 			<!-- Pokemon Details (hidden initially) -->
 			<div id="pokemon-details" style="display: none">
-				<!-- Main Pokemon Card -->
-				<div class="card shadow border-0 rounded-4 mb-4">
+				<!-- SECTION 1: Header and Sprite -->
+				<div class="position-relative overflow-hidden">
+					<!-- Type Background -->
 					<div
-						class="bg-gradient-purple text-white rounded-top-4 p-4 text-center position-relative"
-					>
-						<div class="position-absolute top-0 end-0 mt-3 me-3">
-							<span
-								class="badge bg-white bg-opacity-20 fs-6 px-3 py-2"
-								id="pokemon-id-badge"
-							>
-								#001
-							</span>
-						</div>
-						<img
-							id="pokemon-main-sprite"
-							src=""
-							alt=""
-							class="img-fluid mb-3"
-							style="
-								width: 200px;
-								height: 200px;
-								object-fit: contain;
-								filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-							"
-						/>
-						<h1
-							class="display-5 fw-bold mb-2 text-capitalize"
-							id="pokemon-name"
-						>
-							Nome
-						</h1>
-						<div
-							id="pokemon-types"
-							class="d-flex justify-content-center gap-2 flex-wrap"
-						>
-							<!-- Types will be inserted here -->
+						id="pokemon-background"
+						class="position-absolute w-100 h-100"
+						style="z-index: 1"
+					></div>
+
+					<!-- Header Navigation -->
+					<div class="position-relative" style="z-index: 3">
+						<div class="container-fluid px-4 py-3">
+							<div class="row align-items-center">
+								<!-- Back Button + Pokemon Name -->
+								<div class="col-8 d-flex align-items-center">
+									<a
+										href="index.html"
+										class="text-white me-3"
+										style="font-size: 2rem"
+										title="Back to Home"
+									>
+										<i class="bi bi-arrow-left"></i>
+									</a>
+									<h1
+										class="mb-0 text-white fw-bold text-capitalize"
+										id="pokemon-name"
+									>
+										Loading...
+									</h1>
+								</div>
+
+								<!-- Pokedex Number -->
+								<div class="col-4 text-end">
+									<span
+										class="badge bg-dark bg-opacity-75 text-white fs-5 px-3 py-2 rounded-pill shadow"
+										id="pokemon-id-badge"
+									>
+										#000
+									</span>
+								</div>
+							</div>
 						</div>
 					</div>
 
-					<div class="card-body p-4">
-						<!-- Pokemon Description -->
-						<div
-							class="bg-light rounded-3 p-3 mb-4 border-start border-primary border-4"
-						>
-							<p
-								class="mb-0 fst-italic text-muted fs-5"
-								id="pokemon-description"
-							>
-								Carregando descrição...
-							</p>
-						</div>
+					<!-- Sprite Section -->
+					<div class="position-relative py-4" style="z-index: 2">
+						<div class="container-fluid px-4">
+							<div class="row align-items-center">
+								<!-- Previous Pokemon Button -->
+								<div class="col-2 text-start">
+									<button
+										class="btn btn-light rounded-circle shadow"
+										id="prev-pokemon-btn"
+										style="
+											width: 56px;
+											height: 56px;
+											opacity: 0.8;
+											border: 2px solid rgba(255, 255, 255, 0.3);
+											backdrop-filter: blur(10px);
+										"
+										title="Previous Pokémon"
+									>
+										<i class="bi bi-chevron-left fs-4"></i>
+									</button>
+								</div>
 
-						<!-- Pokemon Stats Grid -->
-						<div class="row g-4">
-							<!-- Basic Info -->
-							<div class="col-md-6">
-								<div class="card border-0 shadow-sm h-100">
-									<div class="card-header bg-primary text-white">
-										<h5 class="mb-0">
-											<i class="fas fa-info-circle me-2"></i
-											>Informações Básicas
-										</h5>
+								<!-- Main Sprite -->
+								<div class="col-8 text-center">
+									<div class="position-relative d-inline-block">
+										<!-- Audio Indicator -->
+										<div
+											id="audio-indicator"
+											class="position-absolute top-0 end-0 bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+											style="
+												width: 40px;
+												height: 40px;
+												z-index: 3;
+												display: none;
+												transform: translate(50%, -50%);
+											"
+										>
+											<i class="bi bi-volume-up-fill"></i>
+										</div>
+
+										<img
+											id="pokemon-main-sprite"
+											src=""
+											alt=""
+											class="position-relative img-fluid"
+											style="
+												width: 200px;
+												height: 200px;
+												object-fit: contain;
+												z-index: 2;
+												filter: drop-shadow(
+													0 8px 16px rgba(0, 0, 0, 0.3)
+												);
+												cursor: pointer;
+											"
+											title="Clique para ouvir o som do Pokémon"
+										/>
 									</div>
-									<div class="card-body">
-										<ul class="list-unstyled mb-0" id="basic-info">
-											<!-- Basic info will be inserted here -->
-										</ul>
-									</div>
+								</div>
+
+								<!-- Next Pokemon Button -->
+								<div class="col-2 text-end">
+									<button
+										class="btn btn-light rounded-circle shadow"
+										id="next-pokemon-btn"
+										style="
+											width: 56px;
+											height: 56px;
+											opacity: 0.8;
+											border: 2px solid rgba(255, 255, 255, 0.3);
+											backdrop-filter: blur(10px);
+										"
+										title="Next Pokémon"
+									>
+										<i class="bi bi-chevron-right fs-4"></i>
+									</button>
 								</div>
 							</div>
 
-							<!-- Abilities -->
-							<div class="col-md-6">
-								<div class="card border-0 shadow-sm h-100">
-									<div class="card-header bg-success text-white">
-										<h5 class="mb-0">
-											<i class="fas fa-star me-2"></i>Habilidades
-										</h5>
+							<!-- Types -->
+							<div class="row mt-3">
+								<div class="col-12 text-center">
+									<div
+										id="pokemon-types"
+										class="d-flex justify-content-center gap-2 flex-wrap"
+									>
+										<!-- Types will be inserted here -->
 									</div>
-									<div class="card-body">
-										<div
-											id="abilities-list"
-											class="d-flex flex-wrap gap-2"
-										>
-											<!-- Abilities will be inserted here -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- SECTION 2: Basic Information -->
+				<div class="bg-white">
+					<div class="container-fluid px-4 py-4">
+						<div class="row">
+							<div class="col-12">
+								<div class="card border-0 shadow-sm rounded-4">
+									<div class="card-body p-4">
+										<h2 class="card-title fw-bold mb-3">
+											<i
+												class="bi bi-info-circle-fill text-primary me-2"
+											></i>
+											Basic Information
+										</h2>
+
+										<!-- Description -->
+										<div class="mb-4">
+											<h5 class="fw-semibold text-muted mb-2">
+												Description
+											</h5>
+											<p
+												class="lead text-muted mb-0"
+												id="pokemon-description"
+											>
+												Loading description...
+											</p>
+										</div>
+
+										<div class="row">
+											<!-- Stats Column -->
+											<div class="col-md-6">
+												<h5 class="fw-semibold text-muted mb-3">
+													Physical Stats
+												</h5>
+												<ul
+													class="list-unstyled"
+													id="basic-info"
+												>
+													<li class="mb-2">
+														<strong>Height:</strong>
+														<span class="text-muted"
+															>Loading...</span
+														>
+													</li>
+													<li class="mb-2">
+														<strong>Weight:</strong>
+														<span class="text-muted"
+															>Loading...</span
+														>
+													</li>
+													<li class="mb-2">
+														<strong>Color:</strong>
+														<span class="text-muted"
+															>Loading...</span
+														>
+													</li>
+													<li class="mb-0">
+														<strong>Habitat:</strong>
+														<span class="text-muted"
+															>Loading...</span
+														>
+													</li>
+												</ul>
+											</div>
+
+											<!-- Abilities Column -->
+											<div class="col-md-6">
+												<h5 class="fw-semibold text-muted mb-3">
+													Abilities
+												</h5>
+												<div
+													id="abilities-list"
+													class="d-flex flex-wrap gap-2"
+												>
+													<!-- Abilities will be inserted here -->
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
 
-							<!-- Base Stats -->
+				<!-- SECTION 3: Navigation Tabs -->
+				<div class="bg-light">
+					<div class="container-fluid px-4 py-4">
+						<div class="row">
 							<div class="col-12">
-								<div class="card border-0 shadow-sm">
-									<div class="card-header bg-warning text-dark">
-										<h5 class="mb-0">
-											<i class="fas fa-chart-bar me-2"></i
-											>Estatísticas Base
-										</h5>
+								<!-- Tab Navigation -->
+								<div class="card border-0 shadow-sm rounded-4">
+									<div
+										class="card-header bg-white border-0 rounded-top-4 p-4"
+									>
+										<div
+											class="btn-group w-100"
+											role="group"
+											aria-label="Pokemon details navigation"
+										>
+											<button
+												type="button"
+												class="btn btn-outline-primary active"
+												id="stats-tab"
+											>
+												<i
+													class="bi bi-bar-chart-fill me-2"
+												></i>
+												Stats
+											</button>
+											<button
+												type="button"
+												class="btn btn-outline-primary"
+												id="evolution-tab"
+											>
+												<i class="bi bi-arrow-repeat me-2"></i>
+												Evolution
+											</button>
+											<button
+												type="button"
+												class="btn btn-outline-primary"
+												id="moves-tab"
+											>
+												<i
+													class="bi bi-lightning-fill me-2"
+												></i>
+												Moves
+											</button>
+											<button
+												type="button"
+												class="btn btn-outline-primary"
+												id="location-tab"
+											>
+												<i class="bi bi-geo-alt-fill me-2"></i>
+												Location
+											</button>
+										</div>
 									</div>
-									<div class="card-body">
-										<div id="base-stats">
-											<!-- Stats will be inserted here -->
+
+									<!-- Tab Content -->
+									<div class="card-body p-4">
+										<!-- Stats Tab Content (Active by default) -->
+										<div
+											id="stats-content"
+											class="tab-content-section"
+										>
+											<h5 class="fw-semibold mb-3">Base Stats</h5>
+											<div id="base-stats">
+												<!-- Base stats will be inserted here -->
+											</div>
+										</div>
+
+										<!-- Evolution Tab Content (Hidden by default) -->
+										<div
+											id="evolution-content"
+											class="tab-content-section d-none"
+										>
+											<h5 class="fw-semibold mb-3">
+												Evolution Chain
+											</h5>
+											<p class="text-muted">
+												Evolution information will be displayed
+												here.
+											</p>
+										</div>
+
+										<!-- Moves Tab Content (Hidden by default) -->
+										<div
+											id="moves-content"
+											class="tab-content-section d-none"
+										>
+											<h5 class="fw-semibold mb-3">
+												Learnable Moves
+											</h5>
+											<p class="text-muted">
+												Moves information will be displayed
+												here.
+											</p>
+										</div>
+
+										<!-- Location Tab Content (Hidden by default) -->
+										<div
+											id="location-content"
+											class="tab-content-section d-none"
+										>
+											<h5 class="fw-semibold mb-3">Locations</h5>
+											<p class="text-muted">
+												Location information will be displayed
+												here.
+											</p>
 										</div>
 									</div>
 								</div>
@@ -170,106 +396,91 @@
 			</div>
 		</main>
 
-        		<!-- Rodapé -->
-		<footer>
-			<div class="bg-dark text-white py-3">
-				<div class="container text-center">
-					<p class="mb-0">
-						Copyright &copy; 2025 GustavoAndreyIF, Leonardo1234321, TrojanN63
-					</p>
-					<p class="mb-0">
-						Desenvolvido por <a href="https://github.com/GustavoAndreyIF" target="_blank">Gustavo Andrey</a>
-						<a href="https://github.com/Leonardo1234321" target="_blank">Leonardo Furtado</a>
-						<a href="https://github.com/TrojanN63" target="_blank">Arthur Alves</a>
-					</p>
-					<p class="mb-0">Link da API: <a href="https://pokeapi.co/" target="_blank">https://pokeapi.co/</a></p>
-				</div>
-			</div>
-		</footer>
-
-		<!-- Bootstrap 5 JS -->
+		<!-- Bootstrap 5 JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-		<!-- JavaScript da aplicação -->
-		<script type="module" src="main.js"></script>
+		<!-- Main JavaScript (ES6 Module) -->
+		<script type="module">
+			// Import main functions
+			import { initializePokemonDetails } from "./main.js";
 
-		<script>
-			// =============================================================================
-			// INTEGRAÇÃO SIMPLIFICADA - APENAS INICIALIZAÇÃO
-			// =============================================================================
-
-			console.log("🚀 INICIALIZANDO PÁGINA DE DETALHES");
-
-			// Função para mostrar loading
-			function showLoading() {
-				const loadingState = document.getElementById("loading-state");
-				const errorState = document.getElementById("error-state");
-				const pokemonDetails = document.getElementById("pokemon-details");
-				
-				if (loadingState) loadingState.style.display = "block";
-				if (errorState) errorState.style.display = "none";
-				if (pokemonDetails) pokemonDetails.style.display = "none";
-			}
-
-			// Função para mostrar erro
-			function showError(message) {
-				const loadingState = document.getElementById("loading-state");
-				const errorState = document.getElementById("error-state");
-				const pokemonDetails = document.getElementById("pokemon-details");
-				
-				if (loadingState) loadingState.style.display = "none";
-				if (errorState) {
-					errorState.style.display = "block";
-					const errorText = errorState.querySelector("p");
-					if (errorText) errorText.textContent = message;
-				}
-				if (pokemonDetails) pokemonDetails.style.display = "none";
-			}
-
-			// Aguardar carregamento do main.js
-			window.addEventListener("load", async () => {
+			// Initialize when DOM is loaded
+			document.addEventListener("DOMContentLoaded", async () => {
 				try {
-					// Obter ID do Pokemon da URL
+					// Get Pokemon ID from URL
 					const urlParams = new URLSearchParams(window.location.search);
 					const pokemonId = urlParams.get("id");
 
 					if (!pokemonId) {
-						throw new Error("ID do Pokémon não encontrado na URL");
+						throw new Error("Pokemon ID not found in URL");
 					}
 
-					// Mostrar loading
-					showLoading();
-
-					// Aguardar que as funções do main.js estejam disponíveis
-					let attempts = 0;
-					const maxAttempts = 50; // 5 segundos
-
-					while (
-						typeof initializePokemonDetails === "undefined" &&
-						attempts < maxAttempts
-					) {
-						await new Promise((resolve) => setTimeout(resolve, 100));
-						attempts++;
-					}
-
-					if (typeof initializePokemonDetails === "undefined") {
-						throw new Error("main.js não foi carregado corretamente");
-					}
-
-					// Carregar detalhes do Pokemon (toda a renderização é feita pelo PokemonDetails.js)
+					// Initialize Pokemon details with the ID
 					const result = await initializePokemonDetails(pokemonId);
 
 					if (!result.success) {
-						throw new Error(result.error || "Falha ao carregar detalhes");
+						throw new Error(
+							result.error || "Failed to load Pokemon details"
+						);
 					}
 
-				} catch (error) {
-					console.error("❌ Erro na página de detalhes:", error);
-					showError(error.message);
-				}
-			});
+					console.log("✅ Pokemon details loaded successfully:", result);
 
-			console.log("🔍 Página de detalhes configurada com sucesso!");
+					// Adicionar event listener para o áudio do sprite
+					const sprite = document.getElementById("pokemon-main-sprite");
+					if (sprite && result.pokemon) {
+						sprite.addEventListener("click", async () => {
+							try {
+								await result.pokemon.playPokemonCry();
+							} catch (error) {
+								console.error("❌ Erro ao tocar áudio:", error);
+							}
+						});
+					}
+				} catch (error) {
+					console.error("❌ Error loading Pokemon details:", error);
+
+					// Show error state
+					const loadingState = document.getElementById("loading-state");
+					const errorState = document.getElementById("error-state");
+					const pokemonDetails = document.getElementById("pokemon-details");
+
+					if (loadingState) loadingState.style.display = "none";
+					if (pokemonDetails) pokemonDetails.style.display = "none";
+					if (errorState) {
+						errorState.style.display = "block";
+						const errorMessage = errorState.querySelector("p");
+						if (errorMessage) {
+							errorMessage.textContent = error.message;
+						}
+					}
+				}
+
+				// Tab navigation functionality
+				const tabButtons = document.querySelectorAll(".btn-group button");
+				const tabContents = document.querySelectorAll(".tab-content-section");
+
+				tabButtons.forEach((button) => {
+					button.addEventListener("click", () => {
+						// Remove active class from all buttons
+						tabButtons.forEach((btn) => btn.classList.remove("active"));
+						// Add active class to clicked button
+						button.classList.add("active");
+
+						// Hide all tab contents
+						tabContents.forEach((content) =>
+							content.classList.add("d-none")
+						);
+
+						// Show corresponding content
+						const targetId = button.id.replace("-tab", "-content");
+						const targetContent = document.getElementById(targetId);
+						if (targetContent) {
+							targetContent.classList.remove("d-none");
+						}
+					});
+				});
+			});
 		</script>
 	</body>
 </html>
