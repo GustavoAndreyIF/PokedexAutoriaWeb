@@ -146,7 +146,7 @@ class PokemonAPI {
 
 			// 📊 Processar dados do Pokémon
 			const pokemon = this._processPokemonData(response);
-
+			console.log(pokemon);
 			// 💾 Salvar no cache
 			this.cache.set(cacheKey, pokemon);
 
@@ -312,8 +312,11 @@ class PokemonAPI {
 			baseExperience: rawData.base_experience,
 			order: rawData.order,
 
+			moves: rawData.moves,
+
 			// 🕐 Metadados
 			loadedAt: new Date().toISOString(),
+
 		};
 	}
 

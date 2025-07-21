@@ -49,11 +49,18 @@ class App {
 		const pathname = window.location.pathname; // Caminho atual da URL
 		const urlParams = new URLSearchParams(window.location.search); // Parâmetros da URL
 		const pokemonId = urlParams.get("id"); // ID do Pokémon na URL
+		// const moveID = urlParams.get("idmove");
 
 		// 📋 Se tem ID ou está em detalhes.html = página de detalhes
 		if (pokemonId || pathname.includes("detalhes.html")) {
 			return "details";
 		}
+
+		/* 
+		if (moveID || pathname.includes("detalhes_move.html")) {
+			return "details_move";
+		}
+		*/
 
 		// 🏠 Caso contrário = página home
 		return "home";
@@ -72,7 +79,11 @@ class App {
 				await this._initHomePage();
 			} else if (pageType === "details") {
 				await this._initDetailsPage();
+			} /* else if (pageType === "details_move") {
+				await this._initDetailsMovePage();
 			}
+			
+			*/
 		} catch (error) {
 			console.error(`💥 Erro ao inicializar página ${pageType}:`, error);
 			throw error;
