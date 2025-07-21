@@ -35,7 +35,7 @@ export class PokemonDetails {
 			// Extrair informações básicas (herdado do PokemonCard)
 			this.id = data.id;
 			this.name = data.name;
-			this.sprite = data.sprites.front_default;
+			this.sprite = data.sprites?.other?.["official-artwork"]?.front_default;
 			this.types = data.types.map((typeInfo) => typeInfo.type.name);
 
 			// Extrair áudio do Pokémon (cries)
@@ -368,17 +368,17 @@ export class PokemonDetails {
 				<!-- Coluna da Esquerda: Header + Imagem + Info Básica -->
 				<div class="col-lg-6">
 					<!-- Header com Background -->
-					<div class="position-relative text-white py-4" style="background: linear-gradient(135deg, ${headerBackground}, ${headerBackground}cc); min-height: 100vh;">
+					<div class="position-relative text-white py-4">
 						<!-- Navigation -->
 						<div class="container-fluid px-4">
 							<div class="row align-items-center mb-4">
 								<div class="col">
-									<button class="text-white me-3 btn p-0 border-0 bg-transparent" 
-											onclick="window.history.back()" 
+									<a class="text-white me-3 btn p-0 border-0 bg-transparent" 
+											href="index.html" 
 											style="font-size: 2rem;"
 											title="Voltar">
 										<i class="bi bi-x-lg"></i>
-									</button>
+									</a>
 									<h1 class="d-inline mb-0 fw-bold">${formattedName}</h1>
 									<span class="ms-3 opacity-75 fs-5">${formattedId}</span>
 								</div>
@@ -397,7 +397,7 @@ export class PokemonDetails {
 									<img src="${data.sprite}" 
 										 alt="${formattedName}" 
 										 class="img-fluid mb-3" 
-										 style="max-height: 300px; cursor: pointer; transition: transform 0.3s ease; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));"
+										 style="width: 300px; height: 300px; cursor: pointer; transition: transform 0.3s ease; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));"
 										 onclick="pokemonDetails.playPokemonCry()"
 										 onmouseover="this.style.transform='scale(1.05)'"
 										 onmouseout="this.style.transform='scale(1)'">

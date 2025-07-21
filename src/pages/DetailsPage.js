@@ -4,8 +4,6 @@
  * Gerencia a página de detalhes individual do Pokémon.
  * Integra com os componentes e APIs existentes.
  *
- * @author Gustavo
- * @version 1.0.0
  */
 
 import pokemonAPI from "../services/PokemonAPI.js";
