@@ -85,6 +85,13 @@ const PokemonTypes = {
 	},
 
 	/**
+	 * 🎨 Alias para getColor (compatibilidade)
+	 */
+	getTypeColor(type) {
+		return this.getColor(type);
+	},
+
+	/**
 	 * 🏷️ Obtém emoji do tipo
 	 */
 	getEmoji(type) {

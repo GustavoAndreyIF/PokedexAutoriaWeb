@@ -10,7 +10,7 @@
 
 import { PokemonTypes, TextFormatter, DOMUtils } from "./src/utils/index.js";
 import PokemonCard from "./src/components/PokemonCard.js";
-import { PokemonDetails } from "./src/components/PokemonDetails.js";
+import { DetailsPage } from "./src/pages/DetailsPage.js";
 
 // ========================================
 // 🌐 CONFIGURAÇÕES DA API
@@ -174,44 +174,40 @@ async function loadMorePokemons() {
 // ========================================
 
 /**
- * 🎨 Renderiza página de detalhes usando PokemonDetails
+ * 🎨 Renderiza página de detalhes usando DetailsPage
  */
 async function renderPokemonDetailsPage(pokemonId) {
-	const container = DOMUtils.findElement("#pokemon-details-container");
-	if (!container) return;
-
 	try {
-		// ⏳ Loading
-		container.innerHTML = `
-            <div class="text-center py-5">
-                <div class="spinner-border text-primary mb-3"></div>
-                <p>Carregando detalhes do Pokémon...</p>
-            </div>
-        `;
+		console.log(`🎨 Inicializando página de detalhes para Pokémon #${pokemonId}`);
 
-		// Criar instância da classe PokemonDetails
-		const pokemonDetails = new PokemonDetails(
-			`pokemon-${pokemonId}`,
-			`${api_base}/pokemon/${pokemonId}`
-		);
+		// Criar instância da DetailsPage
+		const detailsPage = new DetailsPage();
 
-		// Carregar dados completos
-		await pokemonDetails.fetchDetails();
-		await pokemonDetails.fetchSpeciesData();
+		// Configurar o ID manualmente (simular parâmetro URL)
+		const urlParams = new URLSearchParams(window.location.search);
+		if (!urlParams.has("id")) {
+			// Adicionar ID à URL se não existir
+			const newUrl = `${window.location.pathname}?id=${pokemonId}`;
+			window.history.replaceState({ pokemonId }, "", newUrl);
+		}
 
-		// Renderizar página
-		pokemonDetails.renderDetailsPage();
+		// Inicializar página
+		await detailsPage.init();
 
-		console.log(`✅ Detalhes do Pokémon ${pokemonId} carregados`);
+		console.log(`✅ Página de detalhes do Pokémon #${pokemonId} carregada`);
 	} catch (error) {
-		container.innerHTML = `
-            <div class="alert alert-danger text-center m-4">
-                <h4>❌ Erro ao carregar Pokémon</h4>
-                <p>${error.message}</p>
-                <a href="index.html" class="btn btn-primary">Voltar à Home</a>
-            </div>
-        `;
-		console.error("❌ Erro ao carregar detalhes:", error);
+		console.error("❌ Erro ao carregar página de detalhes:", error);
+
+		// Mostrar erro simples
+		const errorContainer =
+			DOMUtils.findElement("#error-container") || document.body;
+		errorContainer.innerHTML = `
+			<div class="alert alert-danger m-4">
+				<h4>❌ Erro ao carregar detalhes</h4>
+				<p>${error.message}</p>
+				<button class="btn btn-primary" onclick="location.reload()">Tentar novamente</button>
+			</div>
+		`;
 	}
 }
 

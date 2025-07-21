@@ -6,8 +6,8 @@
  *
  */
 
-import pokemonAPI from "../services/PokemonAPI.js";
-import PokemonDetails from "../components/PokemonDetails.js/index.js";
+import { PokemonDetailsHeader } from "../components/PokemonDetailsHeader.js";
+import { PokemonDetailsMain } from "../components/PokemonDetailsMain.js";
 import { showPageLoading } from "../components/LoadingSpinner.js";
 import { showError, showPokemonNotFound } from "../components/ErrorMessage.js";
 import { DOMUtils } from "../utils/index.js";
@@ -19,7 +19,11 @@ class DetailsPage {
 	constructor() {
 		this.pokemonId = null;
 		this.pokemonData = null;
-		this.pokemonDetailsComponent = null;
+		this.pokemonUrl = null;
+
+		// Componentes de renderização integrados
+		this.headerComponent = null;
+		this.mainComponent = null;
 		this.loadingSpinner = null;
 
 		// 🔍 Elementos da página
@@ -46,9 +50,6 @@ class DetailsPage {
 
 			// 🔍 Encontrar elementos da página
 			this._findPageElements();
-
-			// 👂 Configurar event listeners
-			this._setupEventListeners();
 
 			// 📋 Carregar dados do Pokémon
 			await this.loadPokemonDetails();
@@ -95,7 +96,7 @@ class DetailsPage {
 		this.errorContainer = DOMUtils.findElement("#error-container");
 
 		if (!this.detailsContainer) {
-			// 📝 Criar container se não existir
+			// 📝 Usar body como container principal
 			this.detailsContainer = document.body;
 			console.log("⚠️ Container de detalhes não encontrado, usando body");
 		}
@@ -104,25 +105,36 @@ class DetailsPage {
 	}
 
 	/**
-	 * 👂 Configura event listeners da página
+	 * 📝 Cria layout básico da página
 	 * @private
 	 */
-	_setupEventListeners() {
-		// 🔙 Botão voltar
-		if (this.backButton) {
-			this.backButton.addEventListener("click", () => {
-				this.goBack();
-			});
+	_createPageLayout() {
+		// Verificar se os containers já existem
+		const headerContainer = document.getElementById(
+			"pokemon-details-header-container"
+		);
+		const mainContainer = document.getElementById("pokemon-details-main-container");
+
+		if (headerContainer && mainContainer) {
+			console.log("📝 Layout já existe, reutilizando containers");
+			return;
 		}
 
-		// ⌨️ Tecla ESC para voltar
-		document.addEventListener("keydown", (event) => {
-			if (event.key === "Escape") {
-				this.goBack();
-			}
-		});
+		// Criar estrutura base no container principal
+		this.detailsContainer.innerHTML = `
+			<div class="container-fluid p-0">
+				<div class="row g-0">
+					<div class="col-lg-6" id="pokemon-details-header-container">
+						<!-- Header será renderizado aqui -->
+					</div>
+					<div class="col-lg-6" id="pokemon-details-main-container">
+						<!-- Main será renderizado aqui -->
+					</div>
+				</div>
+			</div>
+		`;
 
-		console.log("👂 Event listeners configurados");
+		console.log("📝 Layout da página criado");
 	}
 
 	/**
@@ -135,16 +147,16 @@ class DetailsPage {
 			// ⏳ Mostrar loading
 			this._showPageLoading("Carregando detalhes do Pokémon...");
 
-			// 🌐 Buscar dados da API
-			this.pokemonData = await pokemonAPI.getPokemonDetails(this.pokemonId);
+			// 🌐 Construir URL da API
+			this.pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${this.pokemonId}`;
 
-			// 🎨 Renderizar componente de detalhes
+			// 🎨 Renderizar componentes diretamente
 			await this._renderPokemonDetails();
 
 			// 🧹 Esconder loading
 			this._hidePageLoading();
 
-			console.log(`✅ Detalhes do ${this.pokemonData.name} carregados`);
+			console.log(`✅ Detalhes do Pokémon #${this.pokemonId} carregados`);
 		} catch (error) {
 			console.error("❌ Erro ao carregar detalhes:", error);
 			this._hidePageLoading();
@@ -159,20 +171,27 @@ class DetailsPage {
 	}
 
 	/**
-	 * 🎨 Renderiza componente de detalhes do Pokémon
+	 * 🎨 Renderiza componentes de detalhes do Pokémon diretamente
 	 * @private
 	 */
 	async _renderPokemonDetails() {
 		// 🧹 Limpar container
 		DOMUtils.clearElement(this.detailsContainer);
 
-		// 🎨 Criar componente
-		this.pokemonDetailsComponent = new PokemonDetails(this.pokemonData);
+		// 🏗️ Criar layout dos containers PRIMEIRO
+		this._createPageLayout();
 
-		// 📝 Renderizar
-		await this.pokemonDetailsComponent.mount(this.detailsContainer);
+		// 🎨 Criar componentes independentes
+		this.headerComponent = new PokemonDetailsHeader(
+			this.pokemonId,
+			this.pokemonUrl
+		);
+		this.mainComponent = new PokemonDetailsMain(this.pokemonId, this.pokemonUrl);
 
-		console.log("🎨 Componente de detalhes renderizado");
+		// 📝 Renderizar componentes independentemente (cada um faz seu próprio fetch)
+		await Promise.all([this.headerComponent.render(), this.mainComponent.render()]);
+
+		console.log("🎨 Componentes de detalhes renderizados");
 	}
 
 	/**
@@ -184,9 +203,17 @@ class DetailsPage {
 		// 🧹 Limpar container
 		DOMUtils.clearElement(this.detailsContainer);
 
-		// ⏳ Mostrar spinner
-		this.loadingSpinner = showPageLoading(message);
-		this.detailsContainer.appendChild(this.loadingSpinner);
+		// ⏳ Criar e mostrar spinner diretamente
+		this.detailsContainer.innerHTML = `
+			<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+				<div class="text-center">
+					<div class="spinner-border text-primary mb-3" role="status">
+						<span class="visually-hidden">Carregando...</span>
+					</div>
+					<p class="text-muted">${message || "Carregando..."}</p>
+				</div>
+			</div>
+		`;
 	}
 
 	/**
@@ -194,10 +221,8 @@ class DetailsPage {
 	 * @private
 	 */
 	_hidePageLoading() {
-		if (this.loadingSpinner) {
-			this.loadingSpinner.remove();
-			this.loadingSpinner = null;
-		}
+		// Loading é limpo automaticamente quando renderizamos os componentes
+		this.loadingSpinner = null;
 	}
 
 	/**
@@ -214,9 +239,6 @@ class DetailsPage {
 			`${title}: ${details}`,
 			() => this.loadPokemonDetails()
 		);
-
-		// 🔙 Adicionar botão voltar
-		this._addBackButtonToError(errorElement);
 	}
 
 	/**
@@ -231,53 +253,6 @@ class DetailsPage {
 			this.pokemonId,
 			() => this.loadPokemonDetails()
 		);
-
-		// 🔙 Adicionar botão voltar
-		this._addBackButtonToError(errorElement);
-	}
-
-	/**
-	 * 🔙 Adiciona botão voltar ao erro
-	 * @param {Element} errorElement - Elemento de erro
-	 * @private
-	 */
-	_addBackButtonToError(errorElement) {
-		const backButtonHtml = `
-            <div class="mt-3">
-                <button class="btn btn-outline-primary" onclick="window.history.back()">
-                    <i class="fas fa-arrow-left me-2"></i>
-                    Voltar
-                </button>
-            </div>
-        `;
-
-		errorElement.insertAdjacentHTML("beforeend", backButtonHtml);
-	}
-
-	/**
-	 * 🔙 Volta para página anterior
-	 */
-	goBack() {
-		// 🎯 Usar função global se disponível
-		if (window.pokeDexApp && window.pokeDexApp.goToHome) {
-			console.log("🏠 Voltando via App");
-			window.pokeDexApp.goToHome();
-		} else if (window.history.length > 1) {
-			console.log("🔙 Voltando via history");
-			window.history.back();
-		} else {
-			console.log("🏠 Redirecionando para home");
-			window.location.href = "index.html";
-		}
-	}
-
-	/**
-	 * 🔄 Recarrega detalhes do Pokémon atual
-	 */
-	async reload() {
-		if (this.pokemonId) {
-			await this.loadPokemonDetails();
-		}
 	}
 
 	/**
@@ -309,9 +284,10 @@ class DetailsPage {
 	getStatus() {
 		return {
 			pokemonId: this.pokemonId,
-			pokemonName: this.pokemonData?.name || null,
-			isLoaded: !!this.pokemonData,
-			hasComponent: !!this.pokemonDetailsComponent,
+			pokemonUrl: this.pokemonUrl,
+			isLoaded: !!(this.headerComponent && this.mainComponent),
+			hasHeaderComponent: !!this.headerComponent,
+			hasMainComponent: !!this.mainComponent,
 			isLoading: !!this.loadingSpinner,
 		};
 	}
@@ -320,17 +296,17 @@ class DetailsPage {
 	 * 🧹 Limpa a página (usado ao sair)
 	 */
 	cleanup() {
-		// 🧹 Limpar componente
-		if (this.pokemonDetailsComponent) {
-			this.pokemonDetailsComponent.unmount();
-			this.pokemonDetailsComponent = null;
+		// 🧹 Limpar componentes
+		if (this.headerComponent) {
+			this.headerComponent = null;
 		}
 
-		// 🧹 Remover loading
-		if (this.loadingSpinner) {
-			this.loadingSpinner.remove();
-			this.loadingSpinner = null;
+		if (this.mainComponent) {
+			this.mainComponent = null;
 		}
+
+		// 🧹 Limpar loading
+		this.loadingSpinner = null;
 
 		// 🧹 Limpar container
 		if (this.detailsContainer) {

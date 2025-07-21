@@ -34,7 +34,14 @@ const TextFormatter = {
 	},
 
 	/**
-	 * 🎨 Formata tipo de Pokémon para exibição
+	 * � Formata ID do Pokémon com # e zeros à esquerda
+	 */
+	formatPokemonId(id) {
+		return `#${String(id).padStart(3, "0")}`;
+	},
+
+	/**
+	 * �🎨 Formata tipo de Pokémon para exibição
 	 */
 	formatPokemonType(type) {
 		return this.capitalize(type);

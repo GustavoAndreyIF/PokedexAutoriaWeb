@@ -14,9 +14,9 @@ class App {
 
 	/**
 	 * 🎯 Inicializa a aplicação
-     * @returns {Promise<boolean>} Retorna true se a inicialização for bem-sucedida
-     * @description
-     * Inicia a aplicação detectando a página atual e inicializando-a.
+	 * @returns {Promise<boolean>} Retorna true se a inicialização for bem-sucedida
+	 * @description
+	 * Inicia a aplicação detectando a página atual e inicializando-a.
 	 */
 	async init() {
 		try {
@@ -40,10 +40,10 @@ class App {
 
 	/**
 	 * 🔍 Detecta qual página estamos
-     * @returns {string} Tipo da página ("home" ou "details")
-     * @description
-     * Verifica o pathname e os parâmetros da URL para determinar se estamos na página home ou detalhes.
-     * Se houver um ID de Pokémon na URL, assume que estamos na página de detalhes.
+	 * @returns {string} Tipo da página ("home" ou "details")
+	 * @description
+	 * Verifica o pathname e os parâmetros da URL para determinar se estamos na página home ou detalhes.
+	 * Se houver um ID de Pokémon na URL, assume que estamos na página de detalhes.
 	 */
 	_detectCurrentPage() {
 		const pathname = window.location.pathname; // Caminho atual da URL
@@ -68,10 +68,10 @@ class App {
 
 	/**
 	 * 🎬 Inicializa a página detectada
-     * @param {string} pageType - Tipo da página ("home" ou "details")
-     * @throws {Error} Se a página não for reconhecida
-     * @description
-     * Chama o método apropriado para inicializar a página com base no tipo detectado
+	 * @param {string} pageType - Tipo da página ("home" ou "details")
+	 * @throws {Error} Se a página não for reconhecida
+	 * @description
+	 * Chama o método apropriado para inicializar a página com base no tipo detectado
 	 */
 	async _initializePage(pageType) {
 		try {
@@ -92,8 +92,8 @@ class App {
 
 	/**
 	 * 🏠 Inicializa página home
-     * @description
-     * Carrega a HomePage e chama seu método init.
+	 * @description
+	 * Carrega a HomePage e chama seu método init.
 	 */
 	async _initHomePage() {
 		console.log("🏠 Inicializando HomePage...");
@@ -107,8 +107,8 @@ class App {
 
 	/**
 	 * 📋 Inicializa página de detalhes
-     * @description
-     * Carrega a DetailsPage e chama seu método init.
+	 * @description
+	 * Carrega a DetailsPage e chama seu método init.
 	 */
 	async _initDetailsPage() {
 		console.log("📋 Inicializando DetailsPage...");
@@ -122,9 +122,9 @@ class App {
 
 	/**
 	 * 🎯 Navegação para detalhes
-     * @param {number} pokemonId - ID do Pokémon a ser exibido
-     * @description
-     * Redireciona para a página de detalhes do Pokémon com o ID fornecido.
+	 * @param {number} pokemonId - ID do Pokémon a ser exibido
+	 * @description
+	 * Redireciona para a página de detalhes do Pokémon com o ID fornecido.
 	 */
 	goToDetails(pokemonId) {
 		window.location.href = `detalhes.html?id=${pokemonId}`;
@@ -132,8 +132,8 @@ class App {
 
 	/**
 	 * 🏠 Navegação para home
-     * @description
-     * Redireciona para a página inicial da Pokédex.
+	 * @description
+	 * Redireciona para a página inicial da Pokédex.
 	 */
 	goToHome() {
 		window.location.href = "index.html";
@@ -141,9 +141,9 @@ class App {
 
 	/**
 	 * 📊 Status da aplicação
-     * @returns {Object} Status da aplicação
-     * @description
-     * Retorna informações sobre a página atual e se a aplicação foi inicializada.
+	 * @returns {Object} Status da aplicação
+	 * @description
+	 * Retorna informações sobre a página atual e se a aplicação foi inicializada.
 	 */
 	getStatus() {
 		return {
