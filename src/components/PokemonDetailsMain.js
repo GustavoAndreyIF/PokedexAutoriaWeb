@@ -102,6 +102,7 @@
  * @since 2025-07-21
  */
 
+import { DOMUtils } from "../utils/index.js";
 import { StatsTab } from "./tabs/StatsTab.js";
 import { EvolutionTab } from "./tabs/EvolutionTab.js";
 import { MovesTab } from "./tabs/MovesTab.js";
@@ -195,7 +196,7 @@ export class PokemonDetailsMain {
 		// VALIDAÇÃO DO CONTAINER PRINCIPAL
 		// ========================================
 		// O container deve existir no HTML antes da renderização
-		const mainContainer = document.getElementById("pokemon-details-main-container");
+		const mainContainer = DOMUtils.findElement("pokemon-details-main-container");
 		if (!mainContainer) {
 			console.error("❌ Container pokemon-details-main-container não encontrado");
 			return;
@@ -396,7 +397,7 @@ export class PokemonDetailsMain {
 		});
 
 		// Exibe o container da aba selecionada
-		const targetContent = document.getElementById(`${tabName}-content`);
+		const targetContent = DOMUtils.findElement(`${tabName}-content`);
 		if (targetContent) {
 			targetContent.classList.remove("d-none");
 		}
@@ -448,7 +449,7 @@ export class PokemonDetailsMain {
 			// ========================================
 			// VALIDAÇÃO DO CONTAINER
 			// ========================================
-			const targetContainer = document.getElementById(`${tabName}-content`);
+			const targetContainer = DOMUtils.findElement(`${tabName}-content`);
 			if (!targetContainer) {
 				console.error(`❌ Container ${tabName}-content não encontrado`);
 				return;
@@ -505,7 +506,7 @@ export class PokemonDetailsMain {
 			// ========================================
 			// Cada aba tem seu próprio tratamento de erro para não afetar as outras
 			console.error(`❌ Erro ao carregar dados da aba ${tabName}:`, error);
-			const targetContainer = document.getElementById(`${tabName}-content`);
+			const targetContainer = DOMUtils.findElement(`${tabName}-content`);
 			if (targetContainer) {
 				targetContainer.innerHTML = `
 					<div class="alert alert-danger">
