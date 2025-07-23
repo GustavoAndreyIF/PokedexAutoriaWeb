@@ -1,4 +1,24 @@
 /* Importações dos módulos CSS */
 @import url("./src/css/variables.css");
 @import url("./src/css/types.css");
-@import url("./src/css/effects.css");
+@import url("./src/css/main-effects.css");
+
+/* =============================================================================
+   HEADER PERSONALIZADO DA POKÉDEX
+   ============================================================================= */
+
+/* Animação do ícone do Pikachu */
+.header-pokemon-icon {
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	animation: pokemonBounce 2s ease-in-out infinite;
+}
+
+/* Animação de bounce sutil para o Pikachu */
+@keyframes pokemonBounce {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+}

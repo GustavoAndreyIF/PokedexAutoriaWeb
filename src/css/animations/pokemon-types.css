@@ -1,0 +1,93 @@
+/* =============================================================================
+   POKÉDX - HOVER POR TIPO DE POKÉMON - MATERIAL DESIGN 3
+   ============================================================================= */
+
+/* FIRE - Efeito de fundo laranja */
+.pokemon-card.pokemon-type-fire:hover {
+	background-color: var(--color-fire);
+}
+
+/* WATER - Efeito de fundo azul */
+.pokemon-card.pokemon-type-water:hover {
+	background-color: var(--color-water);
+}
+
+/* ELECTRIC - Efeito de fundo amarelo */
+.pokemon-card.pokemon-type-electric:hover {
+	background-color: var(--color-electric);
+}
+
+/* GRASS - Efeito de fundo verde */
+.pokemon-card.pokemon-type-grass:hover {
+	background-color: var(--color-grass);
+}
+
+/* ICE - Efeito de fundo azul claro */
+.pokemon-card.pokemon-type-ice:hover {
+	background-color: var(--color-ice);
+}
+
+/* FIGHTING - Efeito de fundo vermelho */
+.pokemon-card.pokemon-type-fighting:hover {
+	background-color: var(--color-fighting);
+}
+
+/* POISON - Efeito de fundo roxo */
+.pokemon-card.pokemon-type-poison:hover {
+	background-color: var(--color-poison);
+}
+
+/* GROUND - Efeito de fundo marrom */
+.pokemon-card.pokemon-type-ground:hover {
+	background-color: var(--color-ground);
+}
+
+/* FLYING - Efeito de fundo lilás */
+.pokemon-card.pokemon-type-flying:hover {
+	background-color: var(--color-flying);
+}
+
+/* PSYCHIC - Efeito de fundo rosa */
+.pokemon-card.pokemon-type-psychic:hover {
+	background-color: var(--color-psychic);
+}
+
+/* BUG - Efeito de fundo verde-amarelo */
+.pokemon-card.pokemon-type-bug:hover {
+	background-color: var(--color-bug);
+}
+
+/* ROCK - Efeito de fundo marrom escuro */
+.pokemon-card.pokemon-type-rock:hover {
+	background-color: var(--color-rock);
+}
+
+/* GHOST - Efeito de fundo roxo escuro */
+.pokemon-card.pokemon-type-ghost:hover {
+	background-color: var(--color-ghost);
+}
+
+/* DRAGON - Efeito de fundo violeta */
+.pokemon-card.pokemon-type-dragon:hover {
+	background-color: var(--color-dragon);
+}
+
+/* DARK - Efeito de fundo escuro */
+.pokemon-card.pokemon-type-dark:hover {
+	background-color: var(--color-dark);
+}
+
+/* STEEL - Efeito de fundo cinza */
+.pokemon-card.pokemon-type-steel:hover {
+	background-color: var(--color-steel);
+}
+
+/* FAIRY - Efeito de fundo rosa claro */
+.pokemon-card.pokemon-type-fairy:hover {
+	background-color: var(--color-fairy);
+}
+
+/* NORMAL - Efeito de fundo bege */
+.pokemon-card.pokemon-type-normal:hover {
+	background-color: var(--color-normal);
+}

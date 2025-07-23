@@ -1,0 +1,23 @@
+/* =============================================================================
+   POKÉDX - BACKGROUNDS E DETALHES
+   ============================================================================= */
+
+/* Background principal dos detalhes */
+#pokemon-background {
+	transition: all 0.5s ease;
+	/* Permite que o JavaScript aplique o background PNG */
+	background-size: cover !important;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+}
+
+/* Garantir que o texto fique legível sobre qualquer background */
+#pokemon-details .position-relative[style*="z-index: 3"] {
+	position: relative;
+	z-index: 10 !important;
+}
+
+#pokemon-details .position-relative[style*="z-index: 2"] {
+	position: relative;
+	z-index: 5 !important;
+}

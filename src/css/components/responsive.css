@@ -1,0 +1,61 @@
+/* =============================================================================
+   RESPONSIVIDADE ESPECÍFICA - Pokedex Autoria Web
+   ============================================================================= */
+
+/* =============================================================================
+   MOBILE - CARDS E INTERAÇÕES
+   ============================================================================= */
+
+@media (max-width: 768px) {
+	/* Cards menores em mobile */
+	.card[data-pokemon-id]:hover {
+		transform: translateY(-4px) scale(1.02);
+	}
+
+	/* Botões de navegação responsivos */
+	.btn.acrylic-dark-light:hover {
+		transform: translateY(-1px) scale(1.03);
+	}
+
+	/* Garantir espaçamento mínimo das bordas em mobile */
+	.position-absolute.start-0 {
+		left: clamp(8px, 3vw, 15px) !important;
+	}
+
+	.position-absolute.end-0 {
+		right: clamp(8px, 3vw, 15px) !important;
+	}
+}
+
+/* =============================================================================
+   TABLETS - OTIMIZAÇÕES INTERMEDIÁRIAS
+   ============================================================================= */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.position-absolute.start-0 {
+		left: 15px !important;
+	}
+
+	.position-absolute.end-0 {
+		right: 15px !important;
+	}
+}
+
+/* =============================================================================
+   DESKTOP - EFEITOS INTENSOS
+   ============================================================================= */
+
+@media (min-width: 1025px) {
+	/* Efeitos mais intensos em desktop */
+	.card[data-pokemon-id]:hover {
+		transform: translateY(-6px) scale(1.05);
+	}
+
+	.position-absolute.start-0 {
+		left: 20px !important;
+	}
+
+	.position-absolute.end-0 {
+		right: 20px !important;
+	}
+}

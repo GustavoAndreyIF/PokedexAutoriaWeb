@@ -46,7 +46,7 @@
 	/* Animações e transições */
 	--transition-fast: 0.3s ease;
 	--transition-medium: 0.5s ease;
-	--animation-duration: 4s;
+	--animation-duration: 5s;
 	--animation-timing: ease-in-out;
 
 	/* Sombras e efeitos */

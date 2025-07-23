@@ -1,9 +1,6 @@
 /**
  * 🎴 POKEMONCARD.JS - COMPONENTE DE CARD DE POKÉMON
- *
  * Componente simples para renderizar cards de Pokémon na home.
- * Baseado no HTML e CSS existentes, mantendo simplicidade.
- *
  */
 
 import { TextFormatter, PokemonTypes, DOMUtils } from "../utils/index.js";
@@ -13,6 +10,7 @@ import ImageManager from "../utils/ImageManager.js";
  * 🎴 Componente para card de Pokémon
  *
  * Renderiza um card Bootstrap simples com informações básicas do Pokémon
+
  */
 class PokemonCard {
 	/**
@@ -26,6 +24,7 @@ class PokemonCard {
 
 	/**
 	 * 🎨 Renderiza o HTML do card
+	 * * Utiliza desestruturação para facilitar o acesso aos dados do Pokémon
 	 * @returns {string} HTML do card
 	 * @param {Object} pokemon - Dados do Pokémon
 	 * @returns {string} HTML do card
@@ -44,68 +43,49 @@ class PokemonCard {
 
 		// 🎨 Tipo principal para o background
 		const primaryType = types[0]?.name || "normal";
-		const primaryTypeColor = PokemonTypes.getColor(primaryType);
 
 		// 🏷️ Criar badges dos tipos com emojis
 		const typeBadges = this._renderTypeBadgesWithEmojis(types);
 
 		// 🎨 Background usando imagem do backgroundCard
 		const backgroundInfo = ImageManager.getTypeBackgroundImage(primaryType);
-		const backgroundStyle = `
-			background-image: url('${backgroundInfo.imagePath}');
-			background-size: cover;
-			background-position: center;
-		`;
 
 		return `
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                <div class="card shadow-sm rounded-2 position-relative overflow-hidden pokemon-type-${primaryType}"
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-2">
+                <div class="card pokemon-card h-100 pokemon-type-${primaryType}"
                      data-pokemon-id="${id}" 
-                     data-pokemon-type="${primaryType}"
-                     style="cursor: pointer; transition: all 0.3s ease; min-height: 120px; border: 2px solid transparent;">
+                     data-pokemon-type="${primaryType}">
 
-                    <!-- Fundo semi-circular baseado no tipo -->
-                    <div class="position-absolute top-0 end-0 h-100"
-                         style="
-                             width: 180px;
-                             ${backgroundStyle}
-                             opacity: 0.6;
-                             z-index: 1;
-                             clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
-                         "></div>
+                    <!-- Fundo baseado no tipo -->
+                    <div class="pokemon-card__background"
+                         style="background-image: url('${backgroundInfo.imagePath}');"></div>
 
-                    <div class="card-body position-relative"
-                         style="z-index: 2; padding-right: 130px;">
-                        <!-- Informações principais -->
-                        <div>
+                    <div class="card-body pokemon-card__body">
+                        <div class="pokemon-card__info">
                             <!-- Número da Pokédex -->
-                            <small class="badge bg-dark bg-opacity-10 text-muted fw-bold mb-1 d-block"
-                                   style="font-size: 0.7rem; width: fit-content;">
+                            <span class="badge pokemon-card__number mb-1">
                                 #${pokedexNumber}
-                            </small>
+                            </span>
 
                             <!-- Nome do Pokémon -->
-                            <h5 class="card-title fw-bold mb-1 text-dark"
-                                style="font-size: 1.2rem; line-height: 1.2;">
+                            <h5 class="card-title pokemon-card__name">
                                 ${formattedName}
                             </h5>
 
-                            <!-- Tipos com ícones -->
-                            <div class="d-flex flex-wrap gap-1">
+                            <!-- Tipos -->
+                            <div class="pokemon-card__types">
                                 ${typeBadges}
                             </div>
                         </div>
 
-                        <!-- Sprite do Pokémon centralizada -->
-                        <div class="position-absolute d-flex align-items-center justify-content-center"
-                             style="top: 0; right: 0; width: 120px; height: 120px;">
+                        <!-- Sprite do Pokémon -->
+                        <div class="pokemon-card__sprite-container">
                             ${
 								pokemonImage
 									? `<img src="${pokemonImage}" 
                                         alt="${formattedName}" 
-                                        style="width: 120px; height: 120px; object-fit: contain;">`
-									: `<div class="d-flex align-items-center justify-content-center text-muted" 
-                                        style="width: 120px; height: 120px; font-size: 3rem;">❓</div>`
+                                        class="pokemon-card__sprite">`
+									: `<div class="pokemon-card__sprite-fallback">❓</div>`
 							}
                         </div>
                     </div>
@@ -115,44 +95,26 @@ class PokemonCard {
 	}
 
 	/**
-	 * 🏷️ Renderiza badges dos tipos com emojis (estilo elegante)
+	 * 🏷️ Renderiza badges dos tipos
 	 * @param {Array} types - Array de tipos do Pokémon
 	 * @returns {string} HTML dos badges
 	 * @private
 	 */
 	_renderTypeBadgesWithEmojis(types) {
-		if (!types || types.length === 0) {
-			const unknownColor = PokemonTypes.getColor("normal");
-			const unknownIcon = PokemonTypes.getIconPath("normal");
-			return `
-				<span class="badge text-white px-2 py-1 rounded-pill small d-flex align-items-center gap-1"
-					  style="background-color: ${unknownColor}; font-size: 0.7rem;">
-					<img src="${unknownIcon}" 
-						 alt="normal" 
-						 style="width: 14px; height: 14px;"
-						 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-					<span style="display: none; font-size: 0.8rem;">⭐</span>
-					Unknown
-				</span>
-			`;
-		}
-
 		return types
 			.map((type) => {
 				const typeName = type.name;
 				const typeColor = PokemonTypes.getColor(typeName);
 				const iconPath = PokemonTypes.getIconPath(typeName);
-				const emojiFallback = PokemonTypes.getEmoji(typeName);
 				const displayName = TextFormatter.capitalize(typeName);
 
 				return `
-					<span class="badge text-white px-2 py-1 rounded-pill small d-flex align-items-center gap-1"
-						  style="background-color: ${typeColor}; font-size: 0.7rem;">
+					<span class="badge pokemon-type-badge"
+						  style="background-color: ${typeColor};">
 						<img src="${iconPath}" 
 							 alt="${typeName}" 
-							 style="width: 14px; height: 14px;"
-							 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-						<span style="display: none; font-size: 0.8rem;">${emojiFallback}</span>
+							 class="pokemon-type-badge__icon"
+							 onerror="this.style.display='none';">
 						${displayName}
 					</span>
 				`;
@@ -161,33 +123,12 @@ class PokemonCard {
 	}
 
 	/**
-	 * 🏷️ Renderiza badges dos tipos do Pokémon (versão simples)
-	 * @param {Array} types - Array de tipos do Pokémon
-	 * @returns {string} HTML dos badges
-	 * @private
-	 */
-	_renderTypeBadges(types) {
-		if (!types || types.length === 0) {
-			return '<span class="badge bg-secondary">Unknown</span>';
-		}
-
-		return types
-			.map((type) => {
-				const typeName = TextFormatter.formatPokemonType(type.name);
-				const typeColor = PokemonTypes.getColor(type.name);
-
-				return `
-                <span class="badge" 
-                      style="background-color: ${typeColor}; color: white; font-weight: 500;">
-                    ${typeName}
-                </span>
-            `;
-			})
-			.join("");
-	}
-
-	/**
 	 * 🎯 Cria o elemento DOM e adiciona event listeners
+	 * * @description
+	 * Monta o card no container especificado e adiciona os eventos necessários.
+	 * * Utiliza o método `insertAdjacentHTML` para inserir o HTML do card.
+	 * * O elemento DOM criado é armazenado na propriedade `element` para referência futura.
+	 * * Adiciona um event listener de click para navegar para a página de detalhes do Pokémon.
 	 * @param {Element} container - Container onde inserir o card
 	 * @returns {Element} Elemento DOM criado
 	 */
@@ -209,6 +150,10 @@ class PokemonCard {
 
 	/**
 	 * 👂 Adiciona event listeners ao card
+	 * * * Adiciona um listener de click para navegar para a página de detalhes do Pokémon.
+	 * * * Utiliza o método `_navigateToDetails` para realizar a navegação.
+	 * * * Verifica se o elemento DOM já foi criado antes de adicionar os eventos.
+	 * * * Evita erros caso o card ainda não tenha sido montado.
 	 * @private
 	 */
 	_attachEvents() {
@@ -219,20 +164,16 @@ class PokemonCard {
 			this._navigateToDetails();
 		});
 
-		// 🎨 Hover effects
-		this.element.addEventListener("mouseenter", () => {
-			this.element.style.transform = "translateY(-5px)";
-			this.element.style.boxShadow = "0 8px 25px rgba(0,0,0,0.15)";
-		});
-
-		this.element.addEventListener("mouseleave", () => {
-			this.element.style.transform = "translateY(0)";
-			this.element.style.boxShadow = "";
-		});
 	}
 
 	/**
 	 * 🎯 Navega para página de detalhes do Pokémon
+	 * * * Utiliza a função global `pokeDexApp.goToDetails` se disponível, senão navega diretamente.
+	 * * * Loga a navegação para debug.
+	 * * * Usa o ID do Pokémon para construir a URL de detalhes.
+	 * * * Se a função global não estiver disponível, usa `window.location.href` para navegar.
+	 * * * Garante que a navegação funcione mesmo sem o app global.
+	 * * * Evita erros caso a função não exista.
 	 * @private
 	 */
 	_navigateToDetails() {
@@ -248,43 +189,6 @@ class PokemonCard {
 			window.location.href = `detalhes.html?id=${pokemonId}`;
 		}
 	}
-
-	/**
-	 * 🧹 Remove o card do DOM
-	 */
-	unmount() {
-		if (this.element && this.element.parentNode) {
-			this.element.parentNode.removeChild(this.element);
-			this.element = null;
-		}
-	}
-
-	/**
-	 * 🔄 Atualiza os dados do Pokémon e re-renderiza
-	 * @param {Object} newPokemon - Novos dados do Pokémon
-	 */
-	update(newPokemon) {
-		this.pokemon = newPokemon;
-
-		if (this.element) {
-			const container = this.element.parentNode;
-			this.unmount();
-			this.mount(container);
-		}
-	}
-
-	/**
-	 * 📊 Retorna informações do componente
-	 * @returns {Object} Status do componente
-	 */
-	getStatus() {
-		return {
-			pokemonId: this.pokemon?.id,
-			pokemonName: this.pokemon?.name,
-			isMounted: !!this.element,
-			element: this.element,
-		};
-	}
 }
 
 // ========================================
@@ -293,6 +197,10 @@ class PokemonCard {
 
 /**
  * 🏭 Cria múltiplos cards de Pokémon
+ * * * Utiliza a classe PokemonCard para criar instâncias de cards
+ * * * Recebe uma lista de Pokémon e retorna um array de componentes PokemonCard
+ * * * Facilita a criação de múltiplos cards sem precisar instanciar manualmente
+ * * * Útil para renderizar listas de Pokémon na home
  * @param {Array} pokemonList - Lista de Pokémon
  * @returns {Array} Array de componentes PokemonCard
  */
@@ -302,6 +210,10 @@ export function createPokemonCards(pokemonList) {
 
 /**
  * 🎨 Renderiza múltiplos cards em um container
+ * * * Utiliza a função createPokemonCards para criar os componentes
+ * * * Insere os cards no container especificado
+ * * * Retorna um array de componentes criados
+ * * * Facilita a renderização de listas de Pokémon na home
  * @param {Array} pokemonList - Lista de Pokémon
  * @param {Element|string} container - Container onde renderizar
  * @returns {Array} Array de componentes criados
