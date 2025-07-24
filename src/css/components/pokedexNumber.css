@@ -4,14 +4,15 @@
 
 /* Classe base para números da Pokédex */
 .pokedex-number {
-	background-color: var(--pokedex-number-bg);
-	color: var(--pokedex-number-color);
+	background-color: var(--bs-secondary-bg);
+	color: var(--bs-dark);
 }
 
 /* Número da Pokédex nos cards da home */
 .pokedex-number-card {
-	background-color: rgba(108, 117, 125, 0.15) !important;
-	color: #6c757d !important;
+	font-family: "jetbrains-mono", monospace;
+	background-color: var(--bs-secondary-bg);
+	color: var(--bs-dark);
 	font-size: 0.8rem !important;
 	font-weight: 700 !important;
 	width: fit-content !important;
@@ -21,9 +22,124 @@
 	transition: all 0.3s ease;
 }
 
-/* Hover effect para o número da Pokédex */
+/* Hover effect para o número da Pokédex - Genérico */
 .pokedex-number-card:hover {
 	background-color: rgba(108, 117, 125, 0.25) !important;
+	transform: translateY(-1px);
+}
+
+/* Hover dinâmico por tipo - Número da Pokédx - MAIOR ESPECIFICIDADE */
+.pokemon-card.pokemon-type-normal:hover .pokedex-number-card {
+	background-color: var(--color-normal) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-fire:hover .pokedex-number-card {
+	background-color: var(--color-fire) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-water:hover .pokedex-number-card {
+	background-color: var(--color-water) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-electric:hover .pokedex-number-card {
+	background-color: var(--color-electric) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-grass:hover .pokedex-number-card {
+	background-color: var(--color-grass) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-ice:hover .pokedex-number-card {
+	background-color: var(--color-ice) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-fighting:hover .pokedex-number-card {
+	background-color: var(--color-fighting) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-poison:hover .pokedex-number-card {
+	background-color: var(--color-poison) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-ground:hover .pokedex-number-card {
+	background-color: var(--color-ground) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-flying:hover .pokedex-number-card {
+	background-color: var(--color-flying) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-psychic:hover .pokedex-number-card {
+	background-color: var(--color-psychic) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-bug:hover .pokedex-number-card {
+	background-color: var(--color-bug) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-rock:hover .pokedex-number-card {
+	background-color: var(--color-rock) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-ghost:hover .pokedex-number-card {
+	background-color: var(--color-ghost) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-dragon:hover .pokedex-number-card {
+	background-color: var(--color-dragon) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type:hover .pokedex-number-card {
+	background-color: var(--color) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-steel:hover .pokedex-number-card {
+	background-color: var(--color-steel) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-fairy:hover .pokedex-number-card {
+	background-color: var(--color-fairy) !important;
+	color: var(--bs-light) !important;
+	transform: translateY(-1px);
+}
+
+.pokemon-card.pokemon-type-unknown:hover .pokedex-number-card {
+	background-color: var(--color-unknown) !important;
+	color: var(--bs-light) !important;
 	transform: translateY(-1px);
 }
 

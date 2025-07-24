@@ -1,151 +1,32 @@
 /* =============================================================================
-   COMPONENTES DE ÁUDIO - Pokedex Autoria Web
+   POKEMON AUDIO INDICATOR - MATERIAL DESIGN 3
    ============================================================================= */
 
-/* Indicador de áudio */
-#audio-indicator {
-	position: fixed;
-	bottom: 70px;
-	right: 20px;
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	background: rgba(0, 0, 0, 0.25);
-	backdrop-filter: blur(16px) saturate(150%);
-	-webkit-backdrop-filter: blur(16px) saturate(150%);
-	border: 1px solid rgba(255, 255, 255, 0.15);
-	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15),
-		0 1px 0 rgba(255, 255, 255, 0.08);
+/* Audio indicator específico do header */
+.pokemon-audio-indicator {
+	width: clamp(35px, 7vw, 45px);
+	height: clamp(35px, 7vw, 45px);
+	z-index: 3;
+	display: none;
+	transform: translate(50%, -50%);
+	opacity: 0;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	/* Material Design 3 - Surface Container High (modo claro) */
+	background: rgba(255, 255, 255, 0.95);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.pokemon-audio-icon {
+	font-size: clamp(1.5rem, 4vw, 2rem);
+	/* Material Design 3 - On Surface (texto sobre superfície clara) */
+	color: rgba(0, 0, 0, 0.87);
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	/* Material Design 3 - Icon sizing aumentado */
+	width: 32px;
+	height: 32px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: white;
-	cursor: pointer;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	z-index: 1050;
-}
-
-#audio-indicator:hover {
-	transform: translateY(-2px) scale(1.05);
-	background: rgba(0, 0, 0, 0.35);
-	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18),
-		0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-#audio-icon {
-	font-size: 22px;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Animação das barrinhas de áudio */
-.audio-bars {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 2px;
-}
-
-.bar {
-	width: 3px;
-	height: 16px;
-	background-color: #fff;
-	border-radius: 2px;
-	animation: audioWave 1.5s ease-in-out infinite;
-	opacity: 0.6;
-}
-
-.bar:nth-child(1) {
-	animation-delay: 0s;
-}
-.bar:nth-child(2) {
-	animation-delay: 0.1s;
-}
-.bar:nth-child(3) {
-	animation-delay: 0.2s;
-}
-.bar:nth-child(4) {
-	animation-delay: 0.3s;
-}
-.bar:nth-child(5) {
-	animation-delay: 0.4s;
-}
-
-@keyframes audioWave {
-	0%,
-	100% {
-		transform: scaleY(0.3);
-		opacity: 0.4;
-	}
-	50% {
-		transform: scaleY(1);
-		opacity: 1;
-	}
-}
-
-/* Animação do botão audio quando está tocando */
-#audio-indicator.playing {
-	animation: audioIndicatorPulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes audioIndicatorPulse {
-	0% {
-		transform: scale(1);
-		box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3),
-			inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 0 rgba(255, 255, 255, 0.08);
-	}
-	100% {
-		transform: scale(1.05);
-		background: rgba(0, 0, 0, 0.4);
-		box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4),
-			inset 0 1px 0 rgba(255, 255, 255, 0.18);
-	}
-}
-
-/* Efeito no sprite quando áudio está tocando */
-.audio-playing {
-	animation: audioGlow 2s ease-in-out infinite alternate !important;
-}
-
-@keyframes audioGlow {
-	0% {
-		filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
-		transform: scale(1);
-	}
-	100% {
-		filter: drop-shadow(0 15px 35px rgba(255, 255, 255, 0.2)) brightness(1.08);
-		transform: scale(1.01);
-	}
-}
-
-/* =============================================================================
-   RESPONSIVIDADE - COMPONENTES DE ÁUDIO
-   ============================================================================= */
-
-/* Otimizações específicas para mobile */
-@media (max-width: 768px) {
-	/* Audio indicator responsivo para mobile */
-	#audio-indicator {
-		width: clamp(32px, 8vw, 40px) !important;
-		height: clamp(32px, 8vw, 40px) !important;
-		font-size: clamp(14px, 3.5vw, 18px) !important;
-	}
-
-	/* Ajustar audio indicator para mobile */
-	#audio-indicator {
-		width: clamp(30px, 6vw, 40px) !important;
-		height: clamp(30px, 6vw, 40px) !important;
-	}
-
-	#audio-icon {
-		font-size: clamp(0.8rem, 2vw, 1.1rem) !important;
-	}
-}
-
-/* Otimizações para tablets */
-@media (min-width: 769px) and (max-width: 1024px) {
-	#audio-indicator {
-		width: 44px !important;
-		height: 44px !important;
-		font-size: 20px !important;
-	}
 }

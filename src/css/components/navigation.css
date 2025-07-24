@@ -1,48 +1,76 @@
 /* =============================================================================
-   NAVEGAÇÃO - Pokedex Autoria Web
+   POKEMON NAVIGATION BUTTONS - MATERIAL DESIGN 3 LIGHT MODE
    ============================================================================= */
 
-/* Botões de navegação no topo */
-.btn-primary.me-2 {
-	border: none;
-	background: rgba(0, 0, 0, 0.25);
-	backdrop-filter: blur(16px) saturate(150%);
-	-webkit-backdrop-filter: blur(16px) saturate(150%);
-	border: 1px solid rgba(255, 255, 255, 0.15);
+.pokemon-nav-button {
+	width: clamp(40px, 8vw, 48px);
+	height: clamp(40px, 8vw, 48px);
+	z-index: 2;
+	
+	/* Material Design 3 - Surface Container High */
+	background-color: rgba(255, 255, 255, 0.95) !important;
+	border: 1px solid rgba(0, 0, 0, 0.08) !important;
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	
+	/* Material Design 3 - Elevation Level 2 */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+	
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Botões de navegação de Pokémon originais */
-#prev-pokemon-btn,
-#next-pokemon-btn {
-	transition: all 0.3s ease;
+.pokemon-nav-button:hover {
+	/* Material Design 3 - Surface Container Highest on hover */
+	background-color: rgba(255, 255, 255, 1) !important;
+	border-color: rgba(0, 0, 0, 0.12) !important;
+	
+	/* Material Design 3 - Elevation Level 3 */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+	transform: translateY(-1px) scale(1.02);
 }
 
-#prev-pokemon-btn:hover,
-#next-pokemon-btn:hover {
-	transform: scale(1.1);
-	opacity: 1 !important;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* =============================================================================
-   BOTÕES DE NAVEGAÇÃO POKÉMON COM ACRÍLICO
-   ============================================================================= */
-
-/* Estilo base para botões de navegação */
-.btn.acrylic-dark-light {
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	border: 1px solid rgba(255, 255, 255, 0.15) !important;
-}
-
-.btn.acrylic-dark-light:hover {
-	transform: translateY(-2px) scale(1.05);
-	background: rgba(0, 0, 0, 0.4) !important;
-	border-color: rgba(255, 255, 255, 0.25) !important;
-	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2),
-		0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.btn.acrylic-dark-light:active {
-	transform: translateY(0px) scale(1);
+.pokemon-nav-button:active {
+	transform: translateY(0) scale(1);
 	transition-duration: 0.1s;
+	
+	/* Material Design 3 - Pressed state */
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.pokemon-nav-button--previous {
+	left: clamp(8px, 3vw, 16px);
+}
+
+.pokemon-nav-button--next {
+	right: clamp(8px, 3vw, 16px);
+}
+
+.pokemon-nav-icon {
+	font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+	color: rgba(0, 0, 0, 0.87) !important;
+	transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pokemon-nav-button:hover .pokemon-nav-icon {
+	color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Responsividade para navegação */
+@media (max-width: 576px) {
+	.pokemon-nav-button {
+		width: clamp(36px, 7vw, 40px);
+		height: clamp(36px, 7vw, 40px);
+	}
+	
+	.pokemon-nav-button--previous {
+		left: clamp(4px, 2vw, 8px);
+	}
+	
+	.pokemon-nav-button--next {
+		right: clamp(4px, 2vw, 8px);
+	}
+	
+	.pokemon-nav-icon {
+		font-size: clamp(0.9rem, 2vw, 1rem);
+	}
 }

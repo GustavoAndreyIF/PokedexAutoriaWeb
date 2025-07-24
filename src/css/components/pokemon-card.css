@@ -24,7 +24,16 @@
 /* Fallback para cards sem tipo específico */
 .pokemon-card:hover:not([class*="pokemon-type-"]) {
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
-	background-color: var(--bs-light, #f8f9fa);
+	background-color: var(--color-unknown-light);
+}
+
+.pokemon-card:hover:not([class*="pokemon-type-"]) .pokemon-card__name {
+	color: var(--color-unknown-dark);
+}
+
+/* Garantir que cards com tipos específicos tenham a sombra correta no hover */
+.pokemon-card[class*="pokemon-type-"]:hover {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
 }
 
 .pokemon-card:active {
@@ -71,31 +80,15 @@
    POKEMON INFO - Informações principais
    ============================================================================= */
 
-.pokemon-card__number {
-	font-family: "JetBrains Mono", "Fira Code", monospace;
-	font-weight: 500;
-	font-size: 0.75rem;
-	line-height: 1rem;
-
-	/* Bootstrap Badge customizado */
-	background-color: var(--bs-secondary-bg, #f8f9fa) !important;
-	color: var(--bs-secondary, #6c757d) !important;
-	border: none; /* Removido borda */
-	padding: 0.25rem 0.5rem;
-	border-radius: var(--bs-border-radius-pill, 50rem);
-	width: fit-content;
-}
-
 .pokemon-card__name {
 	font-family: "Inter", "Segoe UI", sans-serif;
 	font-weight: 600;
 	font-size: 1.5rem;
 	line-height: 1.3;
-	color: var(--bs-body-color, #212529);
+	color: var(--bs-dark);
 	margin: 0.5rem 0;
 	letter-spacing: -0.01em;
 }
-
 /* =============================================================================
    TYPE BADGES - Material Design 3 Chips
    ============================================================================= */
@@ -109,12 +102,12 @@
 
 .pokemon-type-badge {
 	font-family: "Inter", sans-serif;
-	font-weight: 500;
-	font-size: 0.75rem;
+	font-weight: bold;
+	font-size: 0.8rem;
 	padding: 0.25rem 0.75rem;
 	border-radius: var(--bs-border-radius-pill, 50rem);
 	border: 1px solid var(--bs-body-bg, #ffffff);
-	color: white;
+	color: var(--bs-light);
 	display: inline-flex;
 	align-items: center;
 	gap: 0.25rem;
@@ -172,6 +165,162 @@
 	font-size: 2.5rem;
 	color: var(--bs-secondary, #6c757d);
 	opacity: 0.5;
+}
+
+/* =============================================================================
+   TYPE-SPECIFIC CARD STYLES - Hover com cores dos tipos
+   ============================================================================= */
+
+/* Normal Type */
+.pokemon-card.pokemon-type-normal:hover {
+	background-color: var(--color-normal-light);
+}
+.pokemon-card.pokemon-type-normal:hover .pokemon-card__name {
+	color: var(--color-normal-dark);
+}
+
+/* Fire Type */
+.pokemon-card.pokemon-type-fire:hover {
+	background-color: var(--color-fire-light);
+}
+.pokemon-card.pokemon-type-fire:hover .pokemon-card__name {
+	color: var(--color-fire-dark);
+}
+
+/* Water Type */
+.pokemon-card.pokemon-type-water:hover {
+	background-color: var(--color-water-light);
+}
+.pokemon-card.pokemon-type-water:hover .pokemon-card__name {
+	color: var(--color-water-dark);
+}
+
+/* Electric Type */
+.pokemon-card.pokemon-type-electric:hover {
+	background-color: var(--color-electric-light);
+}
+.pokemon-card.pokemon-type-electric:hover .pokemon-card__name {
+	color: var(--color-electric-dark);
+}
+
+/* Grass Type */
+.pokemon-card.pokemon-type-grass:hover {
+	background-color: var(--color-grass-light);
+}
+.pokemon-card.pokemon-type-grass:hover .pokemon-card__name {
+	color: var(--color-grass-dark);
+}
+
+/* Ice Type */
+.pokemon-card.pokemon-type-ice:hover {
+	background-color: var(--color-ice-light);
+}
+.pokemon-card.pokemon-type-ice:hover .pokemon-card__name {
+	color: var(--color-ice-dark);
+}
+
+/* Fighting Type */
+.pokemon-card.pokemon-type-fighting:hover {
+	background-color: var(--color-fighting-light);
+}
+.pokemon-card.pokemon-type-fighting:hover .pokemon-card__name {
+	color: var(--color-fighting-dark);
+}
+
+/* Poison Type */
+.pokemon-card.pokemon-type-poison:hover {
+	background-color: var(--color-poison-light);
+}
+.pokemon-card.pokemon-type-poison:hover .pokemon-card__name {
+	color: var(--color-poison-dark);
+}
+
+/* Ground Type */
+.pokemon-card.pokemon-type-ground:hover {
+	background-color: var(--color-ground-light);
+}
+.pokemon-card.pokemon-type-ground:hover .pokemon-card__name {
+	color: var(--color-ground-dark);
+}
+
+/* Flying Type */
+.pokemon-card.pokemon-type-flying:hover {
+	background-color: var(--color-flying-light);
+}
+.pokemon-card.pokemon-type-flying:hover .pokemon-card__name {
+	color: var(--color-flying-dark);
+}
+
+/* Psychic Type */
+.pokemon-card.pokemon-type-psychic:hover {
+	background-color: var(--color-psychic-light);
+}
+.pokemon-card.pokemon-type-psychic:hover .pokemon-card__name {
+	color: var(--color-psychic-dark);
+}
+
+/* Bug Type */
+.pokemon-card.pokemon-type-bug:hover {
+	background-color: var(--color-bug-light);
+}
+.pokemon-card.pokemon-type-bug:hover .pokemon-card__name {
+	color: var(--color-bug-dark);
+}
+
+/* Rock Type */
+.pokemon-card.pokemon-type-rock:hover {
+	background-color: var(--color-rock-light);
+}
+.pokemon-card.pokemon-type-rock:hover .pokemon-card__name {
+	color: var(--color-rock-dark);
+}
+
+/* Ghost Type */
+.pokemon-card.pokemon-type-ghost:hover {
+	background-color: var(--color-ghost-light);
+}
+.pokemon-card.pokemon-type-ghost:hover .pokemon-card__name {
+	color: var(--color-ghost-dark);
+}
+
+/* Dragon Type */
+.pokemon-card.pokemon-type-dragon:hover {
+	background-color: var(--color-dragon-light);
+}
+.pokemon-card.pokemon-type-dragon:hover .pokemon-card__name {
+	color: var(--color-dragon-dark);
+}
+
+/* Dark Type */
+.pokemon-card.pokemon-type-dark:hover {
+	background-color: var(--color-dark-light);
+}
+.pokemon-card.pokemon-type-dark:hover .pokemon-card__name {
+	color: var(--color-dark-dark);
+}
+
+/* Steel Type */
+.pokemon-card.pokemon-type-steel:hover {
+	background-color: var(--color-steel-light);
+}
+.pokemon-card.pokemon-type-steel:hover .pokemon-card__name {
+	color: var(--color-steel-dark);
+}
+
+/* Fairy Type */
+.pokemon-card.pokemon-type-fairy:hover {
+	background-color: var(--color-fairy-light);
+}
+.pokemon-card.pokemon-type-fairy:hover .pokemon-card__name {
+	color: var(--color-fairy-dark);
+}
+
+/* Unknown Type */
+.pokemon-card.pokemon-type-unknown:hover {
+	background-color: var(--color-unknown-light);
+}
+.pokemon-card.pokemon-type-unknown:hover .pokemon-card__name {
+	color: var(--color-unknown-dark);
 }
 
 /* =============================================================================

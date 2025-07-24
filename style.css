@@ -1,7 +1,16 @@
 /* Importações dos módulos CSS */
 @import url("./src/css/variables.css");
-@import url("./src/css/types.css");
-@import url("./src/css/main-effects.css");
+
+/* ./src/css/Componentes principais */
+@import url("./src/css/components/pokemon-card.css");
+@import url("./src/css/components/navigation.css");
+@import url("./src/css/components/backgrounds.css");
+@import url("./src/css/components/audio.css");
+@import url("./src/css/components/pokedexNumber.css");
+@import url("./src/css/components/detailsHeader.css");
+
+/* Efeitos especiais */
+@import url("./src/css/effects/acrylic.css");
 
 /* =============================================================================
    HEADER PERSONALIZADO DA POKÉDEX
@@ -15,7 +24,8 @@
 
 /* Animação de bounce sutil para o Pikachu */
 @keyframes pokemonBounce {
-	0%, 100% {
+	0%,
+	100% {
 		transform: translateY(0);
 	}
 	50% {

@@ -2,6 +2,13 @@
    POKÉDX - BACKGROUNDS E DETALHES
    ============================================================================= */
 
+/* Container principal do header com background */
+.pokemon-header-container {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
 /* Background principal dos detalhes */
 #pokemon-background {
 	transition: all 0.5s ease;

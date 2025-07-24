@@ -1,0 +1,191 @@
+/* =============================================================================
+   POKEMON DETAILS HEADER - MATERIAL DESIGN 3 (CLASSES ESPECÍFICAS)
+   ============================================================================= */
+
+/* Header top bar - com botão voltar, nome e ID */
+.pokemon-back-button {
+	font-size: clamp(2rem, 5vw, 3rem);
+	color: rgba(255, 255, 255, 0.95);
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pokemon-back-button:hover {
+	color: rgba(255, 255, 255, 1);
+	transform: scale(1.1);
+}
+
+.pokemon-name-title {
+	font-size: clamp(1.5rem, 6vw, 2.5rem);
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.95);
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	letter-spacing: -0.02em;
+}
+
+/* ID Badge - Material Design 3 */
+.pokemon-id-badge {
+	font-size: clamp(1rem, 3vw, 1.3rem);
+	padding: 0.5rem 0.75rem;
+	font-weight: 600;
+	border-radius: 12px;
+	font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* Sprite principal customizado para header */
+.pokemon-main-sprite {
+	width: clamp(160px, 40vw, 260px);
+	height: clamp(160px, 40vw, 260px);
+	cursor: pointer;
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+}
+
+.pokemon-main-sprite:hover {
+	transform: scale(1.05);
+}
+
+/* =============================================================================
+   AUDIO INDICATOR - MATERIAL DESIGN 3
+   ============================================================================= */
+
+/* Type badges customizados para header */
+.pokemon-type-badge {
+	font-size: clamp(0.75rem, 2vw, 0.9rem);
+	padding: 0.5rem 0.75rem;
+	border-radius: 16px;
+	font-weight: 500;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pokemon-type-badge:hover {
+	transform: translateY(-1px);
+	filter: brightness(1.1);
+}
+
+.pokemon-type-icon {
+	width: clamp(12px, 3vw, 16px);
+	height: clamp(12px, 3vw, 16px);
+	margin-right: 4px;
+}
+
+/* Flavor text customizado para header */
+.pokemon-flavor-card {
+	border-radius: 16px;
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	padding: clamp(1rem, 4vw, 1.5rem);
+}
+
+.pokemon-flavor-text {
+	font-size: clamp(1.2rem, 3vw, 1.5rem);
+	line-height: clamp(1.4, 1.5vw, 1.6);
+	font-weight: 300;
+	font-style: italic;
+	letter-spacing: 0.01em;
+}
+
+/* Responsividade específica para mobile */
+@media (max-width: 576px) {
+	.pokemon-main-sprite {
+		width: clamp(140px, 35vw, 200px);
+		height: clamp(140px, 35vw, 200px);
+	}
+}
+
+/* =============================================================================
+   CLASSES ACRÍLICAS - REUTILIZÁVEIS
+   ============================================================================= */
+
+.acrylic-dark,
+.acrylic-dark-light {
+	background: rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(16px) saturate(150%);
+	-webkit-backdrop-filter: blur(16px) saturate(150%);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15),
+		0 1px 0 rgba(255, 255, 255, 0.08);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.acrylic-dark:hover,
+.acrylic-dark-light:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18),
+		0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.acrylic-text {
+	color: rgba(255, 255, 255, 0.95);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+	font-weight: 300;
+	letter-spacing: 0.02em;
+}
+
+/* =============================================================================
+   RESPONSIVIDADE
+   ============================================================================= */
+
+/* Mobile adjustments */
+@media (max-width: 576px) {
+	.pokemon-header-container {
+		padding: 1rem !important;
+	}
+
+	.pokemon-nav-button {
+		width: clamp(36px, 7vw, 40px);
+		height: clamp(36px, 7vw, 40px);
+	}
+
+	.pokemon-nav-button--previous {
+		left: clamp(4px, 2vw, 8px);
+	}
+
+	.pokemon-nav-button--next {
+		right: clamp(4px, 2vw, 8px);
+	}
+
+	.pokemon-nav-icon {
+		font-size: clamp(0.9rem, 2vw, 1rem);
+	}
+
+	.pokemon-main-sprite {
+		width: clamp(140px, 35vw, 200px);
+		height: clamp(140px, 35vw, 200px);
+	}
+
+	.acrylic-dark,
+	.acrylic-dark-light {
+		backdrop-filter: blur(12px) saturate(140%);
+		-webkit-backdrop-filter: blur(12px) saturate(140%);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+	}
+}
+
+/* Tablet adjustments */
+@media (min-width: 577px) and (max-width: 768px) {
+	.pokemon-nav-button--previous {
+		left: clamp(8px, 2.5vw, 12px);
+	}
+
+	.pokemon-nav-button--next {
+		right: clamp(8px, 2.5vw, 12px);
+	}
+}
+
+/* Desktop enhancements */
+@media (min-width: 1025px) {
+	.pokemon-nav-button:hover {
+		transform: translateY(-2px) scale(1.05);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.acrylic-dark:hover,
+	.acrylic-dark-light:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 0 rgba(255, 255, 255, 0.12);
+	}
+}

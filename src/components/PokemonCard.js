@@ -42,7 +42,7 @@ class PokemonCard {
 		const pokemonImage = images?.official || images?.front || "";
 
 		// 🎨 Tipo principal para o background
-		const primaryType = types[0]?.name || "normal";
+		const primaryType = types[0]?.name || "unknoan";
 
 		// 🏷️ Criar badges dos tipos com emojis
 		const typeBadges = this._renderTypeBadgesWithEmojis(types);
@@ -58,12 +58,14 @@ class PokemonCard {
 
                     <!-- Fundo baseado no tipo -->
                     <div class="pokemon-card__background"
-                         style="background-image: url('${backgroundInfo.imagePath}');"></div>
+                         style="background-image: url('${
+								backgroundInfo.imagePath
+							}');"></div>
 
                     <div class="card-body pokemon-card__body">
                         <div class="pokemon-card__info">
-                            <!-- Número da Pokédex -->
-                            <span class="badge pokemon-card__number mb-1">
+                            <!-- Número da Pokédx -->
+                            <span class="badge pokedex-number-card mb-1">
                                 #${pokedexNumber}
                             </span>
 
@@ -163,7 +165,6 @@ class PokemonCard {
 		this.element.addEventListener("click", () => {
 			this._navigateToDetails();
 		});
-
 	}
 
 	/**
