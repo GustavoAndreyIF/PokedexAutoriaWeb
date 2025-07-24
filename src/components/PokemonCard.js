@@ -75,7 +75,7 @@ class PokemonCard {
                             </h5>
 
                             <!-- Tipos -->
-                            <div class="pokemon-card__types">
+                            <div class="badge pokemon-card__types">
                                 ${typeBadges}
                             </div>
                         </div>

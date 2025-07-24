@@ -1,0 +1,178 @@
+/* =============================================================================
+   POKEMON AUDIO INDICATOR - MATERIAL DESIGN 3
+   ============================================================================= */
+
+/* Audio indicator específico do header */
+.pokemon-audio-indicator {
+	width: clamp(35px, 7vw, 45px);
+	height: clamp(35px, 7vw, 45px);
+	z-index: 3;
+	display: none;
+	transform: translate(50%, -50%);
+	opacity: 0;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	/* Material Design 3 - Surface Container High (modo claro) */
+	border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.pokemon-audio-icon {
+	font-size: clamp(1.5rem, 4vw, 2rem);
+	/* Bootstrap 5 - Dark color (pode ser sobrescrito pelo JavaScript) */
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	/* Material Design 3 - Icon sizing aumentado */
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* =============================================================================
+   POKEMON TYPE AUDIO CLASSES - CORES DINÂMICAS POR TIPO
+   ============================================================================= */
+
+/* Normal Type */
+.pokemon-audio-indicator.audio-normal {
+	background-color: var(--color-normal-light) !important;
+}
+.pokemon-audio-icon.audio-normal {
+	color: var(--color-normal-dark) !important;
+}
+
+/* Fire Type */
+.pokemon-audio-indicator.audio-fire {
+	background-color: var(--color-fire-light) !important;
+}
+.pokemon-audio-icon.audio-fire {
+	color: var(--color-fire-dark) !important;
+}
+
+/* Water Type */
+.pokemon-audio-indicator-water {
+	background-color: var(--color-water-light) !important;
+}
+.pokemon-audio-icon-water {
+	color: var(--color-water-dark) !important;
+}
+
+/* Electric Type */
+.pokemon-audio-indicator.audio-electric {
+	background-color: var(--color-electric-light) !important;
+}
+.pokemon-audio-icon.audio-electric {
+	color: var(--color-electric-dark) !important;
+}
+
+/* Grass Type */
+.pokemon-audio-indicator.audio-grass {
+	background-color: var(--color-grass-light) !important;
+}
+.pokemon-audio-icon.audio-grass {
+	color: var(--color-grass-dark) !important;
+}
+
+/* Ice Type */
+.pokemon-audio-indicator.audio-ice {
+	background-color: var(--color-ice-light) !important;
+}
+.pokemon-audio-icon.audio-ice {
+	color: var(--color-ice-dark) !important;
+}
+
+/* Fighting Type */
+.pokemon-audio-indicator.audio-fighting {
+	background-color: var(--color-fighting-light) !important;
+}
+.pokemon-audio-icon.audio-fighting {
+	color: var(--color-fighting-dark) !important;
+}
+
+/* Poison Type */
+.pokemon-audio-indicator.audio-poison {
+	background-color: var(--color-poison-light) !important;
+}
+.pokemon-audio-icon.audio-poison {
+	color: var(--color-poison-dark) !important;
+}
+
+/* Ground Type */
+.pokemon-audio-indicator.audio-ground {
+	background-color: var(--color-ground-light) !important;
+}
+.pokemon-audio-icon.audio-ground {
+	color: var(--color-ground-dark) !important;
+}
+
+/* Flying Type */
+.pokemon-audio-indicator.audio-flying {
+	background-color: var(--color-flying-light) !important;
+}
+.pokemon-audio-icon.audio-flying {
+	color: var(--color-flying-dark) !important;
+}
+
+/* Psychic Type */
+.pokemon-audio-indicator.audio-psychic {
+	background-color: var(--color-psychic-light) !important;
+}
+.pokemon-audio-icon.audio-psychic {
+	color: var(--color-psychic-dark) !important;
+}
+
+/* Bug Type */
+.pokemon-audio-indicator.audio-bug {
+	background-color: var(--color-bug-light) !important;
+}
+.pokemon-audio-icon.audio-bug {
+	color: var(--color-bug-dark) !important;
+}
+
+/* Rock Type */
+.pokemon-audio-indicator.audio-rock {
+	background-color: var(--color-rock-light) !important;
+}
+.pokemon-audio-icon.audio-rock {
+	color: var(--color-rock-dark) !important;
+}
+
+/* Ghost Type */
+.pokemon-audio-indicator.audio-ghost {
+	background-color: var(--color-ghost-light) !important;
+}
+.pokemon-audio-icon.audio-ghost {
+	color: var(--color-ghost-dark) !important;
+}
+
+/* Dragon Type */
+.pokemon-audio-indicator.audio-dragon {
+	background-color: var(--color-dragon-light) !important;
+}
+.pokemon-audio-icon.audio-dragon {
+	color: var(--color-dragon-dark) !important;
+}
+
+/* Dark Type */
+.pokemon-audio-indicator.audio-dark {
+	background-color: var(--color-dark-light) !important;
+}
+.pokemon-audio-icon.audio-dark {
+	color: var(--color-dark-dark) !important;
+}
+
+/* Steel Type */
+.pokemon-audio-indicator.audio-steel {
+	background-color: var(--color-steel-light) !important;
+}
+.pokemon-audio-icon.audio-steel {
+	color: var(--color-steel-dark) !important;
+}
+
+/* Fairy Type */
+.pokemon-audio-indicator.audio-fairy {
+	background-color: var(--color-fairy-light) !important;
+}
+.pokemon-audio-icon.audio-fairy {
+	color: var(--color-fairy-dark) !important;
+}

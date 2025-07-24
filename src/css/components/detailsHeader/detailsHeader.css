@@ -3,32 +3,14 @@
    ============================================================================= */
 
 /* Header top bar - com botão voltar, nome e ID */
-.pokemon-back-button {
-	font-size: clamp(2rem, 5vw, 3rem);
-	color: rgba(255, 255, 255, 0.95);
-	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.pokemon-back-button:hover {
-	color: rgba(255, 255, 255, 1);
-	transform: scale(1.1);
-}
 
 .pokemon-name-title {
+	font-family: "Inter", "Segoe UI", sans-serif;
 	font-size: clamp(1.5rem, 6vw, 2.5rem);
 	font-weight: 700;
-	color: rgba(255, 255, 255, 0.95);
-	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	color: var(--bs-light);
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	letter-spacing: -0.02em;
-}
-
-/* ID Badge - Material Design 3 */
-.pokemon-id-badge {
-	font-size: clamp(1rem, 3vw, 1.3rem);
-	padding: 0.5rem 0.75rem;
-	font-weight: 600;
-	border-radius: 12px;
-	font-family: "JetBrains Mono", "Fira Code", monospace;
 }
 
 /* Sprite principal customizado para header */
@@ -48,43 +30,10 @@
    AUDIO INDICATOR - MATERIAL DESIGN 3
    ============================================================================= */
 
-/* Type badges customizados para header */
-.pokemon-type-badge {
-	font-size: clamp(0.75rem, 2vw, 0.9rem);
-	padding: 0.5rem 0.75rem;
-	border-radius: 16px;
-	font-weight: 500;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.25rem;
-	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.pokemon-type-badge:hover {
-	transform: translateY(-1px);
-	filter: brightness(1.1);
-}
-
 .pokemon-type-icon {
 	width: clamp(12px, 3vw, 16px);
 	height: clamp(12px, 3vw, 16px);
 	margin-right: 4px;
-}
-
-/* Flavor text customizado para header */
-.pokemon-flavor-card {
-	border-radius: 16px;
-	backdrop-filter: blur(16px);
-	-webkit-backdrop-filter: blur(16px);
-	padding: clamp(1rem, 4vw, 1.5rem);
-}
-
-.pokemon-flavor-text {
-	font-size: clamp(1.2rem, 3vw, 1.5rem);
-	line-height: clamp(1.4, 1.5vw, 1.6);
-	font-weight: 300;
-	font-style: italic;
-	letter-spacing: 0.01em;
 }
 
 /* Responsividade específica para mobile */

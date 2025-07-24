@@ -155,7 +155,6 @@ export class PokemonDetailsHeader {
 			const formattedId = TextFormatter.formatPokemonId(this.data.id);
 			const formattedName = TextFormatter.capitalize(this.data.name);
 			const primaryType = this.data.types[0]?.toLowerCase() || "normal";
-			const headerBackground = PokemonTypes.getTypeColor(primaryType);
 
 			// Imagem de fundo baseada no tipo primário
 			const backgroundImage = `./src/assets/images/backgroundDetails/${primaryType}.png`;
@@ -164,11 +163,13 @@ export class PokemonDetailsHeader {
 			const typeBadges = this.data.types
 				.map((type) => {
 					const typeColor = PokemonTypes.getTypeColor(type.toLowerCase());
-					return `<span class="badge text-white pokemon-type-badge px-2 px-md-3 py-2 rounded-pill me-1 me-md-2 d-flex align-items-center"
+					const iconPath = PokemonTypes.getIconPath(type.toLowerCase());
+					return `
+					<span class="badge text-white pokemon-type-badge px-2 px-md-3 py-2 rounded-pill me-1 me-md-2 d-flex align-items-center"
 						  style="background-color: ${typeColor};">
-						<img src="./src/assets/images/icons/${type.toLowerCase()}.png" 
+						<img src="${iconPath}" 
 							 alt="${type}" 
-							 class="pokemon-type-icon"
+							 class="pokemon-type-badge__icon"
 							 onerror="this.style.display='none'">
 						${TextFormatter.capitalize(type)}
 					</span>`;
@@ -186,7 +187,7 @@ export class PokemonDetailsHeader {
 							<div class="col">
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="d-flex align-items-center">
-										<a class="pokemon-back-button me-2 me-md-3 btn p-0 border-0 bg-transparent" 
+										<a class="pokemon-back-button back-${primaryType} me-2 me-md-3 btn p-0 border-0 bg-transparent" 
 												href="index.html" 
 												title="Voltar">
 											<i class="bi bi-x-lg"></i>
@@ -195,7 +196,7 @@ export class PokemonDetailsHeader {
 									</div>
 
 									<!-- Badge do ID - Material Design 3 -->
-									<small class="badge pokemon-id-badge acrylic-dark-light acrylic-text fw-bold">
+									<small class="badge pokemon-id-badge pokedex-number-details pokemon-type-${primaryType} fw-bold">
 										${formattedId}
 									</small>
 								</div>
@@ -210,7 +211,7 @@ export class PokemonDetailsHeader {
 								${
 									this.hasPreviousPokemon()
 										? `
-									<button class="btn pokemon-nav-button pokemon-nav-button--previous position-absolute start-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+									<button class="btn pokemon-nav-button pokemon-nav-button--previous nav-${primaryType} position-absolute start-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
 											onclick="pokemonDetailsHeader.navigateToPrevious()"
 											title="Pokémon Anterior (#${this.pokemonId - 1})"
 											aria-label="Pokémon Anterior">
@@ -223,8 +224,8 @@ export class PokemonDetailsHeader {
 								<div class="position-relative d-inline-block">
 									<!-- Audio Indicator - Material Design 3 -->
 									<div id="audio-indicator" 
-										 class="pokemon-audio-indicator position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-lg">
-										<i id="audio-icon" class="pokemon-audio-icon bi bi-volume-up-fill" style="color: ${headerBackground};"></i>
+										 class="pokemon-audio-indicator pokemon-audio-indicator-${primaryType} position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-lg">
+										<i id="audio-icon" class="pokemon-audio-icon pokemon-audio-icon-${primaryType} bi bi-volume-up-fill"></i>
 									</div>
 									
 									<!-- Sprite principal - Material Design 3 -->
@@ -239,7 +240,7 @@ export class PokemonDetailsHeader {
 								${
 									this.hasNextPokemon()
 										? `
-									<button class="btn pokemon-nav-button pokemon-nav-button--next position-absolute end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+									<button class="btn pokemon-nav-button pokemon-nav-button--next nav-${primaryType} position-absolute end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
 											onclick="pokemonDetailsHeader.navigateToNext()"
 											title="Próximo Pokémon (#${this.pokemonId + 1})"
 											aria-label="Próximo Pokémon">
@@ -261,8 +262,8 @@ export class PokemonDetailsHeader {
 						
 						<!-- Flavor Text - Material Design 3 -->
 						<div class="text-center mb-3 mb-md-4 px-2 px-md-3">
-							<div class="pokemon-flavor-card acrylic-dark-light rounded-3 rounded-md-4">
-								<p class="pokemon-flavor-text mb-0 acrylic-text">
+							<div class="pokemon-flavor-card flavor-${primaryType}">
+								<p class="pokemon-flavor-text mb-0">
 									"${this.data.flavorText}"
 								</p>
 							</div>
@@ -286,19 +287,8 @@ export class PokemonDetailsHeader {
 	// Método para mostrar o audio indicator com animação
 	showAudioIndicator() {
 		const audioIndicator = DOMUtils.findElement("audio-indicator");
-		const audioIcon = DOMUtils.findElement("audio-icon");
 
-		if (audioIndicator && audioIcon && this.data) {
-			// Obter cor do tipo primário para o ícone (como era antes)
-			const primaryType = this.data.types[0]?.toLowerCase() || "normal";
-			const typeColor = PokemonTypes.getTypeColor(primaryType);
-
-			// Aplicar cor dinâmica do tipo no ícone com glow sutil
-			audioIndicator.style.backgroundColor = typeColor;
-			audioIcon.style.color = "black"
-			audioIcon.style.filter = "none"; // Remove qualquer filtro/sombra
-
-			// Mostrar com animação
+		if (audioIndicator && this.data) {
 			audioIndicator.style.opacity = "1";
 		}
 	}

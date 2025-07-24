@@ -91,6 +91,10 @@ const PokemonTypes = {
 		return this.getColor(type);
 	},
 
+	getValidTypeColor(type) {
+		return this.validTypes[type?.toLowerCase()] || this.validTypes.normal;
+	},
+
 	/**
 	 * 🏷️ Obtém emoji do tipo
 	 */

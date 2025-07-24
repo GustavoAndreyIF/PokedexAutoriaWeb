@@ -8,6 +8,8 @@
 @import url("./src/css/components/audio.css");
 @import url("./src/css/components/pokedexNumber.css");
 @import url("./src/css/components/detailsHeader.css");
+@import url("./src/css/components/pokemonTypeBadge.css");
+@import url("./src/css/components/flavorText.css");
 
 /* Efeitos especiais */
 @import url("./src/css/effects/acrylic.css");

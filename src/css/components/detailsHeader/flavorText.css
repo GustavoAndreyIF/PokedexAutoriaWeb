@@ -1,0 +1,203 @@
+/* =============================================================================
+   POKEMON FLAVOR TEXT - MATERIAL DESIGN 3
+   ============================================================================= */
+
+/* Flavor text card container - Material Design 3 */
+.pokemon-flavor-card {
+	/* Material Design 3 - Surface Container High */
+	background-color: var(--bs-white, #ffffff);
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 16px;
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	padding: clamp(1rem, 4vw, 1.5rem);
+
+	/* Material Design 3 - Elevation Level 1 */
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+
+	/* Smooth transitions */
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	cursor: pointer;
+}
+
+/* Flavor text styling */
+.pokemon-flavor-text {
+	font-family: "Inter", sans-serif;
+	font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+	line-height: 1.5;
+	font-weight: 400;
+	font-style: bold;
+    font-style: italic;
+	letter-spacing: 0.02em;
+	color: var(--bs-dark, #212529);
+	margin: 0;
+	text-align: center;
+}
+
+/* Hover effect genérico */
+.pokemon-flavor-card:hover {
+	/* Material Design 3 - Elevation Level 2 */
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+	transform: translateY(-2px);
+}
+
+/* =============================================================================
+   POKEMON TYPE FLAVOR HOVER - CORES DINÂMICAS POR TIPO
+   ============================================================================= */
+
+/* Normal Type */
+.pokemon-flavor-card.flavor-normal:hover {
+	background-color: var(--color-normal-light) !important;
+}
+.pokemon-flavor-card.flavor-normal:hover .pokemon-flavor-text {
+	color: var(--color-normal-dark) !important;
+}
+
+/* Fire Type */
+.pokemon-flavor-card.flavor-fire:hover {
+	background-color: var(--color-fire-light) !important;
+}
+.pokemon-flavor-card.flavor-fire:hover .pokemon-flavor-text {
+	color: var(--color-fire-dark) !important;
+}
+
+/* Water Type */
+.pokemon-flavor-card.flavor-water:hover {
+	background-color: var(--color-water-light) !important;
+}
+.pokemon-flavor-card.flavor-water:hover .pokemon-flavor-text {
+	color: var(--color-water-dark) !important;
+}
+
+/* Electric Type */
+.pokemon-flavor-card.flavor-electric:hover {
+	background-color: var(--color-electric-light) !important;
+}
+.pokemon-flavor-card.flavor-electric:hover .pokemon-flavor-text {
+	color: var(--color-electric-dark) !important;
+}
+
+/* Grass Type */
+.pokemon-flavor-card.flavor-grass:hover {
+	background-color: var(--color-grass-light) !important;
+}
+.pokemon-flavor-card.flavor-grass:hover .pokemon-flavor-text {
+	color: var(--color-grass-dark) !important;
+}
+
+/* Ice Type */
+.pokemon-flavor-card.flavor-ice:hover {
+	background-color: var(--color-ice-light) !important;
+}
+.pokemon-flavor-card.flavor-ice:hover .pokemon-flavor-text {
+	color: var(--color-ice-dark) !important;
+}
+
+/* Fighting Type */
+.pokemon-flavor-card.flavor-fighting:hover {
+	background-color: var(--color-fighting-light) !important;
+}
+.pokemon-flavor-card.flavor-fighting:hover .pokemon-flavor-text {
+	color: var(--color-fighting-dark) !important;
+}
+
+/* Poison Type */
+.pokemon-flavor-card.flavor-poison:hover {
+	background-color: var(--color-poison-light) !important;
+}
+.pokemon-flavor-card.flavor-poison:hover .pokemon-flavor-text {
+	color: var(--color-poison-dark) !important;
+}
+
+/* Ground Type */
+.pokemon-flavor-card.flavor-ground:hover {
+	background-color: var(--color-ground-light) !important;
+}
+.pokemon-flavor-card.flavor-ground:hover .pokemon-flavor-text {
+	color: var(--color-ground-dark) !important;
+}
+
+/* Flying Type */
+.pokemon-flavor-card.flavor-flying:hover {
+	background-color: var(--color-flying-light) !important;
+}
+.pokemon-flavor-card.flavor-flying:hover .pokemon-flavor-text {
+	color: var(--color-flying-dark) !important;
+}
+
+/* Psychic Type */
+.pokemon-flavor-card.flavor-psychic:hover {
+	background-color: var(--color-psychic-light) !important;
+}
+.pokemon-flavor-card.flavor-psychic:hover .pokemon-flavor-text {
+	color: var(--color-psychic-dark) !important;
+}
+
+/* Bug Type */
+.pokemon-flavor-card.flavor-bug:hover {
+	background-color: var(--color-bug-light) !important;
+}
+.pokemon-flavor-card.flavor-bug:hover .pokemon-flavor-text {
+	color: var(--color-bug-dark) !important;
+}
+
+/* Rock Type */
+.pokemon-flavor-card.flavor-rock:hover {
+	background-color: var(--color-rock-light) !important;
+}
+.pokemon-flavor-card.flavor-rock:hover .pokemon-flavor-text {
+	color: var(--color-rock-dark) !important;
+}
+
+/* Ghost Type */
+.pokemon-flavor-card.flavor-ghost:hover {
+	background-color: var(--color-ghost-light) !important;
+}
+.pokemon-flavor-card.flavor-ghost:hover .pokemon-flavor-text {
+	color: var(--color-ghost-dark) !important;
+}
+
+/* Dragon Type */
+.pokemon-flavor-card.flavor-dragon:hover {
+	background-color: var(--color-dragon-light) !important;
+}
+.pokemon-flavor-card.flavor-dragon:hover .pokemon-flavor-text {
+	color: var(--color-dragon-dark) !important;
+}
+
+/* Dark Type */
+.pokemon-flavor-card.flavor-dark:hover {
+	background-color: var(--color-dark-light) !important;
+}
+.pokemon-flavor-card.flavor-dark:hover .pokemon-flavor-text {
+	color: var(--color-dark-dark) !important;
+}
+
+/* Steel Type */
+.pokemon-flavor-card.flavor-steel:hover {
+	background-color: var(--color-steel-light) !important;
+}
+.pokemon-flavor-card.flavor-steel:hover .pokemon-flavor-text {
+	color: var(--color-steel-dark) !important;
+}
+
+/* Fairy Type */
+.pokemon-flavor-card.flavor-fairy:hover {
+	background-color: var(--color-fairy-light) !important;
+}
+.pokemon-flavor-card.flavor-fairy:hover .pokemon-flavor-text {
+	color: var(--color-fairy-dark) !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+	.pokemon-flavor-card {
+		padding: clamp(0.75rem, 3vw, 1rem);
+		border-radius: 12px;
+	}
+
+	.pokemon-flavor-text {
+		font-size: clamp(0.75rem, 2vw, 0.85rem);
+		line-height: 1.4;
+	}
+}
