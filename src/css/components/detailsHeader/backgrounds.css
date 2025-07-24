@@ -28,3 +28,46 @@
 	position: relative;
 	z-index: 5 !important;
 }
+
+/* =============================================================================
+   RESPONSIVIDADE DO BACKGROUND
+   ============================================================================= */
+
+/* Telas maiores (desktop) - Background preenche altura completa */
+@media (min-width: 992px) {
+	.pokemon-header-container {
+		min-height: 100vh;
+		height: 100vh;
+	}
+
+	#pokemon-background {
+		min-height: 100vh !important;
+		height: 100vh !important;
+	}
+}
+
+/* Telas médias (tablet) - Background preenche altura completa */
+@media (min-width: 768px) and (max-width: 991px) {
+	.pokemon-header-container {
+		min-height: 100vh;
+		height: 100vh;
+	}
+
+	#pokemon-background {
+		min-height: 100vh !important;
+		height: 100vh !important;
+	}
+}
+
+/* Telas menores (mobile) - Background se adapta ao conteúdo */
+@media (max-width: 767px) {
+	.pokemon-header-container {
+		min-height: auto;
+		height: auto;
+	}
+
+	#pokemon-background {
+		min-height: auto !important;
+		height: auto !important;
+	}
+}

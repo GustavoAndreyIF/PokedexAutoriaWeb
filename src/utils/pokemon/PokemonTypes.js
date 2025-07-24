@@ -92,7 +92,11 @@ const PokemonTypes = {
 	},
 
 	getValidTypeColor(type) {
-		return this.validTypes[type?.toLowerCase()] || this.validTypes.normal;
+		const normalizedType = type?.toLowerCase();
+		if (this.validTypes.includes(normalizedType)) {
+			return normalizedType;
+		}
+		return "normal";
 	},
 
 	/**

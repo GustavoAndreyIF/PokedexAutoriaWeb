@@ -3,13 +3,14 @@
 
 /* ./src/css/Componentes principais */
 @import url("./src/css/components/pokemon-card.css");
-@import url("./src/css/components/navigation.css");
-@import url("./src/css/components/backgrounds.css");
-@import url("./src/css/components/audio.css");
+@import url("./src/css/components/detailsHeader/navigation.css");
+@import url("./src/css/components/detailsHeader/backgrounds.css");
+@import url("./src/css/components/detailsHeader/audio.css");
 @import url("./src/css/components/pokedexNumber.css");
-@import url("./src/css/components/detailsHeader.css");
+@import url("./src/css/components/detailsHeader/detailsHeader.css");
 @import url("./src/css/components/pokemonTypeBadge.css");
-@import url("./src/css/components/flavorText.css");
+@import url("./src/css/components/detailsHeader/flavorText.css");
+@import url("./src/css/components/detailsMain/btnGroupMain.css");
 
 /* Efeitos especiais */
 @import url("./src/css/effects/acrylic.css");

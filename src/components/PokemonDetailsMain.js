@@ -87,22 +87,10 @@
  * - Tratamento de erro consistente
  * - Loading states durante fetch
  *
- * BENEFÍCIOS DA ARQUITETURA:
- * ========================================
  *
- * ✅ Separação de responsabilidades
- * ✅ Fácil manutenção e debugging
- * ✅ Extensibilidade sem modificar código existente
- * ✅ Reutilização de componentes
- * ✅ Cache automático de dados
- * ✅ Performance otimizada
- *
- * @author Gustavo Andrey
- * @version 2.0.0
- * @since 2025-07-21
  */
 
-import { DOMUtils } from "../utils/index.js";
+import { DOMUtils, PokemonTypes } from "../utils/index.js";
 import { StatsTab } from "./tabs/StatsTab.js";
 import { EvolutionTab } from "./tabs/EvolutionTab.js";
 import { MovesTab } from "./tabs/MovesTab.js";
@@ -140,6 +128,9 @@ export class PokemonDetailsMain {
 		/** @type {string} URL da API para o Pokémon atual */
 		this.pokemonUrl = pokemonUrl;
 
+		/** @type {Object|null} Dados básicos do Pokémon para cores temáticas */
+		this.basicData = null;
+
 		// ========================================
 		// INSTANCIAÇÃO DOS COMPONENTES DE ABA
 		// ========================================
@@ -162,7 +153,46 @@ export class PokemonDetailsMain {
 	}
 
 	/**
-	 * Renderiza a estrutura principal do sistema de abas no container especificado.
+	 * Busca dados básicos do Pokémon para aplicar cores temáticas.
+	 *
+	 * @async
+	 * @method fetchBasicData
+	 * @returns {Promise<void>} Promise que resolve quando os dados estiverem carregados
+	 * @private
+	 */
+	async fetchBasicData() {
+		try {
+			if (this.basicData) return; // Evita fetch duplicado
+
+			const response = await fetch(this.pokemonUrl);
+			if (!response.ok) {
+				throw new Error(`Erro HTTP: ${response.status}`);
+			}
+
+			const pokemonData = await response.json();
+
+			// Extrair apenas dados necessários para cores temáticas
+			this.basicData = {
+				types: pokemonData.types.map((typeInfo) => typeInfo.type.name),
+				primaryType: pokemonData.types[0]?.type.name?.toLowerCase() || "normal",
+			};
+
+			console.log(
+				`🎨 Dados básicos carregados para ${this.pokemonId}:`,
+				this.basicData
+			);
+		} catch (error) {
+			console.error(`❌ Erro ao carregar dados básicos:`, error);
+			// Fallback para tipo normal
+			this.basicData = {
+				types: ["normal"],
+				primaryType: "normal",
+			};
+		}
+	}
+
+	/**
+	 * Renderiza a estrutura principal do sistema de abas no container especificado com cores temáticas.
 	 *
 	 * FLUXO DE EXECUÇÃO:
 	 * 1. Localiza o container principal no DOM
@@ -204,98 +234,104 @@ export class PokemonDetailsMain {
 
 		try {
 			// ========================================
+			// BUSCAR DADOS BÁSICOS PARA CORES TEMÁTICAS
+			// ========================================
+			await this.fetchBasicData();
+
+			// Obter cor do tipo para classes CSS
+			const typeColor = PokemonTypes.getValidTypeColor(
+				this.basicData.primaryType
+			);
+
+			console.log(`🔍 Tipo detectado: ${this.basicData.primaryType}`);
+			console.log(`🎨 Cor aplicada: ${typeColor}`);
+
+			// ========================================
 			// GERAÇÃO DA ESTRUTURA HTML BASE
 			// ========================================
 			// Cria toda a estrutura necessária para o sistema de abas:
-			// - Bootstrap card layout
+			// - Bootstrap card layout com cores temáticas
 			// - Button group para navegação
 			// - Containers individuais para cada aba
 			// - Estados de loading por aba
 
 			mainContainer.innerHTML = `
-				<!-- Conteúdo Principal com Abas -->
-				<div class="h-100 bg-light">
-					<div class="p-4">
-						<div class="card border-0 shadow-sm rounded-4">
-							
-							<!-- ========================================
-							     NAVIGATION BAR - Button Group
-							     ======================================== -->
-							<div class="card-header bg-white border-0 rounded-top-4 p-4">
-								<div class="btn-group w-100" role="group" aria-label="Navegação de abas do Pokémon">
-									<!-- Aba Stats (ativa por padrão) -->
-									<button type="button" 
-											class="btn btn-outline-primary active" 
-											onclick="switchTab('stats')"
-											aria-pressed="true">
-										<i class="bi bi-bar-chart-fill me-2"></i>Stats
-									</button>
-									
-									<!-- Aba Evolution -->
-									<button type="button" 
-											class="btn btn-outline-primary" 
-											onclick="switchTab('evolution')"
-											aria-pressed="false">
-										<i class="bi bi-arrow-repeat me-2"></i>Evolution
-									</button>
-									
-									<!-- Aba Moves -->
-									<button type="button" 
-											class="btn btn-outline-primary" 
-											onclick="switchTab('moves')"
-											aria-pressed="false">
-										<i class="bi bi-lightning-fill me-2"></i>Moves
-									</button>
-									
-									<!-- Aba Location -->
-									<button type="button" 
-											class="btn btn-outline-primary" 
-											onclick="switchTab('location')"
-											aria-pressed="false">
-										<i class="bi bi-geo-alt-fill me-2"></i>Location
-									</button>
+				<!-- Pokemon Details Main Container -->
+				<div class="pokemon-main-container">
+					<div class="pokemon-content-wrapper">
+						<!-- Navigation Container with Pokemon Type Theme -->
+						<div class="pokemon-nav-container nav-type-${typeColor}">
+							<div class="pokemon-btn-group btn-group w-100" role="group" aria-label="Navegação de abas do Pokémon">
+								<!-- Stats Tab (Active by default) -->
+								<button type="button" 
+										class="pokemon-nav-btn active" 
+										onclick="switchTab('stats')"
+										aria-pressed="true">
+									<i class="bi bi-bar-chart-fill"></i>Stats
+								</button>
+								
+								<!-- Evolution Tab -->
+								<button type="button" 
+										class="pokemon-nav-btn" 
+										onclick="switchTab('evolution')"
+										aria-pressed="false">
+									<i class="bi bi-arrow-repeat"></i>Evolution
+								</button>
+								
+								<!-- Moves Tab -->
+								<button type="button" 
+										class="pokemon-nav-btn" 
+										onclick="switchTab('moves')"
+										aria-pressed="false">
+									<i class="bi bi-lightning-fill"></i>Moves
+								</button>
+								
+								<!-- Location Tab -->
+								<button type="button" 
+										class="pokemon-nav-btn" 
+										onclick="switchTab('location')"
+										aria-pressed="false">
+									<i class="bi bi-geo-alt-fill"></i>Location
+								</button>
+							</div>
+						</div>
+						
+						<!-- Tab Content Area -->
+						<div class="pokemon-tab-content">
+							<!-- Stats Tab Content (Active by default) -->
+							<div id="stats-content" 
+								 class="tab-content-section" 
+								 role="tabpanel" 
+								 aria-labelledby="stats-tab">
+								<div class="pokemon-loading">
+									<div class="spinner-border text-primary" role="status">
+										<span class="visually-hidden">Carregando estatísticas...</span>
+									</div>
 								</div>
 							</div>
 							
-							<!-- ========================================
-							     TAB CONTENT CONTAINERS
-							     ======================================== -->
-							<div class="card-body p-4">
-								<!-- Stats Tab (ativo por padrão) -->
-								<div id="stats-content" 
-									 class="tab-content-section" 
-									 role="tabpanel" 
-									 aria-labelledby="stats-tab">
-									<div class="text-center">
-										<div class="spinner-border text-primary" role="status">
-											<span class="visually-hidden">Carregando estatísticas...</span>
-										</div>
-									</div>
-								</div>
-								
-								<!-- Evolution Tab (oculto) -->
-								<div id="evolution-content" 
-									 class="tab-content-section d-none" 
-									 role="tabpanel" 
-									 aria-labelledby="evolution-tab">
-									<!-- Conteúdo será inserido dinamicamente pelo EvolutionTab -->
-								</div>
-								
-								<!-- Moves Tab (oculto) -->
-								<div id="moves-content" 
-									 class="tab-content-section d-none" 
-									 role="tabpanel" 
-									 aria-labelledby="moves-tab">
-									<!-- Conteúdo será inserido dinamicamente pelo MovesTab -->
-								</div>
-								
-								<!-- Location Tab (oculto) -->
-								<div id="location-content" 
-									 class="tab-content-section d-none" 
-									 role="tabpanel" 
-									 aria-labelledby="location-tab">
-									<!-- Conteúdo será inserido dinamicamente pelo LocationTab -->
-								</div>
+							<!-- Evolution Tab Content (Hidden) -->
+							<div id="evolution-content" 
+								 class="tab-content-section d-none" 
+								 role="tabpanel" 
+								 aria-labelledby="evolution-tab">
+								<!-- Content will be dynamically inserted by EvolutionTab -->
+							</div>
+							
+							<!-- Moves Tab Content (Hidden) -->
+							<div id="moves-content" 
+								 class="tab-content-section d-none" 
+								 role="tabpanel" 
+								 aria-labelledby="moves-tab">
+								<!-- Content will be dynamically inserted by MovesTab -->
+							</div>
+							
+							<!-- Location Tab Content (Hidden) -->
+							<div id="location-content" 
+								 class="tab-content-section d-none" 
+								 role="tabpanel" 
+								 aria-labelledby="location-tab">
+								<!-- Content will be dynamically inserted by LocationTab -->
 							</div>
 						</div>
 					</div>
@@ -369,9 +405,8 @@ export class PokemonDetailsMain {
 		// RESETAR ESTADO DOS BOTÕES
 		// ========================================
 		// Remove o estado ativo de todos os botões da navegação
-		document.querySelectorAll(".btn-group .btn").forEach((btn) => {
-			btn.classList.remove("active", "btn-primary");
-			btn.classList.add("btn-outline-primary");
+		document.querySelectorAll(".pokemon-nav-btn").forEach((btn) => {
+			btn.classList.remove("active");
 			btn.setAttribute("aria-pressed", "false");
 		});
 
@@ -383,8 +418,7 @@ export class PokemonDetailsMain {
 			`[onclick="switchTab('${tabName}')"]`
 		);
 		if (activeButton) {
-			activeButton.classList.add("active", "btn-primary");
-			activeButton.classList.remove("btn-outline-primary");
+			activeButton.classList.add("active");
 			activeButton.setAttribute("aria-pressed", "true");
 		}
 
@@ -461,7 +495,7 @@ export class PokemonDetailsMain {
 			// Exibe spinner enquanto os dados são carregados
 			// Melhora a experiência do usuário indicando que algo está acontecendo
 			targetContainer.innerHTML = `
-				<div class="text-center">
+				<div class="pokemon-loading">
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Carregando...</span>
 					</div>

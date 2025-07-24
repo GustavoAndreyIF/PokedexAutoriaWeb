@@ -1,0 +1,371 @@
+/* =============================================================================
+   POKEMON DETAILS MAIN - SIMPLIFIED WITH BOOTSTRAP
+   ============================================================================= */
+
+/* Main Container - Connected background */
+.pokemon-main-container {
+	min-height: 500px;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+/* Content Wrapper - No separation */
+.pokemon-content-wrapper {
+	padding: 0;
+	height: 100%;
+}
+
+/* Navigation Container - Connected to background */
+.pokemon-nav-container {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	padding: 2rem 1rem 1rem;
+	position: relative;
+}
+
+/* Tab Content Area - Connected */
+.pokemon-tab-content {
+	padding: 1rem;
+	background: transparent;
+	border: none;
+	min-height: 400px;
+}
+
+/* Button Group Navigation - Bootstrap Style */
+.pokemon-btn-group {
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 8px;
+	padding: 0.25rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	backdrop-filter: blur(10px);
+	display: flex;
+	justify-content: center;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+/* Navigation Buttons - Bootstrap Style */
+.pokemon-nav-btn {
+	font-family: inherit;
+	font-weight: 500;
+	font-size: 0.875rem;
+	padding: 0.75rem 1rem;
+	border: none;
+	border-radius: 6px;
+	background-color: transparent;
+	color: var(--bs-secondary);
+	transition: all 0.2s ease;
+	flex: 1;
+	text-align: center;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+/* Active Button State */
+.pokemon-nav-btn.active {
+	background-color: var(--bs-primary) !important;
+	color: white !important;
+	font-weight: 600;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover State */
+.pokemon-nav-btn:not(.active):hover {
+	background-color: rgba(0, 0, 0, 0.05);
+	color: var(--bs-dark) !important;
+}
+
+/* Loading Spinner */
+.pokemon-loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+}
+
+/* =============================================================================
+   POKEMON TYPE COLORS - DYNAMIC SYSTEM
+   ============================================================================= */
+
+/* Normal Type */
+.pokemon-nav-container.nav-type-normal .pokemon-nav-btn {
+	color: var(--color-normal-dark);
+}
+.pokemon-nav-container.nav-type-normal .pokemon-nav-btn.active {
+	background-color: var(--color-normal-light) !important;
+	color: var(--color-normal-dark) !important;
+}
+.pokemon-nav-container.nav-type-normal .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-normal) !important;
+}
+
+/* Fire Type */
+.pokemon-nav-container.nav-type-fire .pokemon-nav-btn {
+	color: var(--color-fire-dark);
+}
+.pokemon-nav-container.nav-type-fire .pokemon-nav-btn.active {
+	background-color: var(--color-fire-light) !important;
+	color: var(--color-fire-dark) !important;
+}
+.pokemon-nav-container.nav-type-fire .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-fire) !important;
+}
+
+/* Water Type */
+.pokemon-nav-container.nav-type-water .pokemon-nav-btn {
+	color: var(--color-water-dark);
+}
+.pokemon-nav-container.nav-type-water .pokemon-nav-btn.active {
+	background-color: var(--color-water-light) !important;
+	color: var(--color-water-dark) !important;
+}
+.pokemon-nav-container.nav-type-water .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-water) !important;
+}
+
+/* Electric Type */
+.pokemon-nav-container.nav-type-electric .pokemon-nav-btn {
+	color: var(--color-electric-dark);
+}
+.pokemon-nav-container.nav-type-electric .pokemon-nav-btn.active {
+	background-color: var(--color-electric-light) !important;
+	color: var(--color-electric-dark) !important;
+}
+.pokemon-nav-container.nav-type-electric .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-electric) !important;
+}
+
+/* Grass Type */
+.pokemon-nav-container.nav-type-grass .pokemon-nav-btn {
+	color: var(--color-grass-dark);
+}
+.pokemon-nav-container.nav-type-grass .pokemon-nav-btn.active {
+	background-color: var(--color-grass-light) !important;
+	color: var(--color-grass-dark) !important;
+}
+.pokemon-nav-container.nav-type-grass .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-grass) !important;
+}
+
+/* Ice Type */
+.pokemon-nav-container.nav-type-ice .pokemon-nav-btn {
+	color: var(--color-ice-dark);
+}
+.pokemon-nav-container.nav-type-ice .pokemon-nav-btn.active {
+	background-color: var(--color-ice-light) !important;
+	color: var(--color-ice-dark) !important;
+}
+.pokemon-nav-container.nav-type-ice .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-ice) !important;
+}
+
+/* Fighting Type */
+.pokemon-nav-container.nav-type-fighting .pokemon-nav-btn {
+	color: var(--color-fighting-dark);
+}
+.pokemon-nav-container.nav-type-fighting .pokemon-nav-btn.active {
+	background-color: var(--color-fighting-light) !important;
+	color: var(--color-fighting-dark) !important;
+}
+.pokemon-nav-container.nav-type-fighting .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-fighting) !important;
+}
+
+/* Poison Type */
+.pokemon-nav-container.nav-type-poison .pokemon-nav-btn {
+	color: var(--color-poison-dark);
+}
+.pokemon-nav-container.nav-type-poison .pokemon-nav-btn.active {
+	background-color: var(--color-poison-light) !important;
+	color: var(--color-poison-dark) !important;
+}
+.pokemon-nav-container.nav-type-poison .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-poison) !important;
+}
+
+/* Ground Type */
+.pokemon-nav-container.nav-type-ground .pokemon-nav-btn {
+	color: var(--color-ground-dark);
+}
+.pokemon-nav-container.nav-type-ground .pokemon-nav-btn.active {
+	background-color: var(--color-ground-light) !important;
+	color: var(--color-ground-dark) !important;
+}
+.pokemon-nav-container.nav-type-ground .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-ground) !important;
+}
+
+/* Flying Type */
+.pokemon-nav-container.nav-type-flying .pokemon-nav-btn {
+	color: var(--color-flying-dark);
+}
+.pokemon-nav-container.nav-type-flying .pokemon-nav-btn.active {
+	background-color: var(--color-flying-light) !important;
+	color: var(--color-flying-dark) !important;
+}
+.pokemon-nav-container.nav-type-flying .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-flying) !important;
+}
+
+/* Psychic Type */
+.pokemon-nav-container.nav-type-psychic .pokemon-nav-btn {
+	color: var(--color-psychic-dark);
+}
+.pokemon-nav-container.nav-type-psychic .pokemon-nav-btn.active {
+	background-color: var(--color-psychic-light) !important;
+	color: var(--color-psychic-dark) !important;
+}
+.pokemon-nav-container.nav-type-psychic .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-psychic) !important;
+}
+
+/* Bug Type */
+.pokemon-nav-container.nav-type-bug .pokemon-nav-btn {
+	color: var(--color-bug-dark);
+}
+.pokemon-nav-container.nav-type-bug .pokemon-nav-btn.active {
+	background-color: var(--color-bug-light) !important;
+	color: var(--color-bug-dark) !important;
+}
+.pokemon-nav-container.nav-type-bug .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-bug) !important;
+}
+
+/* Rock Type */
+.pokemon-nav-container.nav-type-rock .pokemon-nav-btn {
+	color: var(--color-rock-dark);
+}
+.pokemon-nav-container.nav-type-rock .pokemon-nav-btn.active {
+	background-color: var(--color-rock-light) !important;
+	color: var(--color-rock-dark) !important;
+}
+.pokemon-nav-container.nav-type-rock .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-rock) !important;
+}
+
+/* Ghost Type */
+.pokemon-nav-container.nav-type-ghost .pokemon-nav-btn {
+	color: var(--color-ghost-dark);
+}
+.pokemon-nav-container.nav-type-ghost .pokemon-nav-btn.active {
+	background-color: var(--color-ghost-light) !important;
+	color: var(--color-ghost-dark) !important;
+}
+.pokemon-nav-container.nav-type-ghost .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-ghost) !important;
+}
+
+/* Dragon Type */
+.pokemon-nav-container.nav-type-dragon .pokemon-nav-btn {
+	color: var(--color-dragon-dark);
+}
+.pokemon-nav-container.nav-type-dragon .pokemon-nav-btn.active {
+	background-color: var(--color-dragon-light) !important;
+	color: var(--color-dragon-dark) !important;
+}
+.pokemon-nav-container.nav-type-dragon .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-dragon) !important;
+}
+
+/* Dark Type */
+.pokemon-nav-container.nav-type-dark .pokemon-nav-btn {
+	color: var(--color-dark-dark);
+}
+.pokemon-nav-container.nav-type-dark .pokemon-nav-btn.active {
+	background-color: var(--color-dark-light) !important;
+	color: var(--color-dark-dark) !important;
+}
+.pokemon-nav-container.nav-type-dark .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-dark) !important;
+}
+
+/* Steel Type */
+.pokemon-nav-container.nav-type-steel .pokemon-nav-btn {
+	color: var(--color-steel-dark);
+}
+.pokemon-nav-container.nav-type-steel .pokemon-nav-btn.active {
+	background-color: var(--color-steel-light) !important;
+	color: var(--color-steel-dark) !important;
+}
+.pokemon-nav-container.nav-type-steel .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-steel) !important;
+}
+
+/* Fairy Type */
+.pokemon-nav-container.nav-type-fairy .pokemon-nav-btn {
+	color: var(--color-fairy-dark);
+}
+.pokemon-nav-container.nav-type-fairy .pokemon-nav-btn.active {
+	background-color: var(--color-fairy-light) !important;
+	color: var(--color-fairy-dark) !important;
+}
+.pokemon-nav-container.nav-type-fairy .pokemon-nav-btn:not(.active):hover {
+	color: var(--color-fairy) !important;
+}
+
+/* =============================================================================
+   RESPONSIVENESS - HORIZONTAL TABS FOR ALL SCREENS
+   ============================================================================= */
+
+@media (max-width: 768px) {
+	.pokemon-main-container {
+		margin: 0 1rem;
+	}
+
+	.pokemon-nav-container {
+		padding: 1.5rem 0.5rem 1rem;
+	}
+
+	.pokemon-btn-group {
+		max-width: 100%;
+		margin: 0 auto;
+		padding: 0.2rem;
+	}
+
+	.pokemon-nav-btn {
+		font-size: 0.8rem;
+		padding: 0.6rem 0.5rem;
+		gap: 0.3rem;
+	}
+
+	.pokemon-nav-btn i {
+		font-size: 0.875rem;
+	}
+
+	.pokemon-tab-content {
+		padding: 0.75rem;
+	}
+}
+
+@media (max-width: 576px) {
+	.pokemon-main-container {
+		margin: 0 0.75rem;
+	}
+
+	.pokemon-nav-container {
+		padding: 1rem 0.25rem 0.5rem;
+	}
+
+	.pokemon-btn-group {
+		padding: 0.15rem;
+	}
+
+	.pokemon-nav-btn {
+		font-size: 0.75rem;
+		padding: 0.5rem 0.25rem;
+		gap: 0.25rem;
+	}
+
+	.pokemon-nav-btn i {
+		font-size: 0.8rem;
+	}
+
+	.pokemon-tab-content {
+		padding: 0.5rem;
+	}
+}
