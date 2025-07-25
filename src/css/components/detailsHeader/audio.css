@@ -50,10 +50,10 @@
 }
 
 /* Water Type */
-.pokemon-audio-indicator-water {
+.pokemon-audio-indicator.audio-water {
 	background-color: var(--color-water-light) !important;
 }
-.pokemon-audio-icon-water {
+.pokemon-audio-icon.audio-water {
 	color: var(--color-water-dark) !important;
 }
 

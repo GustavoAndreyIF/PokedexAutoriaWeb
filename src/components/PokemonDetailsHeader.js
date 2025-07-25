@@ -224,8 +224,8 @@ export class PokemonDetailsHeader {
 								<div class="position-relative d-inline-block">
 									<!-- Audio Indicator - Material Design 3 -->
 									<div id="audio-indicator" 
-										 class="pokemon-audio-indicator pokemon-audio-indicator-${primaryType} position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-lg">
-										<i id="audio-icon" class="pokemon-audio-icon pokemon-audio-icon-${primaryType} bi bi-volume-up-fill"></i>
+										 class="pokemon-audio-indicator audio-${primaryType} position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-lg">
+										<i id="audio-icon" class="pokemon-audio-icon audio-${primaryType} bi bi-volume-up-fill"></i>
 									</div>
 									
 									<!-- Sprite principal - Material Design 3 -->

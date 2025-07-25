@@ -1,0 +1,403 @@
+/**
+ * ========================================
+ * STATS TAB - Estilização Temática por Tipo
+ * ========================================
+ *
+ * Este arquivo define os estilos temáticos para o componente StatsTab
+ * baseados no tipo primário do Pokémon.
+ *
+ * FUNCIONALIDADES:
+ * - Progress bars com gradientes específicos por tipo
+ * - Cores de fundo e destaque baseadas no tipo
+ * - Sistema de variáveis CSS para consistência
+ * - Responsividade mantida
+ *
+ * ESTRUTURA:
+ * - Estilos base das progress bars
+ * - Modificadores por tipo de Pokémon (normal, fire, water, etc.)
+ * - Gradientes usando cores light e dark das variables
+ *
+ * @import Este arquivo deve ser importado após variables.css
+ */
+
+/* ========================================
+   TIPOGRAFIA - FONTES PERSONALIZADAS
+   ======================================== */
+
+.stats-text {
+	font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.stats-number {
+	font-family: "JetBrains Mono", "Fira Code", monospace;
+	font-weight: 500;
+	font-size: 0.7rem;
+	line-height: 1.2;
+	letter-spacing: 0.05em;
+}
+
+.stats-title {
+	font-family: "Inter", "Segoe UI", sans-serif;
+	font-weight: 600;
+}
+
+/* Ajustes específicos para badges com números */
+.stat-badge.stats-number {
+	padding: 5px 9px;
+	font-size: 0.7rem;
+	min-width: 32px;
+	text-align: center;
+}
+
+/* ========================================
+   ESTILOS BASE DAS PROGRESS BARS
+   ======================================== */
+
+.stats-progress {
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.stats-progress-bar {
+	transition: all 0.3s ease;
+	border-radius: 4px;
+	position: relative;
+	overflow: hidden;
+}
+
+.stats-progress-bar::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.2) 50%,
+		transparent 100%
+	);
+	animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+/* ========================================
+   PROGRESS BARS POR TIPO DE POKÉMON
+   ======================================== */
+
+/* Normal Type */
+.stats-progress-bar--normal {
+	background: linear-gradient(
+		90deg,
+		var(--color-normal-light),
+		var(--color-normal-dark)
+	);
+}
+
+/* Fire Type */
+.stats-progress-bar--fire {
+	background: linear-gradient(90deg, var(--color-fire-light), var(--color-fire-dark));
+}
+
+/* Water Type */
+.stats-progress-bar--water {
+	background: linear-gradient(
+		90deg,
+		var(--color-water-light),
+		var(--color-water-dark)
+	);
+}
+
+/* Electric Type */
+.stats-progress-bar--electric {
+	background: linear-gradient(
+		90deg,
+		var(--color-electric-light),
+		var(--color-electric-dark)
+	);
+}
+
+/* Grass Type */
+.stats-progress-bar--grass {
+	background: linear-gradient(
+		90deg,
+		var(--color-grass-light),
+		var(--color-grass-dark)
+	);
+}
+
+/* Ice Type */
+.stats-progress-bar--ice {
+	background: linear-gradient(90deg, var(--color-ice-light), var(--color-ice-dark));
+}
+
+/* Fighting Type */
+.stats-progress-bar--fighting {
+	background: linear-gradient(
+		90deg,
+		var(--color-fighting-light),
+		var(--color-fighting-dark)
+	);
+}
+
+/* Poison Type */
+.stats-progress-bar--poison {
+	background: linear-gradient(
+		90deg,
+		var(--color-poison-light),
+		var(--color-poison-dark)
+	);
+}
+
+/* Ground Type */
+.stats-progress-bar--ground {
+	background: linear-gradient(
+		90deg,
+		var(--color-ground-light),
+		var(--color-ground-dark)
+	);
+}
+
+/* Flying Type */
+.stats-progress-bar--flying {
+	background: linear-gradient(
+		90deg,
+		var(--color-flying-light),
+		var(--color-flying-dark)
+	);
+}
+
+/* Psychic Type */
+.stats-progress-bar--psychic {
+	background: linear-gradient(
+		90deg,
+		var(--color-psychic-light),
+		var(--color-psychic-dark)
+	);
+}
+
+/* Bug Type */
+.stats-progress-bar--bug {
+	background: linear-gradient(90deg, var(--color-bug-light), var(--color-bug-dark));
+}
+
+/* Rock Type */
+.stats-progress-bar--rock {
+	background: linear-gradient(90deg, var(--color-rock-light), var(--color-rock-dark));
+}
+
+/* Ghost Type */
+.stats-progress-bar--ghost {
+	background: linear-gradient(
+		90deg,
+		var(--color-ghost-light),
+		var(--color-ghost-dark)
+	);
+}
+
+/* Dragon Type */
+.stats-progress-bar--dragon {
+	background: linear-gradient(
+		90deg,
+		var(--color-dragon-light),
+		var(--color-dragon-dark)
+	);
+}
+
+/* Dark Type */
+.stats-progress-bar--dark {
+	background: linear-gradient(90deg, var(--color-dark-light), var(--color-dark-dark));
+}
+
+/* Steel Type */
+.stats-progress-bar--steel {
+	background: linear-gradient(
+		90deg,
+		var(--color-steel-light),
+		var(--color-steel-dark)
+	);
+}
+
+/* Fairy Type */
+.stats-progress-bar--fairy {
+	background: linear-gradient(
+		90deg,
+		var(--color-fairy-light),
+		var(--color-fairy-dark)
+	);
+}
+
+/* ========================================
+   BADGES TEMÁTICOS - MATERIAL DESIGN 3
+   ======================================== */
+
+.stat-badge {
+	border-radius: 8px;
+	padding: 6px 10px;
+	font-weight: 600;
+	font-size: 0.75rem;
+	border: none;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 24px;
+	line-height: 1;
+}
+
+/* Badge colors por tipo - usando --color-[type]-light para o fundo */
+.stat-badge--normal {
+	background-color: var(--color-normal-light);
+}
+.stat-badge--fire {
+	background-color: var(--color-fire-light);
+}
+.stat-badge--water {
+	background-color: var(--color-water-light);
+}
+.stat-badge--electric {
+	background-color: var(--color-electric-light);
+}
+.stat-badge--grass {
+	background-color: var(--color-grass-light);
+}
+.stat-badge--ice {
+	background-color: var(--color-ice-light);
+}
+.stat-badge--fighting {
+	background-color: var(--color-fighting-light);
+}
+.stat-badge--poison {
+	background-color: var(--color-poison-light);
+}
+.stat-badge--ground {
+	background-color: var(--color-ground-light);
+}
+.stat-badge--flying {
+	background-color: var(--color-flying-light);
+}
+.stat-badge--psychic {
+	background-color: var(--color-psychic-light);
+}
+.stat-badge--bug {
+	background-color: var(--color-bug-light);
+}
+.stat-badge--rock {
+	background-color: var(--color-rock-light);
+}
+.stat-badge--ghost {
+	background-color: var(--color-ghost-light);
+}
+.stat-badge--dragon {
+	background-color: var(--color-dragon-light);
+}
+.stat-badge--dark {
+	background-color: var(--color-dark-light);
+}
+.stat-badge--steel {
+	background-color: var(--color-steel-light);
+}
+.stat-badge--fairy {
+	background-color: var(--color-fairy-light);
+}
+
+/* ========================================
+   CONTAINER TEMÁTICO POR TIPO
+   ======================================== */
+
+.stats-tab {
+	position: relative;
+	padding: 1rem;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.02);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
+}
+
+/* Hover effects baseados no tipo */
+.stats-tab--normal:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-normal-rgb), 0.2);
+}
+.stats-tab--fire:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-fire-rgb), 0.2);
+}
+.stats-tab--water:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-water-rgb), 0.2);
+}
+.stats-tab--electric:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-electric-rgb), 0.2);
+}
+.stats-tab--grass:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-grass-rgb), 0.2);
+}
+.stats-tab--ice:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-ice-rgb), 0.2);
+}
+.stats-tab--fighting:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-fighting-rgb), 0.2);
+}
+.stats-tab--poison:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-poison-rgb), 0.2);
+}
+.stats-tab--ground:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-ground-rgb), 0.2);
+}
+.stats-tab--flying:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-flying-rgb), 0.2);
+}
+.stats-tab--psychic:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-psychic-rgb), 0.2);
+}
+.stats-tab--bug:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-bug-rgb), 0.2);
+}
+.stats-tab--rock:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-rock-rgb), 0.2);
+}
+.stats-tab--ghost:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-ghost-rgb), 0.2);
+}
+.stats-tab--dragon:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-dragon-rgb), 0.2);
+}
+.stats-tab--dark:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-dark-rgb), 0.2);
+}
+.stats-tab--steel:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-steel-rgb), 0.2);
+}
+.stats-tab--fairy:hover {
+	box-shadow: 0 4px 20px rgba(var(--color-fairy-rgb), 0.2);
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 768px) {
+	.stats-tab {
+		padding: 0.75rem;
+		margin: 0 -0.5rem;
+	}
+
+	.stats-progress {
+		height: 6px;
+	}
+}
+
+@media (max-width: 480px) {
+	.stats-tab {
+		padding: 0.5rem;
+	}
+}

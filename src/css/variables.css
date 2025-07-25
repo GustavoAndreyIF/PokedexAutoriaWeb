@@ -83,6 +83,26 @@
 	--color-water-dark: #1b539b;
 	--color-water-light: #74acf5;
 
+	/* Valores RGB para efeitos de transparência */
+	--color-normal-rgb: 159, 161, 159;
+	--color-fire-rgb: 230, 40, 41;
+	--color-water-rgb: 41, 128, 239;
+	--color-electric-rgb: 250, 192, 0;
+	--color-grass-rgb: 63, 161, 41;
+	--color-ice-rgb: 61, 206, 243;
+	--color-fighting-rgb: 255, 128, 0;
+	--color-poison-rgb: 145, 65, 203;
+	--color-ground-rgb: 145, 81, 33;
+	--color-flying-rgb: 129, 185, 239;
+	--color-psychic-rgb: 239, 65, 121;
+	--color-bug-rgb: 145, 161, 25;
+	--color-rock-rgb: 175, 169, 129;
+	--color-ghost-rgb: 112, 65, 112;
+	--color-dragon-rgb: 80, 96, 225;
+	--color-dark-rgb: 98, 77, 78;
+	--color-steel-rgb: 96, 161, 184;
+	--color-fairy-rgb: 239, 112, 239;
+
 	/* Animações e transições */
 	--transition-fast: 0.3s ease;
 	--transition-medium: 0.5s ease;
