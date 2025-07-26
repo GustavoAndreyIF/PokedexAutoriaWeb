@@ -38,11 +38,11 @@
 }
 
 .pokemon-nav-button--previous {
-	left: clamp(8px, 3vw, 16px);
+	left: clamp(4px, 2vw, 12px);
 }
 
 .pokemon-nav-button--next {
-	right: clamp(8px, 3vw, 16px);
+	right: clamp(4px, 2vw, 12px);
 }
 
 .pokemon-nav-icon {

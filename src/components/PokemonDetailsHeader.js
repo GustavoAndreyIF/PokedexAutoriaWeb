@@ -56,6 +56,8 @@ export class PokemonDetailsHeader {
 				id: pokemonData.id,
 				name: pokemonData.name,
 				sprite: pokemonData.sprites?.other?.["official-artwork"]?.front_default,
+				// Sprite local GIF para a seção de navegação
+				localSprite: `./src/assets/images/pokemons/poke_${pokemonData.id}.gif`,
 				types: pokemonData.types.map((typeInfo) => typeInfo.type.name),
 				height: pokemonData.height,
 				weight: pokemonData.weight,
@@ -344,12 +346,17 @@ export class PokemonDetailsHeader {
 										<i id="audio-icon" class="pokemon-audio-icon audio-${primaryType} bi bi-volume-up-fill"></i>
 									</div>
 									
-									<!-- Sprite principal - Material Design 3 -->
+									<!-- Sprite principal local GIF - Material Design 3 -->
 									<img id="pokemon-main-sprite"
-										 src="${this.data.sprite}" 
+										 src="${this.data.localSprite}" 
 										 alt="${formattedName}" 
 										 class="pokemon-main-sprite img-fluid mb-3" 
-										 onclick="pokemonDetailsHeader.playPokemonCry()">
+										 onclick="pokemonDetailsHeader.playPokemonCry()"
+										 onerror="this.src='${
+												this.data.sprite
+											}'; console.warn('Fallback para sprite original do Pokémon #${
+				this.data.id
+			}');">
 								</div>
 								
 								<!-- Botão Próximo - Material Design 3 -->
