@@ -28,6 +28,7 @@ export class MovesTab {
 				name: moveInfo.move.name,
 				url: moveInfo.move.url,
 				level_learned: moveInfo.version_group_details[0]?.level_learned_at || 1,
+				id: moveInfo.move.url.split("/").slice(-2, -1)[0], // Extrai o ID da URL //bruxaria isso aqui
 			}));
 
 			console.log(
@@ -59,12 +60,16 @@ export class MovesTab {
 
 					return `
 						<div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-							<div>
-								${levelBadge}
-								<span class="fw-medium">${moveName}</span>
-							</div>
+							
+								<div>
+									${levelBadge}
+									<span class="fw-medium">${moveName}</span>
+								</div>
+							
 							<small class="text-muted">
-								<i class="bi bi-info-circle"></i>
+								<a href="movedetails.html?moveID=${move.id}" title="Ver detalhes do movimento" class="text-decoration-none">
+									<i class="bi bi-info-circle"></i>
+								</a>
 							</small>
 						</div>
 					`;
