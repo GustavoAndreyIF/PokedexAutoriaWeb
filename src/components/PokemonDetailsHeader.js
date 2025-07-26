@@ -56,8 +56,8 @@ export class PokemonDetailsHeader {
 				id: pokemonData.id,
 				name: pokemonData.name,
 				sprite: pokemonData.sprites?.other?.["official-artwork"]?.front_default,
-				// Sprite local GIF para a seção de navegação
-				localSprite: `./src/assets/images/pokemons/poke_${pokemonData.id}.gif`,
+				// Sprite online GIF do GitHub para a seção de navegação
+				localSprite: `https://raw.githubusercontent.com/wellrccity/pokedex-html-js/refs/heads/master/assets/img/pokemons/poke_${pokemonData.id}.gif`,
 				types: pokemonData.types.map((typeInfo) => typeInfo.type.name),
 				height: pokemonData.height,
 				weight: pokemonData.weight,
@@ -346,7 +346,7 @@ export class PokemonDetailsHeader {
 										<i id="audio-icon" class="pokemon-audio-icon audio-${primaryType} bi bi-volume-up-fill"></i>
 									</div>
 									
-									<!-- Sprite principal local GIF - Material Design 3 -->
+									<!-- Sprite principal online GIF - Material Design 3 -->
 									<img id="pokemon-main-sprite"
 										 src="${this.data.localSprite}" 
 										 alt="${formattedName}" 

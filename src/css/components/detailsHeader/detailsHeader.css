@@ -15,8 +15,9 @@
 
 /* Sprite principal customizado para header */
 .pokemon-main-sprite {
-	width: clamp(220px, 50vw, 320px);
-	height: clamp(220px, 50vw, 320px);
+	height: clamp(240px, 55vw, 350px);
+	width: auto; /* Mantém proporção original */
+	max-width: clamp(200px, 45vw, 280px); /* Limita largura máxima */
 	cursor: pointer;
 	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
@@ -39,8 +40,9 @@
 /* Responsividade específica para mobile */
 @media (max-width: 576px) {
 	.pokemon-main-sprite {
-		width: clamp(180px, 45vw, 240px);
-		height: clamp(180px, 45vw, 240px);
+		height: clamp(200px, 50vw, 280px);
+		width: auto; /* Mantém proporção original */
+		max-width: clamp(160px, 40vw, 220px); /* Limita largura máxima */
 	}
 }
 
@@ -101,8 +103,9 @@
 	}
 
 	.pokemon-main-sprite {
-		width: clamp(180px, 45vw, 240px);
-		height: clamp(180px, 45vw, 240px);
+		height: clamp(200px, 50vw, 280px);
+		width: auto; /* Mantém proporção original */
+		max-width: clamp(160px, 40vw, 220px); /* Limita largura máxima */
 	}
 
 	.acrylic-dark,
