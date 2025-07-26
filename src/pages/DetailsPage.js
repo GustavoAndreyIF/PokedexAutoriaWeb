@@ -124,10 +124,10 @@ class DetailsPage {
 		this.detailsContainer.innerHTML = `
 			<div class="container-fluid p-0">
 				<div class="row g-0">
-					<div class="col-lg-6" id="pokemon-details-header-container">
+					<div class="col-lg-4" id="pokemon-details-header-container">
 						<!-- Header será renderizado aqui -->
 					</div>
-					<div class="col-lg-6" id="pokemon-details-main-container">
+					<div class="col-lg-8" id="pokemon-details-main-container">
 						<!-- Main será renderizado aqui -->
 					</div>
 				</div>
