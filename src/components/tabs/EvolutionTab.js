@@ -61,7 +61,7 @@ export class EvolutionTab {
 			this.evoCards = nextEvoData.map(evo => {
 				const name = TextFormatter.capitalize(evo.name);
 				const id = evo.id;
-				const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo.id}.png`;
+				const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 				return `
 				<div class="col-12 col-md-4 d-flex justify-content-center mb-4">
 					<a href="detalhes.html?id=${id}" class="text-decoration-none w-100" style="max-width: 260px;">

@@ -94,7 +94,7 @@ import { DOMUtils, PokemonTypes } from "../utils/index.js";
 import { StatsTab } from "./tabs/StatsTab.js";
 import { EvolutionTab } from "./tabs/EvolutionTab.js";
 import { MovesTab } from "./tabs/MovesTab.js";
-import { LocationTab } from "./tabs/LocationTab.js";
+import { VariantsTab } from "./tabs/VariantsTab.js";
 
 /**
  * Componente principal que gerencia o sistema de abas da página de detalhes do Pokémon.
@@ -148,8 +148,8 @@ export class PokemonDetailsMain {
 		/** @type {MovesTab} Componente da aba de movimentos */
 		this.movesTab = new MovesTab(pokemonId, pokemonUrl);
 
-		/** @type {LocationTab} Componente da aba de localização */
-		this.locationTab = new LocationTab(pokemonId, pokemonUrl);
+		/** @type {VariantsTab} Componente da aba de localização */
+		this.locationTab = new VariantsTab(pokemonId, pokemonUrl);
 	}
 
 	/**
@@ -291,7 +291,7 @@ export class PokemonDetailsMain {
 										class="pokemon-nav-btn" 
 										onclick="switchTab('location')"
 										aria-pressed="false">
-									<i class="bi bi-geo-alt-fill"></i>Location
+									<i class="bi bi-shuffle"></i>Variants
 								</button>
 							</div>
 						</div>
