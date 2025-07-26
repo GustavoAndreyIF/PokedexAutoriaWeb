@@ -1,3 +1,4 @@
+
 /**
  * 🚀 MAIN.JS - VERSÃO SIMPLES DA POKÉDX
  *
@@ -11,6 +12,7 @@
 import { PokemonTypes, TextFormatter, DOMUtils } from "./src/utils/index.js";
 import PokemonCard from "./src/components/PokemonCard.js";
 import { DetailsPage } from "./src/pages/DetailsPage.js";
+import { MovePage } from "./src/pages/MovePage.js";
 
 // ========================================
 // 🌐 CONFIGURAÇÕES DA API
@@ -108,11 +110,11 @@ function showError(message) {
 	if (errorContainer) {
 		errorContainer.style.display = "block";
 		errorContainer.innerHTML = `
-            <strong>Erro!</strong> ${message}
-            <button class="btn btn-outline-danger btn-sm ms-2" onclick="location.reload()">
-                Tentar Novamente
-            </button>
-        `;
+			<strong>Erro!</strong> ${message}
+			<button class="btn btn-outline-danger btn-sm ms-2" onclick="location.reload()">
+				Tentar Novamente
+			</button>
+		`;
 	}
 }
 
@@ -226,16 +228,78 @@ async function initializeDetailsPage() {
 	await renderPokemonDetailsPage(pokemonId);
 }
 
+
+// ========================================
+// 📋 PÁGINA DETALHES DO MOVIMENTO - FUNÇÕES SIMPLES
+// ========================================
+
+/**
+ * 📋 Inicializa página de detalhes do movimento
+ */
+
+/**
+ * 🎨 Renderiza página de detalhes do movimento usando MovePage
+ */
+async function renderMoveDetailsPage(moveId) {
+	try {
+		console.log(`🎨 Inicializando página de detalhes do movimento #${moveId}`);
+
+		// Criar instância da MovePage
+		const moveUrl = `https://pokeapi.co/api/v2/move/${moveId}`;
+		const movePage = new MovePage(moveId, moveUrl);
+
+		// Configurar o ID manualmente (simular parâmetro URL)
+		const urlParams = new URLSearchParams(window.location.search);
+		if (!urlParams.has("moveID")) {
+			const newUrl = `${window.location.pathname}?moveID=${moveId}`;
+			window.history.replaceState({ moveId }, "", newUrl);
+		}
+
+		// Inicializar página
+		await movePage.init();
+
+		console.log(`✅ Página de detalhes do movimento #${moveId} carregada`);
+	} catch (error) {
+		console.error("❌ Erro ao carregar página de detalhes do movimento:", error);
+		const mainContainer = document.getElementById("move-main-container") || document.body;
+		mainContainer.innerHTML = `
+			<div class="alert alert-danger m-4">
+				<h4>❌ Erro ao carregar detalhes do movimento</h4>
+				<p>${error.message}</p>
+				<button class="btn btn-primary" onclick="location.reload()">Tentar novamente</button>
+			</div>
+		`;
+	}
+}
+
+async function initializeMoveDetailsPage() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const moveId = urlParams.get("moveID");
+	if (!moveId) {
+		window.location.href = "index.html";
+		return;
+	}
+	await renderMoveDetailsPage(moveId);
+}
+
+
 // ========================================
 // 🎯 INICIALIZAÇÃO AUTOMÁTICA
 // ========================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 	console.log("🚀 Pokédex refatorada carregada!");
 
 	const pathname = window.location.pathname;
 	const urlParams = new URLSearchParams(window.location.search);
 	const pokemonId = urlParams.get("id");
+	const moveId = urlParams.get("moveID");
+	
+	// Se for página de detalhes de movimento
+	if (pathname.includes("movedetails.html") || moveId) {
+		initializeMoveDetailsPage();
+		return;
+	}
 
 	// 📋 Se é página de detalhes
 	if (pathname.includes("detalhes.html") || pokemonId) {

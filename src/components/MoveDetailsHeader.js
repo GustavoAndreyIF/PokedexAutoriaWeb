@@ -10,6 +10,7 @@ export class MoveDetailsHeader {
         this.primary = null;
     }
 
+    // eisso aq faz fetch do json enorme dos moves e pega só o type
     async fetchMoveHeaderData() {
         try {
             const response = await fetch(this.moveUrl);
@@ -17,13 +18,14 @@ export class MoveDetailsHeader {
                 throw new Error("Network response was not ok");
             }
             let data = await response.json();
-            this.primary = this.data.types[0]?.toLowerCase() || "normal";
+            this.primary = data.type[0]?.toLowerCase() || "normal";
 
         } catch (error) {
             console.error("Error fetching move data:", error);
         }
     }
 
+    // Renderiza o header
     async render() {
         const headerContainer = document.getElementById(
 			"move-header-container"
@@ -37,7 +39,7 @@ export class MoveDetailsHeader {
         try {
             await this.fetchMoveHeaderData();
 
-            headerContainer = `
+            headerContainer.innerHTML = `
             <header class="position-relative overflow-hidden mb-4" style=" 
             background-color: var(--color-${this.primary}-dark">
                 <div class="container py-4">
