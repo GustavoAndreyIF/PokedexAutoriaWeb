@@ -34,18 +34,32 @@ const TextFormatter = {
 	},
 
 	/**
-	 * � Formata ID do Pokémon com # e zeros à esquerda
+	 * 🆔 Formata ID do Pokémon com # e zeros à esquerda
 	 */
 	formatPokemonId(id) {
 		return `#${String(id).padStart(3, "0")}`;
 	},
 
 	/**
-	 * �🎨 Formata tipo de Pokémon para exibição
+	 * 🎨 Formata tipo de Pokémon para exibição
 	 */
 	formatPokemonType(type) {
 		return this.capitalize(type);
 	},
+
+	/**
+	 * 🧹 Limpa e normaliza flavor texts removendo caracteres especiais
+	 */
+	cleanFlavorText(text) {
+		if (!text || typeof text !== "string") return "";
+		
+		return text
+			.replace(/\f/g, " ") // Remove form feed
+			.replace(/\n/g, " ") // Remove quebras de linha
+			.replace(/\s+/g, " ") // Remove espaços múltiplos
+			.trim();
+	},
 };
 
+export { TextFormatter };
 export default TextFormatter;

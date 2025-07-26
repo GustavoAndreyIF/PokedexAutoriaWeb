@@ -95,7 +95,7 @@ export class EvolutionTab {
 			await this.fetchData();
 
 			container.innerHTML = `
-    <h5 class="fw-semibold mb-3">🔄 Cadeia Evolutiva</h5>
+    <h5 class="fw-semibold mb-3 stats-title"><i class="bi bi-arrow-repeat me-2"></i>Evolution</h5>
     <div class="row justify-content-center">
         ${this.evoCards}
     </div>

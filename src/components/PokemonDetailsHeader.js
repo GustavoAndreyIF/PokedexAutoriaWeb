@@ -3,6 +3,7 @@
 // ========================================
 
 import { DOMUtils, PokemonTypes, TextFormatter } from "../utils/index.js";
+import ImageManager from "../utils/ImageManager.js";
 
 export class PokemonDetailsHeader {
 	constructor(pokemonId, pokemonUrl) {
@@ -59,10 +60,11 @@ export class PokemonDetailsHeader {
 				height: pokemonData.height,
 				weight: pokemonData.weight,
 				speciesUrl: pokemonData.species.url, // URL da species para buscar flavor text
+				abilities: pokemonData.abilities, // Habilidades do Pokémon
 			};
 
-			// Buscar flavor text da species
-			await this.fetchFlavorText();
+			// Buscar flavor text da species e detalhes das habilidades
+			await Promise.all([this.fetchFlavorText(), this.fetchAbilitiesDetails()]);
 
 			// Extrair áudio do Pokémon (cries)
 			this.audioUrl = null;
@@ -92,48 +94,162 @@ export class PokemonDetailsHeader {
 
 			const speciesData = await response.json();
 
-			// Buscar flavor text em português ou inglês como fallback
-			const flavorTexts = speciesData.flavor_text_entries;
-			let flavorText = null;
+			// Buscar flavor text em inglês
+			const englishFlavor = speciesData.flavor_text_entries.find(
+				(entry) => entry.language.name === "en"
+			);
 
-			// Priorizar português
-			const ptEntry = flavorTexts.find((entry) => entry.language.name === "pt");
-			if (ptEntry) {
-				flavorText = ptEntry.flavor_text;
-			} else {
-				// Fallback para inglês
-				const enEntry = flavorTexts.find(
-					(entry) => entry.language.name === "en"
+			if (englishFlavor) {
+				// Limpar e formatar o flavor text
+				this.data.flavorText = TextFormatter.cleanFlavorText(
+					englishFlavor.flavor_text
 				);
-				if (enEntry) {
-					flavorText = enEntry.flavor_text;
-				}
-			}
-
-			// Limpar caracteres especiais do flavor text
-			if (flavorText) {
-				this.data.flavorText = flavorText
-					.replace(/\f/g, " ") // Remove form feed
-					.replace(/\n/g, " ") // Remove quebras de linha
-					.replace(/\s+/g, " ") // Remove espaços múltiplos
-					.trim();
-
 				console.log(
 					`📖 Flavor text encontrado para ${this.data.name}:`,
 					this.data.flavorText
 				);
 			} else {
+				// Texto padrão de fallback
 				this.data.flavorText = `${TextFormatter.capitalize(
 					this.data.name
-				)} é um Pokémon fascinante com habilidades únicas.`;
+				)} is a fascinating Pokémon with unique abilities.`;
 				console.log(`📖 Usando flavor text padrão para ${this.data.name}`);
 			}
 		} catch (error) {
 			console.error(`❌ Erro ao carregar flavor text:`, error);
 			this.data.flavorText = `${TextFormatter.capitalize(
 				this.data.name
-			)} é um Pokémon fascinante com habilidades únicas.`;
+			)} is a fascinating Pokémon with unique abilities.`;
 		}
+	}
+
+	// Método para buscar os detalhes das habilidades
+	async fetchAbilitiesDetails() {
+		try {
+			this.data.abilitiesDetails = [];
+
+			for (const abilityInfo of this.data.abilities) {
+				const response = await fetch(abilityInfo.ability.url);
+				if (!response.ok) {
+					throw new Error(`Erro HTTP: ${response.status}`);
+				}
+
+				const abilityData = await response.json();
+
+				// Buscar nome em inglês (fallback para nome formatado da API)
+				const englishName = abilityData.names.find(
+					(name) => name.language.name === "en"
+				);
+				const abilityName = englishName
+					? englishName.name
+					: TextFormatter.capitalize(abilityInfo.ability.name);
+
+				// Buscar descrição em inglês (flavor text)
+				const englishFlavor = abilityData.flavor_text_entries.find(
+					(entry) => entry.language.name === "en"
+				);
+				const abilityDescription = englishFlavor
+					? TextFormatter.cleanFlavorText(englishFlavor.flavor_text)
+					: "Description not available.";
+
+				// Buscar efeito detalhado em inglês
+				const englishEffect = abilityData.effect_entries.find(
+					(entry) => entry.language.name === "en"
+				);
+				const abilityEffect = englishEffect
+					? TextFormatter.cleanFlavorText(englishEffect.effect)
+					: null;
+
+				// Buscar informações da geração
+				const generation = abilityData.generation;
+				const generationNumber = generation
+					? generation.name.replace("generation-", "").toUpperCase()
+					: "UNKNOWN";
+
+				// Buscar Pokémon que possuem essa habilidade (limitando a 6 para não sobrecarregar)
+				const pokemonList = await Promise.all(
+					abilityData.pokemon.slice(0, 6).map(async (pokemonInfo) => {
+						const pokemonId = this.extractPokemonIdFromUrl(
+							pokemonInfo.pokemon.url
+						);
+
+						try {
+							// Buscar tipos do Pokémon
+							const pokemonResponse = await fetch(
+								pokemonInfo.pokemon.url
+							);
+							if (pokemonResponse.ok) {
+								const pokemonData = await pokemonResponse.json();
+								const types = pokemonData.types.map(
+									(typeInfo) => typeInfo.type.name
+								);
+
+								return {
+									name: pokemonInfo.pokemon.name,
+									url: pokemonInfo.pokemon.url,
+									isHidden: pokemonInfo.is_hidden,
+									slot: pokemonInfo.slot,
+									id: pokemonId,
+									types: types,
+								};
+							} else {
+								// Fallback se não conseguir buscar os tipos
+								return {
+									name: pokemonInfo.pokemon.name,
+									url: pokemonInfo.pokemon.url,
+									isHidden: pokemonInfo.is_hidden,
+									slot: pokemonInfo.slot,
+									id: pokemonId,
+									types: ["normal"], // Tipo padrão
+								};
+							}
+						} catch (fetchError) {
+							console.warn(
+								`⚠️ Erro ao buscar tipos do Pokémon ${pokemonInfo.pokemon.name}:`,
+								fetchError
+							);
+							// Fallback em caso de erro
+							return {
+								name: pokemonInfo.pokemon.name,
+								url: pokemonInfo.pokemon.url,
+								isHidden: pokemonInfo.is_hidden,
+								slot: pokemonInfo.slot,
+								id: pokemonId,
+								types: ["normal"], // Tipo padrão
+							};
+						}
+					})
+				);
+
+				// Adicionar aos detalhes das habilidades
+				this.data.abilitiesDetails.push({
+					id: abilityData.id,
+					name: abilityName,
+					description: abilityDescription,
+					effect: abilityEffect,
+					generation: generationNumber,
+					pokemonList: pokemonList,
+					isHidden: abilityInfo.is_hidden,
+					slot: abilityInfo.slot,
+					originalName: abilityInfo.ability.name,
+				});
+
+				console.log(
+					`🎯 Habilidade encontrada para ${this.data.name}:`,
+					abilityName,
+					abilityInfo.is_hidden ? "(Oculta)" : ""
+				);
+			}
+		} catch (error) {
+			console.error(`❌ Erro ao carregar detalhes das habilidades:`, error);
+			this.data.abilitiesDetails = [];
+		}
+	}
+
+	// Método auxiliar para extrair ID do Pokémon da URL
+	extractPokemonIdFromUrl(url) {
+		const matches = url.match(/\/pokemon\/(\d+)\//);
+		return matches ? parseInt(matches[1]) : null;
 	}
 
 	// Método para renderizar o header container (coluna da esquerda)
@@ -154,7 +270,7 @@ export class PokemonDetailsHeader {
 
 			const formattedId = TextFormatter.formatPokemonId(this.data.id);
 			const formattedName = TextFormatter.capitalize(this.data.name);
-			const primaryType = this.data.types[0]?.toLowerCase() || "normal";
+			const primaryType = this.data.types[0]?.toLowerCase() || "unknown";
 
 			// Imagem de fundo baseada no tipo primário
 			const backgroundImage = `./src/assets/images/backgroundDetails/${primaryType}.png`;
@@ -268,8 +384,22 @@ export class PokemonDetailsHeader {
 								</p>
 							</div>
 						</div>
+						
+						<!-- Abilities Section - Material Design 3 -->
+						<div class="text-center mb-3 mb-md-4 px-2 px-md-3">
+							<h6 class="text-white mb-2 fw-bold">
+								<i class="bi bi-stars me-1"></i>
+								Abilities
+							</h6>
+							<div class="d-flex justify-content-center gap-2 flex-wrap">
+								${this.renderAbilities(primaryType)}
+							</div>
+						</div>
 					</div>
 				</div>
+				
+				<!-- Ability Modals - Material Design 3 -->
+				${this.renderAbilityModals(primaryType)}
 			`;
 
 			// Disponibilizar globalmente a instância para uso nos event handlers
@@ -282,6 +412,215 @@ export class PokemonDetailsHeader {
 				</div>
 			`;
 		}
+	}
+
+	// Método para renderizar os botões das habilidades
+	renderAbilities(primaryType) {
+		if (!this.data.abilitiesDetails || this.data.abilitiesDetails.length === 0) {
+			return '<span class="text-white-50 small">No abilities available</span>';
+		}
+
+		return this.data.abilitiesDetails
+			.map((ability) => {
+				const hiddenBadge = ability.isHidden
+					? '<i class="bi bi-eye-slash-fill ms-1" title="Hidden Ability"></i>'
+					: "";
+				return `
+					<button type="button" 
+							class="btn btn-light btn-sm pokemon-ability-btn ability-${primaryType}" 
+							data-bs-toggle="modal" 
+							data-bs-target="#abilityModal-${ability.id}"
+							title="${ability.description}">
+						<i class="bi bi-star-fill me-1"></i>
+						${ability.name}
+						${hiddenBadge}
+					</button>
+				`;
+			})
+			.join("");
+	}
+
+	// Método para renderizar os modais das habilidades
+	renderAbilityModals(primaryType) {
+		if (!this.data.abilitiesDetails || this.data.abilitiesDetails.length === 0) {
+			return "";
+		}
+
+		return this.data.abilitiesDetails
+			.map((ability) => {
+				const modalId = `abilityModal-${ability.id}`;
+				const hiddenBadge = ability.isHidden
+					? '<span class="badge bg-white text-dark ms-2 hidden-ability-badge"><i class="bi bi-eye-slash-fill me-1"></i>Hidden</span>'
+					: "";
+
+				// Renderizar lista de Pokémon
+				const pokemonCards = ability.pokemonList
+					.map((pokemon) => {
+						const pokemonName = TextFormatter.capitalize(pokemon.name);
+						const pokemonId = TextFormatter.formatNumber(pokemon.id, 3);
+						const formattedName = TextFormatter.formatPokemonName(
+							pokemon.name
+						);
+
+						// Tipo principal (assumir normal se não disponível por enquanto)
+						const primaryType = pokemon.types ? pokemon.types[0] : "normal";
+
+						// Background baseado no tipo
+						const backgroundInfo =
+							ImageManager.getTypeBackgroundImage(primaryType);
+
+						// Badges dos tipos (se disponível)
+						const typeBadges = pokemon.types
+							? pokemon.types
+									.map((type) => {
+										const typeColor = PokemonTypes.getColor(type);
+										const iconPath = PokemonTypes.getIconPath(type);
+										const displayName =
+											TextFormatter.capitalize(type);
+
+										return `
+									<span class="pokemon-type-badge" style="background-color: ${typeColor};">
+										<img src="${iconPath}" 
+											 alt="${type}" 
+											 class="pokemon-type-badge__icon"
+											 onerror="this.style.display='none';">
+										${displayName}
+									</span>
+								`;
+									})
+									.join("")
+							: "";
+
+						// Hidden badge
+						const hiddenBadge = pokemon.isHidden
+							? '<span class="ability-pokemon-card__hidden-badge"><i class="bi bi-eye-slash-fill me-1"></i>Hidden</span>'
+							: "";
+
+						return `
+						<div class="col-6 col-md-4">
+							<a href="detalhes.html?id=${pokemon.id}" class="text-decoration-none">
+								<div class="ability-pokemon-card h-100 pokemon-type-${primaryType}">
+									<!-- Fundo baseado no tipo -->
+									<div class="ability-pokemon-card__background"
+										 style="background-image: url('${backgroundInfo.imagePath}');"></div>
+									
+									<div class="ability-pokemon-card__body">
+										<div class="ability-pokemon-card__info">
+											<!-- ID da Pokédex -->
+											<div class="ability-pokemon-card__id">
+												#${pokemonId}${hiddenBadge}
+											</div>
+											
+											<!-- Nome do Pokémon -->
+											<h6 class="ability-pokemon-card__name">
+												${formattedName}
+											</h6>
+											
+											<!-- Tipos (se disponível) -->
+											${typeBadges ? `<div class="ability-pokemon-card__types">${typeBadges}</div>` : ""}
+										</div>
+										
+										<!-- Sprite do Pokémon -->
+										<div class="ability-pokemon-card__sprite-container">
+											<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+												pokemon.id
+											}.png" 
+												 alt="${formattedName}" 
+												 class="ability-pokemon-card__sprite"
+												 onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+														pokemon.id
+													}.png'; if(this.src.includes('official-artwork')) this.style.display='none'; this.nextElementSibling.style.display='flex';">
+											<div class="ability-pokemon-card__sprite-fallback" style="display: none;">❓</div>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+					`;
+					})
+					.join("");
+
+				return `
+					<!-- Modal Aprimorado para ${ability.name} -->
+					<div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-lg">
+							<div class="modal-content ability-modal-${primaryType}">
+								<div class="modal-header border-0 pb-2">
+									<div class="d-flex align-items-center w-100">
+										<div class="flex-grow-1">
+											<h4 class="modal-title d-flex align-items-center mb-1" id="${modalId}Label">
+												<i class="bi bi-star-fill me-2"></i>
+												${ability.name}
+												${hiddenBadge}
+											</h4>
+											<div class="ability-meta d-flex align-items-center gap-3">
+												<small class="text-white-50">
+													<i class="bi bi-layers me-1"></i>
+													Generation: ${ability.generation}
+												</small>
+												<small class="text-white-50">
+													<i class="bi bi-hash me-1"></i>
+													ID: ${ability.id}
+												</small>
+												<small class="text-white-50">
+													<i class="bi bi-award me-1"></i>
+													Slot: ${ability.slot}
+												</small>
+											</div>
+										</div>
+										<button type="button" class="btn-close btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+								</div>
+								
+								<div class="modal-body pt-1">
+									<!-- Descrição do Flavor Text -->
+									<div class="ability-flavor-section mt-3">
+										<h6 class="ability-section-title mb-1">
+											<i class="bi bi-quote me-1"></i>
+											Description
+										</h6>
+										<div class="ability-flavor-card p-2 rounded-3">
+											<p class="ability-description-text mb-0">${ability.description}</p>
+										</div>
+									</div>
+
+									${
+										ability.effect
+											? `
+									<!-- Efeito Detalhado -->
+									<div class="ability-effect-section">
+										<h6 class="ability-section-title mb-1 mt-3">
+											<i class="bi bi-gear me-1"></i>
+											Detailed Effect
+										</h6>
+										<div class="ability-effect-card p-2 rounded-3">
+											<p class="ability-effect-text mb-0">${ability.effect}</p>
+										</div>
+									</div>
+									`
+											: ""
+									}
+
+									<!-- Pokémon que possuem esta habilidade -->
+									<div class="ability-pokemon-section mt-3">
+										<h6 class="ability-section-title mb-1 d-flex align-items-center justify-content-between">
+											<span>
+												<i class="bi bi-collection me-1"></i>
+												Pokémon with this ability
+											</span>
+											<small class="ability-pokemon-count">(first ${ability.pokemonList.length})</small>
+										</h6>
+										<div class="row g-2">
+											${pokemonCards}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				`;
+			})
+			.join("");
 	}
 
 	// Método para mostrar o audio indicator com animação

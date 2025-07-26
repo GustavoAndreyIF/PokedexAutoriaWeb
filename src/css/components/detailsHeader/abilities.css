@@ -1,0 +1,802 @@
+/* ========================================
+   ABILITIES SECTION - Estilização das habilidades no header
+   ======================================== */
+
+/* Botões de habilidades - Material Design 3 */
+.pokemon-ability-btn {
+	border-width: 1.5px !important;
+	transition: all 0.2s ease;
+	font-size: 0.875rem;
+	font-weight: 500;
+	text-transform: none;
+	border-radius: 20px !important;
+	padding: 8px 16px !important;
+	backdrop-filter: blur(10px);
+	background: rgba(255, 255, 255, 0.9) !important;
+	color: var(--bs-dark) !important;
+	border-color: rgba(255, 255, 255, 0.8) !important;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-ability-btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Themed ability buttons baseados no tipo primário */
+.pokemon-ability-btn.ability-fire:hover {
+	background: var(--color-fire-light) !important;
+	color: var(--color-fire-dark) !important;
+	border-color: var(--color-fire) !important;
+}
+
+.pokemon-ability-btn.ability-water:hover {
+	background: var(--color-water-light) !important;
+	color: var(--color-water-dark) !important;
+	border-color: var(--color-water) !important;
+}
+
+.pokemon-ability-btn.ability-grass:hover {
+	background: var(--color-grass-light) !important;
+	color: var(--color-grass-dark) !important;
+	border-color: var(--color-grass) !important;
+}
+
+.pokemon-ability-btn.ability-electric:hover {
+	background: var(--color-electric-light) !important;
+	color: var(--color-electric-dark) !important;
+	border-color: var(--color-electric) !important;
+}
+
+.pokemon-ability-btn.ability-psychic:hover {
+	background: var(--color-psychic-light) !important;
+	color: var(--color-psychic-dark) !important;
+	border-color: var(--color-psychic) !important;
+}
+
+.pokemon-ability-btn.ability-ice:hover {
+	background: var(--color-ice-light) !important;
+	color: var(--color-ice-dark) !important;
+	border-color: var(--color-ice) !important;
+}
+
+.pokemon-ability-btn.ability-dragon:hover {
+	background: var(--color-dragon-light) !important;
+	color: var(--color-dragon-dark) !important;
+	border-color: var(--color-dragon) !important;
+}
+
+.pokemon-ability-btn.ability-dark:hover {
+	background: var(--color-dark-light) !important;
+	color: var(--color-dark-dark) !important;
+	border-color: var(--color-dark) !important;
+}
+
+.pokemon-ability-btn.ability-fairy:hover {
+	background: var(--color-fairy-light) !important;
+	color: var(--color-fairy-dark) !important;
+	border-color: var(--color-fairy) !important;
+}
+
+.pokemon-ability-btn.ability-fighting:hover {
+	background: var(--color-fighting-light) !important;
+	color: var(--color-fighting-dark) !important;
+	border-color: var(--color-fighting) !important;
+}
+
+.pokemon-ability-btn.ability-poison:hover {
+	background: var(--color-poison-light) !important;
+	color: var(--color-poison-dark) !important;
+	border-color: var(--color-poison) !important;
+}
+
+.pokemon-ability-btn.ability-ground:hover {
+	background: var(--color-ground-light) !important;
+	color: var(--color-ground-dark) !important;
+	border-color: var(--color-ground) !important;
+}
+
+.pokemon-ability-btn.ability-flying:hover {
+	background: var(--color-flying-light) !important;
+	color: var(--color-flying-dark) !important;
+	border-color: var(--color-flying) !important;
+}
+
+.pokemon-ability-btn.ability-bug:hover {
+	background: var(--color-bug-light) !important;
+	color: var(--color-bug-dark) !important;
+	border-color: var(--color-bug) !important;
+}
+
+.pokemon-ability-btn.ability-rock:hover {
+	background: var(--color-rock-light) !important;
+	color: var(--color-rock-dark) !important;
+	border-color: var(--color-rock) !important;
+}
+
+.pokemon-ability-btn.ability-ghost:hover {
+	background: var(--color-ghost-light) !important;
+	color: var(--color-ghost-dark) !important;
+	border-color: var(--color-ghost) !important;
+}
+
+.pokemon-ability-btn.ability-steel:hover {
+	background: var(--color-steel-light) !important;
+	color: var(--color-steel-dark) !important;
+	border-color: var(--color-steel) !important;
+}
+
+.pokemon-ability-btn.ability-normal:hover {
+	background: var(--color-normal-light) !important;
+	color: var(--color-normal-dark) !important;
+	border-color: var(--color-normal) !important;
+}
+
+/* Modais de habilidades - Material Design 3 */
+.modal-content.ability-modal-fire {
+	background: var(--color-fire) !important;
+	border: 2px solid var(--color-fire) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-water {
+	background: var(--color-water) !important;
+	border: 2px solid var(--color-water) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-grass {
+	background: var(--color-grass) !important;
+	border: 2px solid var(--color-grass) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-electric {
+	background: var(--color-electric) !important;
+	border: 2px solid var(--color-electric) !important;
+	color: var(--bs-dark) !important;
+}
+
+.modal-content.ability-modal-psychic {
+	background: var(--color-psychic) !important;
+	border: 2px solid var(--color-psychic) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-ice {
+	background: var(--color-ice) !important;
+	border: 2px solid var(--color-ice) !important;
+	color: var(--bs-dark) !important;
+}
+
+.modal-content.ability-modal-dragon {
+	background: var(--color-dragon) !important;
+	border: 2px solid var(--color-dragon) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-dark {
+	background: var(--color-dark) !important;
+	border: 2px solid var(--color-dark) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-fairy {
+	background: var(--color-fairy) !important;
+	border: 2px solid var(--color-fairy) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-fighting {
+	background: var(--color-fighting) !important;
+	border: 2px solid var(--color-fighting) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-poison {
+	background: var(--color-poison) !important;
+	border: 2px solid var(--color-poison) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-ground {
+	background: var(--color-ground) !important;
+	border: 2px solid var(--color-ground) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-flying {
+	background: var(--color-flying) !important;
+	border: 2px solid var(--color-flying) !important;
+	color: var(--bs-dark) !important;
+}
+
+.modal-content.ability-modal-bug {
+	background: var(--color-bug) !important;
+	border: 2px solid var(--color-bug) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-rock {
+	background: var(--color-rock) !important;
+	border: 2px solid var(--color-rock) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-ghost {
+	background: var(--color-ghost) !important;
+	border: 2px solid var(--color-ghost) !important;
+	color: white !important;
+}
+
+.modal-content.ability-modal-steel {
+	background: var(--color-steel) !important;
+	border: 2px solid var(--color-steel) !important;
+	color: var(--bs-dark) !important;
+}
+
+.modal-content.ability-modal-normal {
+	background: var(--color-normal) !important;
+	border: 2px solid var(--color-normal) !important;
+	color: var(--bs-dark) !important;
+}
+
+/* Estilização geral dos modais */
+.modal-content[class*="ability-modal-"] {
+	border-radius: 16px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content[class*="ability-modal-"] .modal-header {
+	border-radius: 16px 16px 0 0;
+}
+
+.modal-content[class*="ability-modal-"] .modal-footer {
+	border-radius: 0 0 16px 16px;
+}
+
+/* Corpo do modal com fundo light */
+.modal-content[class*="ability-modal-"] .modal-body {
+	background: var(--bs-light);
+	color: var(--bs-dark);
+	border-radius: 0 0 16px 16px;
+}
+
+/* Cards dentro do modal */
+.ability-flavor-card,
+.ability-effect-card {
+	background: var(--bs-light);
+}
+
+.ability-flavor-card p,
+.ability-effect-card p {
+	color: var(--bs-dark) !important;
+}
+
+/* Meta informações da habilidade */
+.ability-meta small {
+	font-size: 0.9rem;
+	color: var(--bs-dark) !important;
+}
+
+/* Títulos das seções dentro do modal */
+.ability-flavor-section h6,
+.ability-effect-section h6,
+.ability-pokemon-section h6 {
+	color: var(--bs-dark) !important;
+}
+
+/* Ícones dentro do modal */
+.ability-flavor-section i,
+.ability-effect-section i,
+.ability-pokemon-section i,
+.ability-meta i {
+	color: var(--bs-dark) !important;
+}
+
+/* Títulos das seções com melhor tipografia */
+.ability-section-title {
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+		sans-serif !important;
+	font-weight: 700 !important;
+	color: var(--bs-dark) !important;
+	font-size: 0.9rem;
+	letter-spacing: 0.02em;
+}
+
+/* Texto de descrição responsivo */
+.ability-description-text {
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+		sans-serif !important;
+	font-size: 0.9rem;
+	line-height: 1.2;
+	color: var(--bs-dark) !important;
+	font-weight: 400;
+}
+
+/* Texto de efeito responsivo */
+.ability-effect-text {
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+		sans-serif !important;
+	font-size: 0.85rem;
+	line-height: 1.2;
+	color: var(--bs-dark) !important;
+	font-weight: 400;
+}
+
+/* Contador de Pokémon */
+.ability-pokemon-count {
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+		sans-serif !important;
+	color: var(--bs-secondary) !important;
+	font-size: 0.8rem;
+	font-weight: 500;
+}
+
+/* Responsividade para desktop */
+@media (min-width: 768px) {
+	.ability-section-title {
+		font-size: 1rem;
+	}
+
+	.ability-description-text {
+		font-size: 1.1rem;
+		line-height: 1.5;
+	}
+
+	.ability-effect-text {
+		font-size: 1rem;
+		line-height: 1.5;
+	}
+
+	.ability-pokemon-count {
+		font-size: 0.9rem;
+	}
+}
+
+@media (min-width: 992px) {
+	.ability-section-title {
+		font-size: 1.1rem;
+	}
+
+	.ability-description-text {
+		font-size: 1.2rem;
+		line-height: 1.6;
+	}
+
+	.ability-effect-text {
+		font-size: 1.1rem;
+		line-height: 1.6;
+	}
+
+	.ability-pokemon-count {
+		font-size: 1rem;
+	}
+}
+
+/* Badge "Hidden" pequeno */
+.hidden-ability-badge {
+	font-size: 0.75rem !important;
+	padding: 4px 8px !important;
+	font-weight: 600 !important;
+}
+
+/* =============================================================================
+   ABILITY POKEMON CARDS - Estilo baseado nos cards da home
+   ============================================================================= */
+
+.ability-pokemon-card {
+	/* Material Design 3 Surface - adaptado para modal */
+	background-color: var(--bs-body-bg, #ffffff);
+	border: none;
+	border-radius: var(--bs-border-radius-lg, 0.5rem);
+
+	/* Material Design 3 Elevation Level 1 */
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+
+	/* Bootstrap + Material Motion */
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	cursor: pointer;
+	min-height: 100px;
+	position: relative;
+	overflow: hidden;
+}
+
+/* Material Design 3 States */
+.ability-pokemon-card:hover {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+	transform: translateY(-2px);
+}
+
+.ability-pokemon-card:active {
+	transform: translateY(0);
+	transition-duration: 0.1s;
+}
+
+/* Background pattern baseado no tipo */
+.ability-pokemon-card__background {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 120px;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	z-index: 1;
+	clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 0% 100%);
+	opacity: 0.6;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ability-pokemon-card:hover .ability-pokemon-card__background {
+	transform: scale(1.02);
+	opacity: 0.8;
+}
+
+/* Card body - área de conteúdo */
+.ability-pokemon-card__body {
+	position: relative;
+	z-index: 2;
+	padding: 0.75rem;
+	padding-right: 80px; /* Espaço para o sprite */
+}
+
+/* Nome do Pokémon */
+.ability-pokemon-card__name {
+	font-family: "Inter", "Segoe UI", sans-serif;
+	font-weight: 600;
+	font-size: 0.9rem;
+	line-height: 1.3;
+	color: var(--bs-dark);
+	margin: 0.25rem 0;
+	letter-spacing: -0.01em;
+}
+
+/* ID do Pokémon */
+.ability-pokemon-card__id {
+	font-family: "Inter", "Segoe UI", sans-serif;
+	font-weight: 500;
+	font-size: 0.75rem;
+	color: var(--bs-secondary);
+	margin-bottom: 0.25rem;
+}
+
+/* Tipos do Pokémon */
+.ability-pokemon-card__types {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.2rem;
+	margin-top: 0.25rem;
+}
+
+/* Sprite container */
+.ability-pokemon-card__sprite-container {
+	position: absolute;
+	top: 50%;
+	right: 0.5rem;
+	transform: translateY(-50%);
+	width: 70px;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 3;
+}
+
+/* Sprite do Pokémon */
+.ability-pokemon-card__sprite {
+	width: 150%;
+	height: 150%;
+	object-fit: contain;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.ability-pokemon-card:hover .ability-pokemon-card__sprite {
+	transform: scale(1.1);
+	filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+.ability-pokemon-card__sprite-fallback {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	color: var(--bs-secondary, #6c757d);
+	opacity: 0.5;
+}
+
+/* Badge para habilidade hidden */
+.ability-pokemon-card__hidden-badge {
+	font-family: "Inter", "Segoe UI", sans-serif;
+	font-size: 0.6rem;
+	padding: 4px 6px;
+	font-weight: 600;
+	background: var(--bs-dark) !important;
+	color: white !important;
+	border-radius: 0.25rem;
+	margin-left: 0.25rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	height: auto;
+	min-height: 16px;
+}
+
+.ability-pokemon-card__hidden-badge i {
+	color: var(--bs-light) !important;
+}
+
+/* Estilos específicos para cada tipo - hover effects */
+.ability-pokemon-card.pokemon-type-normal:hover {
+	background-color: var(--color-normal-light);
+}
+.ability-pokemon-card.pokemon-type-normal:hover .ability-pokemon-card__name {
+	color: var(--color-normal-dark);
+}
+
+.ability-pokemon-card.pokemon-type-fire:hover {
+	background-color: var(--color-fire-light);
+}
+.ability-pokemon-card.pokemon-type-fire:hover .ability-pokemon-card__name {
+	color: var(--color-fire-dark);
+}
+
+.ability-pokemon-card.pokemon-type-water:hover {
+	background-color: var(--color-water-light);
+}
+.ability-pokemon-card.pokemon-type-water:hover .ability-pokemon-card__name {
+	color: var(--color-water-dark);
+}
+
+.ability-pokemon-card.pokemon-type-electric:hover {
+	background-color: var(--color-electric-light);
+}
+.ability-pokemon-card.pokemon-type-electric:hover .ability-pokemon-card__name {
+	color: var(--color-electric-dark);
+}
+
+.ability-pokemon-card.pokemon-type-grass:hover {
+	background-color: var(--color-grass-light);
+}
+.ability-pokemon-card.pokemon-type-grass:hover .ability-pokemon-card__name {
+	color: var(--color-grass-dark);
+}
+
+.ability-pokemon-card.pokemon-type-ice:hover {
+	background-color: var(--color-ice-light);
+}
+.ability-pokemon-card.pokemon-type-ice:hover .ability-pokemon-card__name {
+	color: var(--color-ice-dark);
+}
+
+.ability-pokemon-card.pokemon-type-fighting:hover {
+	background-color: var(--color-fighting-light);
+}
+.ability-pokemon-card.pokemon-type-fighting:hover .ability-pokemon-card__name {
+	color: var(--color-fighting-dark);
+}
+
+.ability-pokemon-card.pokemon-type-poison:hover {
+	background-color: var(--color-poison-light);
+}
+.ability-pokemon-card.pokemon-type-poison:hover .ability-pokemon-card__name {
+	color: var(--color-poison-dark);
+}
+
+.ability-pokemon-card.pokemon-type-ground:hover {
+	background-color: var(--color-ground-light);
+}
+.ability-pokemon-card.pokemon-type-ground:hover .ability-pokemon-card__name {
+	color: var(--color-ground-dark);
+}
+
+.ability-pokemon-card.pokemon-type-flying:hover {
+	background-color: var(--color-flying-light);
+}
+.ability-pokemon-card.pokemon-type-flying:hover .ability-pokemon-card__name {
+	color: var(--color-flying-dark);
+}
+
+.ability-pokemon-card.pokemon-type-psychic:hover {
+	background-color: var(--color-psychic-light);
+}
+.ability-pokemon-card.pokemon-type-psychic:hover .ability-pokemon-card__name {
+	color: var(--color-psychic-dark);
+}
+
+.ability-pokemon-card.pokemon-type-bug:hover {
+	background-color: var(--color-bug-light);
+}
+.ability-pokemon-card.pokemon-type-bug:hover .ability-pokemon-card__name {
+	color: var(--color-bug-dark);
+}
+
+.ability-pokemon-card.pokemon-type-rock:hover {
+	background-color: var(--color-rock-light);
+}
+.ability-pokemon-card.pokemon-type-rock:hover .ability-pokemon-card__name {
+	color: var(--color-rock-dark);
+}
+
+.ability-pokemon-card.pokemon-type-ghost:hover {
+	background-color: var(--color-ghost-light);
+}
+.ability-pokemon-card.pokemon-type-ghost:hover .ability-pokemon-card__name {
+	color: var(--color-ghost-dark);
+}
+
+.ability-pokemon-card.pokemon-type-dragon:hover {
+	background-color: var(--color-dragon-light);
+}
+.ability-pokemon-card.pokemon-type-dragon:hover .ability-pokemon-card__name {
+	color: var(--color-dragon-dark);
+}
+
+.ability-pokemon-card.pokemon-type-dark:hover {
+	background-color: var(--color-dark-light);
+}
+.ability-pokemon-card.pokemon-type-dark:hover .ability-pokemon-card__name {
+	color: var(--color-dark-dark);
+}
+
+.ability-pokemon-card.pokemon-type-steel:hover {
+	background-color: var(--color-steel-light);
+}
+.ability-pokemon-card.pokemon-type-steel:hover .ability-pokemon-card__name {
+	color: var(--color-steel-dark);
+}
+
+.ability-pokemon-card.pokemon-type-fairy:hover {
+	background-color: var(--color-fairy-light);
+}
+.ability-pokemon-card.pokemon-type-fairy:hover .ability-pokemon-card__name {
+	color: var(--color-fairy-dark);
+}
+
+.ability-pokemon-card.pokemon-type-unknown:hover {
+	background-color: var(--color-unknown-light);
+}
+.ability-pokemon-card.pokemon-type-unknown:hover .ability-pokemon-card__name {
+	color: var(--color-unknown-dark);
+}
+
+/* Type badges para cards de ability - menores que os da home */
+.ability-pokemon-card .pokemon-type-badge {
+	font-family: "Inter", sans-serif;
+	font-weight: 600;
+	font-size: 0.6rem;
+	padding: 0.15rem 0.4rem;
+	border-radius: var(--bs-border-radius-pill, 50rem);
+	color: var(--bs-light);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.15rem;
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ability-pokemon-card .pokemon-type-badge__icon {
+	width: 8px;
+	height: 8px;
+}
+
+/* Links para os Pokémon */
+a .ability-pokemon-card {
+	text-decoration: none;
+}
+
+a:hover .ability-pokemon-card {
+	text-decoration: none;
+}
+
+/* Estilização da descrição da habilidade */
+.ability-description p {
+	font-size: 1rem;
+	line-height: 1.5;
+	color: var(--bs-dark) !important;
+}
+
+.ability-info small {
+	color: var(--bs-secondary) !important;
+	font-size: 0.8rem;
+}
+@media (max-width: 576px) {
+	.pokemon-ability-btn {
+		font-size: 0.8rem;
+		padding: 6px 12px !important;
+	}
+
+	.modal-dialog {
+		margin: 1rem;
+	}
+
+	.ability-description p {
+		font-size: 0.9rem;
+	}
+
+	.ability-meta {
+		flex-direction: column;
+		align-items: flex-start !important;
+		gap: 0.25rem !important;
+	}
+
+	.modal-title {
+		font-size: 1.1rem;
+	}
+
+	.ability-flavor-card,
+	.ability-effect-card {
+		padding: 0.75rem !important;
+	}
+
+	/* Cards responsivos em mobile */
+	.ability-pokemon-card {
+		min-height: 80px;
+	}
+
+	.ability-pokemon-card__background {
+		width: 100px;
+		clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
+	}
+
+	.ability-pokemon-card__body {
+		padding: 0.5rem;
+		padding-right: 70px;
+	}
+
+	.ability-pokemon-card__name {
+		font-size: 0.8rem;
+		margin: 0.15rem 0;
+	}
+
+	.ability-pokemon-card__id {
+		font-size: 0.65rem;
+		margin-bottom: 0.15rem;
+	}
+
+	.ability-pokemon-card__sprite-container {
+		width: 60px;
+		height: 60px;
+		right: 0.25rem;
+	}
+
+	.ability-pokemon-card .pokemon-type-badge {
+		font-size: 0.5rem;
+		padding: 0.1rem 0.3rem;
+		gap: 0.1rem;
+	}
+
+	.ability-pokemon-card .pokemon-type-badge__icon {
+		width: 6px;
+		height: 6px;
+	}
+
+	.ability-pokemon-card__hidden-badge {
+		font-size: 0.5rem;
+		padding: 2px 4px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		height: auto;
+		min-height: 14px;
+	}
+
+	.ability-pokemon-card__hidden-badge i {
+		color: var(--bs-light) !important;
+	}
+}
+
+/* Animação para os modais */
+.modal.fade .modal-dialog {
+	transition: transform 0.3s ease-out;
+	transform: scale(0.8);
+}
+
+.modal.show .modal-dialog {
+	transform: scale(1);
+}

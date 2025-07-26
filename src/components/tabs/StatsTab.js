@@ -252,7 +252,7 @@ export class StatsTab {
                             <!-- Nome e valor da estatística -->
                             <div class="d-flex justify-content-between mb-1">
                                 <small class="fw-bold stats-text"><i class="${iconClass}"></i> ${statName}</small>
-                                <small class="badge stat-badge stat-badge--${primaryType} text-light stats-number">${stat.value}</small>
+                                <small class="badge stat-badge stat-badge--${primaryType} stats-number">${stat.value}</small>
                             </div>
                             
                             <!-- Barra de progresso -->
@@ -285,12 +285,12 @@ export class StatsTab {
 					? this.statsData.heldItems
 							.map(
 								(item) =>
-									`<span class="badge stat-badge stat-badge--${primaryType} text-light stats-text me-1">${TextFormatter.capitalize(
+									`<span class="badge stat-badge stat-badge--${primaryType} stats-text me-1">${TextFormatter.capitalize(
 										item.name.replace("-", " ")
 									)}</span>`
 							)
 							.join("")
-					: `<span class="badge stat-badge stat-badge--${primaryType} text-light stats-text">None</span>`;
+					: `<span class="badge stat-badge stat-badge--${primaryType} stats-text">None</span>`;
 
 			// ========================================
 			// INFORMAÇÕES DA SPECIES
@@ -299,12 +299,6 @@ export class StatsTab {
 				(this.statsData.speciesInfo.captureRate / 255) *
 				100
 			).toFixed(1);
-			const captureRateColor =
-				this.statsData.speciesInfo.captureRate > 200
-					? "success"
-					: this.statsData.speciesInfo.captureRate > 100
-					? "warning"
-					: "danger";
 
 			const generationName = this.statsData.speciesInfo.generation
 				? TextFormatter.capitalize(
@@ -327,12 +321,12 @@ export class StatsTab {
 			// Status especial (Legendary/Mythical/Baby)
 			let specialStatus = [];
 			if (this.statsData.speciesInfo.isLegendary)
-				specialStatus.push("🌟 Lendário");
-			if (this.statsData.speciesInfo.isMythical) specialStatus.push("✨ Mítico");
-			if (this.statsData.speciesInfo.isBaby) specialStatus.push("👶 Bebê");
+				specialStatus.push("Legendary");
+			if (this.statsData.speciesInfo.isMythical) specialStatus.push("Mythical");
+			if (this.statsData.speciesInfo.isBaby) specialStatus.push("Baby");
 
 			const specialStatusText =
-				specialStatus.length > 0 ? specialStatus.join(", ") : "🐾 Normal";
+				specialStatus.length > 0 ? specialStatus.join(", ") : "Normal";
 
 			// ========================================
 			// RENDERIZAÇÃO FINAL
@@ -346,11 +340,11 @@ export class StatsTab {
                         <div class="col-md-6">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-rulers"></i> Height:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-number">${heightInMeters} m</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-number">${heightInMeters} m</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-speedometer2"></i> Weight:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-number">${weightInKg} kg</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-number">${weightInKg} kg</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-box-seam"></i> Held Items:</small>
@@ -358,25 +352,25 @@ export class StatsTab {
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-gem"></i> Generation:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-text">${generationName}</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-text">${generationName}</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-tree"></i> Habitat:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-text">${habitatName}</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-text">${habitatName}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-star"></i> Special Status:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-text">${specialStatusText}</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-text">${specialStatusText}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="fw-bold stats-text"><i class="bi bi-bullseye"></i> Capture Rate:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-number">${this.statsData.speciesInfo.captureRate}/255 (${captureRatePercentage}%)</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-number">${this.statsData.speciesInfo.captureRate}/255 (${captureRatePercentage}%)</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <small class="fw-bold stats-text"><i class="bi bi-graph-up"></i> Growth Rate:</small>
-                                <span class="badge stat-badge stat-badge--${primaryType} text-light stats-text">${growthRateName}</span>
+                                <span class="badge stat-badge stat-badge--${primaryType} stats-text">${growthRateName}</span>
                             </div>
                         </div>
                     </div>

@@ -100,13 +100,19 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-normal-light),
+		var(--color-normal),
 		var(--color-normal-dark)
 	);
 }
 
 /* Fire Type */
 .stats-progress-bar--fire {
-	background: linear-gradient(90deg, var(--color-fire-light), var(--color-fire-dark));
+	background: linear-gradient(
+		90deg,
+		var(--color-fire-light),
+		var(--color-fire),
+		var(--color-fire-dark)
+	);
 }
 
 /* Water Type */
@@ -114,6 +120,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-water-light),
+		var(--color-water),
 		var(--color-water-dark)
 	);
 }
@@ -123,6 +130,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-electric-light),
+		var(--color-electric),
 		var(--color-electric-dark)
 	);
 }
@@ -132,13 +140,19 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-grass-light),
+		var(--color-grass),
 		var(--color-grass-dark)
 	);
 }
 
 /* Ice Type */
 .stats-progress-bar--ice {
-	background: linear-gradient(90deg, var(--color-ice-light), var(--color-ice-dark));
+	background: linear-gradient(
+		90deg,
+		var(--color-ice-light),
+		var(--color-ice),
+		var(--color-ice-dark)
+	);
 }
 
 /* Fighting Type */
@@ -146,6 +160,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-fighting-light),
+		var(--color-fighting),
 		var(--color-fighting-dark)
 	);
 }
@@ -155,6 +170,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-poison-light),
+		var(--color-poison),
 		var(--color-poison-dark)
 	);
 }
@@ -164,6 +180,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-ground-light),
+		var(--color-ground),
 		var(--color-ground-dark)
 	);
 }
@@ -173,6 +190,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-flying-light),
+		var(--color-flying),
 		var(--color-flying-dark)
 	);
 }
@@ -182,18 +200,29 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-psychic-light),
+		var(--color-psychic),
 		var(--color-psychic-dark)
 	);
 }
 
 /* Bug Type */
 .stats-progress-bar--bug {
-	background: linear-gradient(90deg, var(--color-bug-light), var(--color-bug-dark));
+	background: linear-gradient(
+		90deg,
+		var(--color-bug-light),
+		var(--color-bug),
+		var(--color-bug-dark)
+	);
 }
 
 /* Rock Type */
 .stats-progress-bar--rock {
-	background: linear-gradient(90deg, var(--color-rock-light), var(--color-rock-dark));
+	background: linear-gradient(
+		90deg,
+		var(--color-rock-light),
+		var(--color-rock),
+		var(--color-rock-dark)
+	);
 }
 
 /* Ghost Type */
@@ -201,6 +230,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-ghost-light),
+		var(--color-ghost),
 		var(--color-ghost-dark)
 	);
 }
@@ -210,13 +240,19 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-dragon-light),
+		var(--color-dragon),
 		var(--color-dragon-dark)
 	);
 }
 
 /* Dark Type */
 .stats-progress-bar--dark {
-	background: linear-gradient(90deg, var(--color-dark-light), var(--color-dark-dark));
+	background: linear-gradient(
+		90deg,
+		var(--color-dark-light),
+		var(--color-dark),
+		var(--color-dark-dark)
+	);
 }
 
 /* Steel Type */
@@ -224,6 +260,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-steel-light),
+		var(--color-steel),
 		var(--color-steel-dark)
 	);
 }
@@ -233,6 +270,7 @@
 	background: linear-gradient(
 		90deg,
 		var(--color-fairy-light),
+		var(--color-fairy),
 		var(--color-fairy-dark)
 	);
 }
@@ -258,57 +296,75 @@
 /* Badge colors por tipo - usando --color-[type]-light para o fundo */
 .stat-badge--normal {
 	background-color: var(--color-normal-light);
+	color: var(--color-normal-dark);
 }
 .stat-badge--fire {
 	background-color: var(--color-fire-light);
+	color: var(--color-fire-dark);
 }
 .stat-badge--water {
 	background-color: var(--color-water-light);
+	color: var(--color-water-dark);
 }
 .stat-badge--electric {
 	background-color: var(--color-electric-light);
+	color: var(--color-electric-dark);
 }
 .stat-badge--grass {
 	background-color: var(--color-grass-light);
+	color: var(--color-grass-dark);
 }
 .stat-badge--ice {
 	background-color: var(--color-ice-light);
+	color: var(--color-ice-dark);
 }
 .stat-badge--fighting {
 	background-color: var(--color-fighting-light);
+	color: var(--color-fighting-dark);
 }
 .stat-badge--poison {
 	background-color: var(--color-poison-light);
+	color: var(--color-poison-dark);
 }
 .stat-badge--ground {
 	background-color: var(--color-ground-light);
+	color: var(--color-ground-dark);
 }
 .stat-badge--flying {
 	background-color: var(--color-flying-light);
+	color: var(--color-flying-dark);
 }
 .stat-badge--psychic {
 	background-color: var(--color-psychic-light);
+	color: var(--color-psychic-dark);
 }
 .stat-badge--bug {
 	background-color: var(--color-bug-light);
+	color: var(--color-bug-dark);
 }
 .stat-badge--rock {
 	background-color: var(--color-rock-light);
+	color: var(--color-rock-dark);
 }
 .stat-badge--ghost {
 	background-color: var(--color-ghost-light);
+	color: var(--color-ghost-dark);
 }
 .stat-badge--dragon {
 	background-color: var(--color-dragon-light);
+	color: var(--color-dragon-dark);
 }
 .stat-badge--dark {
 	background-color: var(--color-dark-light);
+	color: var(--color-dark-dark);
 }
 .stat-badge--steel {
 	background-color: var(--color-steel-light);
+	color: var(--color-steel-dark);
 }
 .stat-badge--fairy {
 	background-color: var(--color-fairy-light);
+	color: var(--color-fairy-dark);
 }
 
 /* ========================================
