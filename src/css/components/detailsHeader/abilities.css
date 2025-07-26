@@ -276,7 +276,7 @@
 /* Meta informações da habilidade */
 .ability-meta small {
 	font-size: 0.9rem;
-	color: var(--bs-dark) !important;
+	color: var(--bs-light) !important;
 }
 
 /* Títulos das seções dentro do modal */
@@ -289,9 +289,23 @@
 /* Ícones dentro do modal */
 .ability-flavor-section i,
 .ability-effect-section i,
-.ability-pokemon-section i,
-.ability-meta i {
+.ability-pokemon-section i {
 	color: var(--bs-dark) !important;
+}
+
+/* Ícones da seção meta - cores light */
+.ability-meta i {
+	color: var(--bs-light) !important;
+}
+
+/* Botão de fechar modal */
+.modal-content[class*="ability-modal-"] .btn-close {
+	filter: invert(1) brightness(1.5);
+	opacity: 0.8;
+}
+
+.modal-content[class*="ability-modal-"] .btn-close:hover {
+	opacity: 1;
 }
 
 /* Títulos das seções com melhor tipografia */

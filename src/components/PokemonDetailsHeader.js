@@ -387,7 +387,7 @@ export class PokemonDetailsHeader {
 						
 						<!-- Abilities Section - Material Design 3 -->
 						<div class="text-center mb-3 mb-md-4 px-2 px-md-3">
-							<h6 class="text-white mb-2 fw-bold">
+							<h6 class="text-white mb-2 fw-bold" style="	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
 								<i class="bi bi-stars me-1"></i>
 								Abilities
 							</h6>
@@ -456,7 +456,6 @@ export class PokemonDetailsHeader {
 				// Renderizar lista de Pokémon
 				const pokemonCards = ability.pokemonList
 					.map((pokemon) => {
-						const pokemonName = TextFormatter.capitalize(pokemon.name);
 						const pokemonId = TextFormatter.formatNumber(pokemon.id, 3);
 						const formattedName = TextFormatter.formatPokemonName(
 							pokemon.name
@@ -554,21 +553,21 @@ export class PokemonDetailsHeader {
 												${hiddenBadge}
 											</h4>
 											<div class="ability-meta d-flex align-items-center gap-3">
-												<small class="text-white-50">
-													<i class="bi bi-layers me-1"></i>
+												<small class="text-white">
+													<i class="bi bi-layers me-1 text-light"></i>
 													Generation: ${ability.generation}
 												</small>
-												<small class="text-white-50">
-													<i class="bi bi-hash me-1"></i>
+												<small class="text-white">
+													<i class="bi bi-hash me-1 text-light"></i>
 													ID: ${ability.id}
 												</small>
-												<small class="text-white-50">
-													<i class="bi bi-award me-1"></i>
+												<small class="text-white">
+													<i class="bi bi-award me-1 text-light"></i>
 													Slot: ${ability.slot}
 												</small>
 											</div>
 										</div>
-										<button type="button" class="btn-close btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 								</div>
 								
