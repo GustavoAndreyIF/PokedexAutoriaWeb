@@ -1,0 +1,439 @@
+/* =============================================================================
+   POKÉDX - TOOLTIPS CUSTOMIZADOS
+   ============================================================================= */
+
+/* Tooltip customizado base com fundo branco e texto preto */
+.tooltip.custom-tooltip .tooltip-inner {
+	background-color: var(--bs-white);
+	color: var(--bs-dark);
+	border: 1px solid var(--bs-border-color);
+	box-shadow: var(--bs-box-shadow);
+	font-size: 0.875rem;
+	font-weight: 500;
+	padding: 0.5rem 0.75rem;
+	border-radius: var(--bs-border-radius);
+}
+
+/* =============================================================================
+   TOOLTIPS POR TIPO DE POKÉMON
+   ============================================================================= */
+
+/* Base comum para todos os tooltips de tipos */
+.tooltip[class*="tooltip-"] .tooltip-inner {
+	box-shadow: var(--bs-box-shadow);
+	font-size: 0.875rem;
+	font-weight: 500;
+	padding: 0.5rem 0.75rem;
+	border-radius: var(--bs-border-radius);
+}
+
+/* Normal Type */
+.tooltip.tooltip-normal .tooltip-inner {
+	background-color: var(--color-normal-light);
+	color: var(--color-normal-dark);
+	border: 1px solid var(--color-normal);
+	box-shadow: var(--bs-box-shadow);
+	font-size: 0.875rem;
+	font-weight: 500;
+	padding: 0.5rem 0.75rem;
+	border-radius: var(--bs-border-radius);
+}
+
+/* Fire Type */
+.tooltip.tooltip-fire .tooltip-inner {
+	background-color: var(--color-fire-light);
+	color: var(--color-fire-dark);
+	border: 1px solid var(--color-fire);
+}
+
+/* Water Type */
+.tooltip.tooltip-water .tooltip-inner {
+	background-color: var(--color-water-light);
+	color: var(--color-water-dark);
+	border: 1px solid var(--color-water);
+}
+
+/* Electric Type */
+.tooltip.tooltip-electric .tooltip-inner {
+	background-color: var(--color-electric-light);
+	color: var(--color-electric-dark);
+	border: 1px solid var(--color-electric);
+}
+
+/* Grass Type */
+.tooltip.tooltip-grass .tooltip-inner {
+	background-color: var(--color-grass-light);
+	color: var(--color-grass-dark);
+	border: 1px solid var(--color-grass);
+}
+
+/* Ice Type */
+.tooltip.tooltip-ice .tooltip-inner {
+	background-color: var(--color-ice-light);
+	color: var(--color-ice-dark);
+	border: 1px solid var(--color-ice);
+}
+
+/* Fighting Type */
+.tooltip.tooltip-fighting .tooltip-inner {
+	background-color: var(--color-fighting-light);
+	color: var(--color-fighting-dark);
+	border: 1px solid var(--color-fighting);
+}
+
+/* Poison Type */
+.tooltip.tooltip-poison .tooltip-inner {
+	background-color: var(--color-poison-light);
+	color: var(--color-poison-dark);
+	border: 1px solid var(--color-poison);
+}
+
+/* Ground Type */
+.tooltip.tooltip-ground .tooltip-inner {
+	background-color: var(--color-ground-light);
+	color: var(--color-ground-dark);
+	border: 1px solid var(--color-ground);
+}
+
+/* Flying Type */
+.tooltip.tooltip-flying .tooltip-inner {
+	background-color: var(--color-flying-light);
+	color: var(--color-flying-dark);
+	border: 1px solid var(--color-flying);
+}
+
+/* Psychic Type */
+.tooltip.tooltip-psychic .tooltip-inner {
+	background-color: var(--color-psychic-light);
+	color: var(--color-psychic-dark);
+	border: 1px solid var(--color-psychic);
+}
+
+/* Bug Type */
+.tooltip.tooltip-bug .tooltip-inner {
+	background-color: var(--color-bug-light);
+	color: var(--color-bug-dark);
+	border: 1px solid var(--color-bug);
+}
+
+/* Rock Type */
+.tooltip.tooltip-rock .tooltip-inner {
+	background-color: var(--color-rock-light);
+	color: var(--color-rock-dark);
+	border: 1px solid var(--color-rock);
+}
+
+/* Ghost Type */
+.tooltip.tooltip-ghost .tooltip-inner {
+	background-color: var(--color-ghost-light);
+	color: var(--color-ghost-dark);
+	border: 1px solid var(--color-ghost);
+}
+
+/* Dragon Type */
+.tooltip.tooltip-dragon .tooltip-inner {
+	background-color: var(--color-dragon-light);
+	color: var(--color-dragon-dark);
+	border: 1px solid var(--color-dragon);
+}
+
+/* Dark Type */
+.tooltip.tooltip-dark .tooltip-inner {
+	background-color: var(--color-dark-light);
+	color: var(--color-dark-dark);
+	border: 1px solid var(--color-dark);
+}
+
+/* Steel Type */
+.tooltip.tooltip-steel .tooltip-inner {
+	background-color: var(--color-steel-light);
+	color: var(--color-steel-dark);
+	border: 1px solid var(--color-steel);
+}
+
+/* Fairy Type */
+.tooltip.tooltip-fairy .tooltip-inner {
+	background-color: var(--color-fairy-light);
+	color: var(--color-fairy-dark);
+	border: 1px solid var(--color-fairy);
+}
+
+/* =============================================================================
+   SETAS DOS TOOLTIPS POR TIPO
+   ============================================================================= */
+
+/* Setas direcionais para todos os tipos */
+.tooltip.tooltip-normal.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-normal-light);
+}
+.tooltip.tooltip-normal.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-normal-light);
+}
+.tooltip.tooltip-normal.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-normal-light);
+}
+.tooltip.tooltip-normal.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-normal-light);
+}
+
+.tooltip.tooltip-fire.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-fire-light);
+}
+.tooltip.tooltip-fire.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-fire-light);
+}
+.tooltip.tooltip-fire.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-fire-light);
+}
+.tooltip.tooltip-fire.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-fire-light);
+}
+
+.tooltip.tooltip-water.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-water-light);
+}
+.tooltip.tooltip-water.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-water-light);
+}
+.tooltip.tooltip-water.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-water-light);
+}
+.tooltip.tooltip-water.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-water-light);
+}
+
+.tooltip.tooltip-electric.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-electric-light);
+}
+.tooltip.tooltip-electric.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-electric-light);
+}
+.tooltip.tooltip-electric.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-electric-light);
+}
+.tooltip.tooltip-electric.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-electric-light);
+}
+
+.tooltip.tooltip-grass.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-grass-light);
+}
+.tooltip.tooltip-grass.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-grass-light);
+}
+.tooltip.tooltip-grass.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-grass-light);
+}
+.tooltip.tooltip-grass.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-grass-light);
+}
+
+.tooltip.tooltip-ice.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-ice-light);
+}
+.tooltip.tooltip-ice.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-ice-light);
+}
+.tooltip.tooltip-ice.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-ice-light);
+}
+.tooltip.tooltip-ice.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-ice-light);
+}
+
+.tooltip.tooltip-fighting.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-fighting-light);
+}
+.tooltip.tooltip-fighting.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-fighting-light);
+}
+.tooltip.tooltip-fighting.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-fighting-light);
+}
+.tooltip.tooltip-fighting.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-fighting-light);
+}
+
+.tooltip.tooltip-poison.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-poison-light);
+}
+.tooltip.tooltip-poison.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-poison-light);
+}
+.tooltip.tooltip-poison.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-poison-light);
+}
+.tooltip.tooltip-poison.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-poison-light);
+}
+
+.tooltip.tooltip-ground.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-ground-light);
+}
+.tooltip.tooltip-ground.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-ground-light);
+}
+.tooltip.tooltip-ground.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-ground-light);
+}
+.tooltip.tooltip-ground.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-ground-light);
+}
+
+.tooltip.tooltip-flying.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-flying-light);
+}
+.tooltip.tooltip-flying.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-flying-light);
+}
+.tooltip.tooltip-flying.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-flying-light);
+}
+.tooltip.tooltip-flying.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-flying-light);
+}
+
+.tooltip.tooltip-psychic.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-psychic-light);
+}
+.tooltip.tooltip-psychic.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-psychic-light);
+}
+.tooltip.tooltip-psychic.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-psychic-light);
+}
+.tooltip.tooltip-psychic.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-psychic-light);
+}
+
+.tooltip.tooltip-bug.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-bug-light);
+}
+.tooltip.tooltip-bug.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-bug-light);
+}
+.tooltip.tooltip-bug.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-bug-light);
+}
+.tooltip.tooltip-bug.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-bug-light);
+}
+
+.tooltip.tooltip-rock.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-rock-light);
+}
+.tooltip.tooltip-rock.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-rock-light);
+}
+.tooltip.tooltip-rock.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-rock-light);
+}
+.tooltip.tooltip-rock.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-rock-light);
+}
+
+.tooltip.tooltip-ghost.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-ghost-light);
+}
+.tooltip.tooltip-ghost.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-ghost-light);
+}
+.tooltip.tooltip-ghost.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-ghost-light);
+}
+.tooltip.tooltip-ghost.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-ghost-light);
+}
+
+.tooltip.tooltip-dragon.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-dragon-light);
+}
+.tooltip.tooltip-dragon.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-dragon-light);
+}
+.tooltip.tooltip-dragon.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-dragon-light);
+}
+.tooltip.tooltip-dragon.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-dragon-light);
+}
+
+.tooltip.tooltip-dark.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-dark-light);
+}
+.tooltip.tooltip-dark.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-dark-light);
+}
+.tooltip.tooltip-dark.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-dark-light);
+}
+.tooltip.tooltip-dark.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-dark-light);
+}
+
+.tooltip.tooltip-steel.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-steel-light);
+}
+.tooltip.tooltip-steel.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-steel-light);
+}
+.tooltip.tooltip-steel.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-steel-light);
+}
+.tooltip.tooltip-steel.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-steel-light);
+}
+
+.tooltip.tooltip-fairy.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--color-fairy-light);
+}
+.tooltip.tooltip-fairy.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--color-fairy-light);
+}
+.tooltip.tooltip-fairy.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--color-fairy-light);
+}
+.tooltip.tooltip-fairy.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--color-fairy-light);
+}
+
+/* Seta do tooltip customizada (fallback para custom-tooltip) */
+.tooltip.custom-tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+	border-bottom-color: var(--bs-white);
+}
+
+.tooltip.custom-tooltip.bs-tooltip-top .tooltip-arrow::before {
+	border-top-color: var(--bs-white);
+}
+
+.tooltip.custom-tooltip.bs-tooltip-start .tooltip-arrow::before {
+	border-left-color: var(--bs-white);
+}
+
+.tooltip.custom-tooltip.bs-tooltip-end .tooltip-arrow::before {
+	border-right-color: var(--bs-white);
+}
+
+/* Animação suave para os tooltips */
+.tooltip {
+	transition: opacity 0.15s ease-in-out;
+}
+
+/* Z-index alto para garantir que ficará acima de outros elementos */
+.tooltip.custom-tooltip,
+.tooltip[class*="tooltip-"] {
+	z-index: 1080;
+}
+
+/* =============================================================================
+   RESPONSIVIDADE DOS TOOLTIPS
+   ============================================================================= */
+
+/* Em telas menores, tooltips podem ser menores */
+@media (max-width: 768px) {
+	.tooltip.custom-tooltip .tooltip-inner,
+	.tooltip[class*="tooltip-"] .tooltip-inner {
+		font-size: 0.8125rem;
+		padding: 0.375rem 0.625rem;
+	}
+}

@@ -307,7 +307,10 @@ export class PokemonDetailsHeader {
 									<div class="d-flex align-items-center">
 										<a class="pokemon-back-button back-${primaryType} me-2 me-md-3 btn p-0 border-0 bg-transparent" 
 												href="index.html" 
-												title="Voltar">
+												data-bs-toggle="tooltip" 
+												data-bs-placement="bottom"
+												data-bs-custom-class="tooltip-${primaryType}"
+												title="Back to Home">
 											<i class="bi bi-x-lg"></i>
 										</a>
 										<h1 class="pokemon-name-title mb-0">${formattedName}</h1>
@@ -331,8 +334,11 @@ export class PokemonDetailsHeader {
 										? `
 									<button class="btn pokemon-nav-button pokemon-nav-button--previous nav-${primaryType} position-absolute start-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
 											onclick="pokemonDetailsHeader.navigateToPrevious()"
-											title="Pokémon Anterior (#${this.pokemonId - 1})"
-											aria-label="Pokémon Anterior">
+											data-bs-toggle="tooltip" 
+											data-bs-placement="left"
+											data-bs-custom-class="tooltip-${primaryType}"
+											title="Previous Pokémon (#${this.pokemonId - 1})"
+											aria-label="Previous Pokémon">
 										<i class="pokemon-nav-icon bi bi-chevron-left"></i>
 									</button>
 								`
@@ -365,8 +371,11 @@ export class PokemonDetailsHeader {
 										? `
 									<button class="btn pokemon-nav-button pokemon-nav-button--next nav-${primaryType} position-absolute end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
 											onclick="pokemonDetailsHeader.navigateToNext()"
-											title="Próximo Pokémon (#${this.pokemonId + 1})"
-											aria-label="Próximo Pokémon">
+											data-bs-toggle="tooltip" 
+											data-bs-placement="right"
+											data-bs-custom-class="tooltip-${primaryType}"
+											title="Next Pokémon (#${this.pokemonId + 1})"
+											aria-label="Next Pokémon">
 										<i class="pokemon-nav-icon bi bi-chevron-right"></i>
 									</button>
 								`
@@ -411,6 +420,9 @@ export class PokemonDetailsHeader {
 
 			// Disponibilizar globalmente a instância para uso nos event handlers
 			window.pokemonDetailsHeader = this;
+
+			// Inicializar tooltips do Bootstrap
+			this.initializeTooltips();
 		} catch (error) {
 			headerContainer.innerHTML = `
 				<div class="alert alert-danger m-4">
@@ -746,5 +758,26 @@ export class PokemonDetailsHeader {
 
 			return false;
 		}
+	}
+
+	// Método para inicializar tooltips do Bootstrap
+	initializeTooltips() {
+		// Aguardar um pequeno delay para garantir que o DOM foi renderizado
+		setTimeout(() => {
+			// Selecionar todos os elementos com data-bs-toggle="tooltip"
+			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+			
+			// Inicializar tooltips do Bootstrap
+			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => {
+				return new bootstrap.Tooltip(tooltipTriggerEl, {
+					// Configurações customizadas
+					delay: { show: 300, hide: 100 },
+					animation: true,
+					html: false
+				});
+			});
+
+			console.log(`✅ ${tooltipList.length} tooltips inicializados no header`);
+		}, 100);
 	}
 }
