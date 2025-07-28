@@ -23,8 +23,8 @@ export class MovesTab {
 
 			const pokemonData = await response.json();
 
-			// Pegar apenas os primeiros 10 movimentos para não sobrecarregar
-			this.movesData = pokemonData.moves.slice(0, 10).map((moveInfo) => ({
+			// Pegar apenas os primeiros 40 movimentos para não sobrecarregar
+			this.movesData = pokemonData.moves.map((moveInfo) => ({
 				name: moveInfo.move.name,
 				url: moveInfo.move.url,
 				level_learned: moveInfo.version_group_details[0]?.level_learned_at || 1,
@@ -59,19 +59,19 @@ export class MovesTab {
 							: `<span class="badge bg-secondary me-2">Inicial</span>`;
 
 					return `
-						<div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+					<a href="movedetails.html?moveID=${move.id}" title="Ver detalhes do movimento" class="text-decoration-none">
+						<div class="d-flex justify-content-between align-items-center py-2 border-bottom mx-2 mt-2 moveTabElement" >
 							
-								<div>
+								<div class="mx-2">
 									${levelBadge}
-									<span class="fw-medium">${moveName}</span>
+									<span class="fw-medium text-dark">${moveName}</span>
 								</div>
 							
-							<small class="text-muted">
-								<a href="movedetails.html?moveID=${move.id}" title="Ver detalhes do movimento" class="text-decoration-none">
+							<small class="text-muted mx-2">
 									<i class="bi bi-info-circle"></i>
-								</a>
 							</small>
 						</div>
+					</a>
 					`;
 				})
 				.join("");
@@ -79,9 +79,9 @@ export class MovesTab {
 			container.innerHTML = `
 				<h5 class="fw-semibold mb-3">⚔️ Movimentos</h5>
 				<div class="mb-3">
-					<small class="text-muted">Exibindo ${this.movesData.length} primeiros movimentos</small>
+					<small class="text-muted">Exibindo ${this.movesData.length} movimentos</small>
 				</div>
-				<div class="moves-list">
+				<div class="moves-list overflow-auto">
 					${movesList}
 				</div>
 			`;
