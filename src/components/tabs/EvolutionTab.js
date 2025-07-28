@@ -64,7 +64,7 @@ export class EvolutionTab {
 				const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 				return `
 				<div class="col-12 col-md-4 d-flex justify-content-center mb-4">
-					<a href="detalhes.html?id=${id}" class="text-decoration-none w-100" style="max-width: 260px;">
+					<a href="detalhes.html?id=${id}" class="text-decoration-none w-100" style="max-width: 260px; padding-top: 1rem;">
 						<div class="pokemon-card text-center p-3">
 							<img width="140" src="${imageUrl}" alt="${name}" class="img-fluid">
 							<h6 class="mt-2">${name} <span class="text-muted">#${id}</span></h6>
@@ -99,7 +99,7 @@ export class EvolutionTab {
     <div class="row justify-content-center">
         ${this.evoCards}
     </div>
-`;
+			`;
 		} catch (error) {
 			container.innerHTML = `
 				<div class="alert alert-danger">

@@ -72,10 +72,8 @@ export class VariantsTab {
 
             container.innerHTML = `
                 <h5 class="fw-semibold mb-3 stats-title"><i class="bi bi-shuffle me-2"></i>Variants</h5>
-                <div class="variants-scroll-container overflow-auto" style="max-height: 480px;">
-                    <div class="row w-100">
+                <div class="row w-100 justify-content-center variants-scroll-container overflow-auto" style="max-height: 80vmin; padding-top: 1rem;">
                         ${this.varCards}
-                    </div>
                 </div>
             `;
         } catch (error) {
