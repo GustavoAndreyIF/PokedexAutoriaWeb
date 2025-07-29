@@ -57,6 +57,8 @@ export class EvolutionTab {
     			})
 			);
 
+			const evolveFrom = speciesData.evolves_from_species;
+
 			// Formatar cards de evolução
 			this.evoCards = nextEvoData.map(evo => {
 				const name = TextFormatter.capitalize(evo.name);
@@ -70,11 +72,26 @@ export class EvolutionTab {
 							<h6 class="mt-2">${name} <span class="text-muted">#${id}</span></h6>
 						</div>
 					</a>
-					</div>
+				</div>
 				`;
 			}).join("");
 			if (this.evoCards === "") {
-				this.evoCards = `<p class="text-muted">Nenhuma evolução encontrada.</p>`;
+				this.evoCards = `<p class="text-muted">No evolutions found.</p>`;
+			}
+			if (evolveFrom) {
+				const fromName = TextFormatter.capitalize(evolveFrom.name);
+				const fromId = evolveFrom.url.split("/").slice(-2, -1)[0];
+				const fromImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${fromId}.png`;
+				this.evoCards += `
+				<h5 class="fw-semibold mb-3 mt-4"><i class="bi bi-arrow-left-circle me-2"></i>Evolves from:</h5>
+					<a href="detalhes.html?id=${fromId}" class="text-decoration-none w-100" style="max-width: 260px; padding-top: 1rem;">
+						<div class="pokemon-card text-center p-3">
+							<img width="140" src="${fromImage}" alt="${fromName}" class="img-fluid">
+							<h6 class="mt-2">${fromName} <span class="text-muted">#${fromId}</span></h6>
+						</div>
+					</a>
+				</div>
+				`
 			}
 
 			console.log(
