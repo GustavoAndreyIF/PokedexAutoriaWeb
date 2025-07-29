@@ -151,7 +151,7 @@ export class PokemonDetailsHeader {
 			const primaryType = this.data.types[0]?.toLowerCase() || "unknown";
 
 			// Imagem de fundo baseada no tipo primário
-			const backgroundImage = `./src/assets/images/backgroundDetails/${primaryType}.png`;
+			const backgroundImage = `./src/assets/images/gifs/${primaryType}.gif`;
 
 			// Tipos com ícones - Material Design 3
 			const typeBadges = this.data.types
