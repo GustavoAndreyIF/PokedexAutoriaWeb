@@ -18,7 +18,7 @@ export class MoveDetailsHeader {
                 throw new Error("Network response was not ok");
             }
             let data = await response.json();
-            this.primary = data.type[0]?.toLowerCase() || "normal";
+            this.primary = data.type?.name?.toLowerCase() || "normal";
 
         } catch (error) {
             console.error("Error fetching move data:", error);
@@ -49,19 +49,19 @@ export class MoveDetailsHeader {
                             <div class="d-flex align-items-center">
                                 <!-- Ícone do Pikachu -->
                                 <div class="me-2">
-                                    <img
-                                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
-                                        alt="Pikachu"
-                                        class="header-pokemon-icon"
-                                        style="
-                                            width: 64px;
-                                            height: 64px;
-                                            filter: drop-shadow(
-                                                0 2px 8px rgba(0, 0, 0, 0.3)
-                                            );
-                                        "
-                                    />
-                                </div>
+								<img
+									src="./src/assets/images/pikachu.png"
+									alt="Pikachu"
+									class="header-pokemon-icon"
+									style="
+										width: 64px;
+										height: 64px;
+										filter: drop-shadow(
+											0 2px 8px rgba(0, 0, 0, 0.3)
+										);
+									"
+								/>
+							</div>
                                 <!-- Texto do header -->
                                 <div class="text-white">
                                     <h1

@@ -32,12 +32,16 @@ export class MoveDetailsMain {
             console.error("❌ Container move-main-container não encontrado");
             return;
         }
+        
+        await this.fetchMoveMainData();
+
         let moveType = this.data?.type?.name || "normal";
 
 					const typeColor = PokemonTypes.getTypeColor(moveType.toLowerCase());
 					const iconPath = PokemonTypes.getIconPath(moveType.toLowerCase());
+                    const metaCategory = this.data?.meta?.category?.name || "unknown";
 					const typeBadge = `
-					<span class="badge text-white pokemon-type-badge px-2 px-md-3 py-2 rounded-pill me-1 me-md-2 d-flex align-items-center"
+					<span class="badge text-white pokemon-type-badge px-2 px-md-3 py-2 rounded-pill d-flex align-items-center"
 						  style="background-color: ${typeColor};">
 						<img src="${iconPath}" 
 							 alt="${moveType}" 
@@ -53,20 +57,98 @@ export class MoveDetailsMain {
             if (!this.data) throw new Error("Dados do movimento não carregados");
 
             mainContainer.innerHTML = `
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title text-capitalize">${this.data.name}</h2>
-                        <p class="card-text">Power: ${this.data.power ?? 'N/A'}</p>
-                        <p class="card-text">Accuracy: ${this.data.accuracy ?? 'N/A'}</p>
-                        <p class="card-text">PP: ${this.data.pp ?? 'N/A'}</p>
-                        <p class="card-text">Type: 
-                            <div class="d-flex justify-content-center gap-1 gap-md-2 flex-wrap">
-								${typeBadge}
-							</div>
-                        </p>
-                        <p class="card-text">Effect: ${this.data.effect_entries?.[0]?.effect ?? 'N/A'}</p>
+                
+                <div class="d-md-flex container mt-3 ">
+                    <div class="card border-0 mb-3 move-details-card">
+                        <div class="card-body">
+                            <h2 class="text-capitalize">${this.data.name}</h2>
+                            <h4 class="text-capitalize">Dados do Movimento</h4>
+                            <hr>
+                            <div class="d-flex align-items-end justify-content-between mb-3">
+                                <div>
+                                    <h5 class="card-text">Power:</h5>
+                                </div>
+                                <h4 class="card-text">${this.data.power ?? 'N/A'}</h4>
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-end justify-content-between mb-3">
+                                <div>
+                                    <h5 class="card-text">PP:</h5>
+                                </div>
+                                <h4 class="card-text">${this.data.pp ?? 'N/A'}</h4>
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-end justify-content-between mb-3">
+                                <div>
+                                    <h5 class="card-text">Type:</h5>
+                                </div>
+                                ${typeBadge}
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-end justify-content-between mb-3">
+                                <div>
+                                    <h5 class="card-text">Category:</h5>
+                                </div>
+                                <h4 class="card-text">${metaCategory}</h4>
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-end justify-content-between mb-1">
+                                <div>
+                                    <h5 class="card-text">Accuracy:</h5>
+                                </div>
+                                <h5 class="card-text px-2 py-1 rounded text-light" style="background-color: ${typeColor}">${this.data.accuracy ?? 'N/A'}</h5>
+                            </div>
+                            <div class="progress stats-progress" style="height: 8px; border-radius: 4px;">
+                                <div class="progress-bar stats-progress-bar stats-progress-bar--${typeColor}" 
+                                    role="progressbar" 
+                                    style="width: ${this.data.accuracy ?? 0}%; 
+                                           background-color: ${typeColor};"
+                                    aria-valuenow="${this.data.accuracy ?? 0}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-0 mb-3 move-details-card-2">
+                        <div class="card-body">
+                            <div class="flavor-move-text p-2 mb-5 mb-md-2 text-center">
+                                <p class="card-text"><i>"${TextFormatter.capitalize(this.data.flavor_text_entries?.[0]?.flavor_text ?? 'N/A')}"</i></p>
+                            </div>
+                            <h4 class="card-text">Efeitos</h4>
+                            <hr>
+                            <p class="card-text"><i>"${TextFormatter.capitalize(this.data.effect_entries?.[0]?.effect ?? 'N/A')}"</i></p>
+                        </div>
                     </div>
                 </div>
+                <footer>
+			<div class="bg-dark text-white py-3">
+				<div class="container text-center">
+					<p class="mb-0">
+						Copyright &copy; 2025 GustavoAndreyIF, Leonardo1234321,
+						TrojanN63
+					</p>
+					<p class="mb-0">
+						Desenvolvido por
+						<a href="https://github.com/GustavoAndreyIF" target="_blank"
+							>Gustavo Andrey</a
+						>
+						<a href="https://github.com/Leonardo1234321" target="_blank"
+							>Leonardo Furtado</a
+						>
+						<a href="https://github.com/TrojanN63" target="_blank"
+							>Arthur Alves</a
+						>
+					</p>
+					<p class="mb-0">
+						Link da API:
+						<a href="https://pokeapi.co/" target="_blank"
+							>https://pokeapi.co/</a
+						>
+					</p>
+				</div>
+			</div>
+		</footer>
             `;
         } catch (error) {
             mainContainer.innerHTML = `
