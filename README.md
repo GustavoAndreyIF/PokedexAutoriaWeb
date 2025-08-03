@@ -1,4 +1,4 @@
-<h1 align="center">Pokedex</h1>
+<h1 align="center">Pokédex</h1>
 
 <div align="center">
 
@@ -10,32 +10,25 @@
 
 <h2 align="center">App Preview</h2>
 
+|      ![Home Preview](src/assets/images/preview/home.png)      | ![Details Preview](src/assets/images/preview/details.png) |
+| :-----------------------------------------------------------: | :-------------------------------------------------------: |
+| ![Evolution Preview](src/assets/images/preview/evolution.png) |   ![Modal Preview](src/assets/images/preview/modal.png)   |
+
 <h2 align="center">PokeAPI</h2>
 <div align="center">
+
+<img src="src/assets/images/pokeapi.png">
 
 <a href="https://pokeapi.co/" target="_blank">
   <img src="https://img.shields.io/badge/PokeAPI-REST%20API-3773a1?logo=pokemon&logoColor=white&style=for-the-badge" alt="PokeAPI Badge" />
 </a>
 </div>
 
-💾 Esta aplicação consome a API RESTful da <a href="https://pokeapi.co/" target="_blank"><strong>PokeAPI</strong></a> para buscar dados de Pokémon. A PokeAPI fornece objetos detalhados que facilitam a construção de aplicações temáticas de pokémon, especialmente Pokédex.
+💾 Esta aplicação consome a API RESTful da [**PokeAPI**](https://pokeapi.co/) para buscar dados de Pokémon. A PokeAPI fornece objetos detalhados que facilitam a construção de aplicações temáticas de pokémon, especialmente Pokédex.
 
 <h2 align="center">Contribuição</h2>
 👥 Esse projeto não seria possível sem os seguintes amigos feitos pelo caminho <3
 
-<div align="center" style="margin-top: 12px;">
-  <a href="https://github.com/GustavoAndreyIF" target="_blank" style="text-decoration:none;">
-    <img src="https://github.com/GustavoAndreyIF.png" width="32" height="32" style="border-radius:50%; vertical-align:middle;" alt="Gustavo Andrey"/>
-    <span style="vertical-align:middle; font-weight:bold;"> GustavoAndreyIF </span>
-  </a>
-  &nbsp;
-  <a href="https://github.com/TrojanN63" target="_blank" style="text-decoration:none;">
-    <img src="https://github.com/TrojanN63.png" width="32" height="32" style="border-radius:50%; vertical-align:middle;" alt="TrojanN63"/>
-    <span style="vertical-align:middle; font-weight:bold;"> TrojanN63 </span>
-  </a>
-  &nbsp;
-  <a href="https://github.com/Leonardo1234321" target="_blank" style="text-decoration:none;">
-    <img src="https://github.com/Leonardo1234321.png" width="32" height="32" style="border-radius:50%; vertical-align:middle;" alt="Leonardo1234321"/>
-    <span style="vertical-align:middle; font-weight:bold;"> Leonardo1234321 </span>
-  </a>
-</div>
+| [![Gustavo Andrey](https://github.com/GustavoAndreyIF.png?size=80)](https://github.com/GustavoAndreyIF) | [![TrojanN63](https://github.com/TrojanN63.png?size=80)](https://github.com/TrojanN63) | [![Leonardo1234321](https://github.com/Leonardo1234321.png?size=80)](https://github.com/Leonardo1234321) |
+| :-----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+|                        [**GustavoAndreyIF**](https://github.com/GustavoAndreyIF)                        |                     [**TrojanN63**](https://github.com/TrojanN63)                      |                        [**Leonardo1234321**](https://github.com/Leonardo1234321)                         |
