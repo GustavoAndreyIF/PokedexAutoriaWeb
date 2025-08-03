@@ -50,19 +50,34 @@ export class EvolutionTab {
 
 			// Buscar dados das próximas evoluções (species)
 			const evoUrls = this.nextEvolutions.map(evo => evo.species.url);
+			const triggerUrls = this.nextEvolutions.map(evo => {
+				if (evo.evolution_details[0].item){
+					return evo.evolution_details[0].item.url;
+				}
+				else{
+					return evo.evolution_details[0].trigger.url;
+				}
+			});
 			const nextEvoData = await Promise.all(
     			evoUrls.map(async url => {
         			const res = await fetch(url);
         			return res.json();
     			})
 			);
+			const triggerData = await Promise.all(
+				triggerUrls.map(async url => {
+					const res = await fetch(url);
+					return res.json();
+				})
+			)
 
 			const evolveFrom = speciesData.evolves_from_species;
 
 			// Formatar cards de evolução
-			this.evoCards = nextEvoData.map(evo => {
+			this.evoCards = nextEvoData.map((evo, i)=> {
 				const name = TextFormatter.capitalize(evo.name);
 				const id = evo.id;
+				const trigg = triggerData[i].name;
 				const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 				return `
 				<div class="col-12 col-md-4 d-flex justify-content-center mb-4">
@@ -71,8 +86,12 @@ export class EvolutionTab {
 							<img width="140" src="${imageUrl}" alt="${name}" class="img-fluid">
 							<h6 class="mt-2">${name} <span class="text-muted">#${id}</span></h6>
 						</div>
+				<h6 class="mt-2 text-center" style="font-size: 0.9rem; color: #6c757d;">
+					Triggered by ${trigg.split("-").map(word => TextFormatter.capitalize(word)).join(" ")}
+				</h6>
 					</a>
 				</div>
+				
 				`;
 			}).join("");
 			if (this.evoCards === "") {
