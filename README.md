@@ -18,8 +18,8 @@
 <div align="center">
 
 <img src="src/assets/images/pokeapi.png">
-
-<a href="https://pokeapi.co/" target="_blank">
+<br>
+<a href="https://pokeapi.co/">
   <img src="https://img.shields.io/badge/PokeAPI-REST%20API-3773a1?logo=pokemon&logoColor=white&style=for-the-badge" alt="PokeAPI Badge" />
 </a>
 </div>
@@ -29,6 +29,5 @@
 <h2 align="center">Contribuição</h2>
 👥 Esse projeto não seria possível sem os seguintes amigos feitos pelo caminho <3
 
-| [![Gustavo Andrey](https://github.com/GustavoAndreyIF.png?size=80)](https://github.com/GustavoAndreyIF) | [![TrojanN63](https://github.com/TrojanN63.png?size=80)](https://github.com/TrojanN63) | [![Leonardo1234321](https://github.com/Leonardo1234321.png?size=80)](https://github.com/Leonardo1234321) |
-| :-----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
-|                        [**GustavoAndreyIF**](https://github.com/GustavoAndreyIF)                        |                     [**TrojanN63**](https://github.com/TrojanN63)                      |                        [**Leonardo1234321**](https://github.com/Leonardo1234321)                         |
+| <a href="https://github.com/GustavoAndreyIF"><img src="https://github.com/GustavoAndreyIF.png" width="60" style="border-radius:50%"><br><b>GustavoAndreyIF</b></a> | <a href="https://github.com/TrojanN63"><img src="https://github.com/TrojanN63.png" width="60" style="border-radius:50%"><br><b>TrojanN63</b></a> | <a href="https://github.com/Leonardo1234321"><img src="https://github.com/Leonardo1234321.png" width="60" style="border-radius:50%"><br><b>Leonardo1234321</b></a> |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
