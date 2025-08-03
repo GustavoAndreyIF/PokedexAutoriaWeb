@@ -40,55 +40,43 @@
 
 ```html
 <div id="move-main-container">
-	<div class="d-md-flex container mt-3 ">
+	<div class="d-md-flex container mt-3">
 		<div class="card border-0 mb-3 move-details-card">
 			<div class="card-body">
 				<h2 class="text-capitalize">Thunderbolt</h2>
 				<h4 class="text-capitalize">Dados do Movimento</h4>
 				<hr />
 				<div class="d-flex align-items-end justify-content-between mb-3">
-					<div>
-						<h5 class="card-text">Power:</h5>
-					</div>
+					<div><h5 class="card-text">Power:</h5></div>
 					<h4 class="card-text">90</h4>
 				</div>
 				<hr />
 				<div class="d-flex align-items-end justify-content-between mb-3">
-					<div>
-						<h5 class="card-text">PP:</h5>
-					</div>
+					<div><h5 class="card-text">PP:</h5></div>
 					<h4 class="card-text">15</h4>
 				</div>
 				<hr />
 				<div class="d-flex align-items-end justify-content-between mb-3">
-					<div>
-						<h5 class="card-text">Type:</h5>
-					</div>
+					<div><h5 class="card-text">Type:</h5></div>
 					<span
 						class="badge text-white pokemon-type-badge px-2 px-md-3 py-2 rounded-pill d-flex align-items-center"
 						style="background-color: #F8D030;"
 					>
 						<img
 							src="img/icons/electric.png"
-							alt="electric"
 							class="pokemon-type-badge__icon"
-							onerror="this.style.display='none'"
 						/>
 						Electric
 					</span>
 				</div>
 				<hr />
 				<div class="d-flex align-items-end justify-content-between mb-3">
-					<div>
-						<h5 class="card-text">Category:</h5>
-					</div>
+					<div><h5 class="card-text">Category:</h5></div>
 					<h4 class="card-text">special</h4>
 				</div>
 				<hr />
 				<div class="d-flex align-items-end justify-content-between mb-1">
-					<div>
-						<h5 class="card-text">Accuracy:</h5>
-					</div>
+					<div><h5 class="card-text">Accuracy:</h5></div>
 					<h5
 						class="card-text px-2 py-1 rounded text-light"
 						style="background-color: #F8D030"
@@ -102,11 +90,7 @@
 				>
 					<div
 						class="progress-bar stats-progress-bar stats-progress-bar--electric"
-						role="progressbar"
 						style="width: 100%; background-color: #F8D030;"
-						aria-valuenow="100"
-						aria-valuemin="0"
-						aria-valuemax="100"
 					></div>
 				</div>
 			</div>
@@ -127,7 +111,7 @@
 </div>
 ```
 
-> [!COMMENT] > **Comentários do Dev**
+> [!NOTE] > **Comentários do Dev**
 >
 > "Fazer o moveDetails em si não foi complicado, obviamente já que eu utilizei o auxílio do Copilot, mas a problemática era no geral, integrar a página à todo resto do site o que seria bem trabalhoso. O detalhe de um movimento é referenciado na TAB de movimentos que um pokemon pode aprender, devido a arquitetura REST da api utilizada, isso foi bem tranquilo de fazer. Feito isso, a segunda parte foi montar os componentes dinamicamente, o moveDetailsHeader é uma reciclagem do header da Home, porém utiliza do Type do move referenciado para alterar a cor dinâmicamente, cada paleta de cores foi salva em variáveis CSS que foram então foram exportadas. Por fim, o moveDetailMain contém os detalhes mais essenciais dos movimentos, como PP, Poder, precisão e etc, apenas incluindo um flavor text e o efeito do movimento, todos carregados dinamicamente."
 >
@@ -157,7 +141,6 @@
 				<img
 					width="140"
 					src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png"
-					alt="Raichu"
 					class="img-fluid"
 				/>
 				<h6 class="mt-2">Raichu <span class="text-muted">#26</span></h6>
@@ -192,7 +175,7 @@
 </div>
 ```
 
-> [!COMMENT] > **Comentários do Dev**
+> [!NOTE] > **Comentários do Dev**
 >
 > "Primeiro, decidi como organizar as possível evoluções, escolhi estruturar em cards que podem te levar à página de detalhes da evolução. O código usa o id do pokémon que vemos para acessar sua api e procurar a chave 'evolution_chain' e sua url. A partir da cadeia evolutiva, determinei onde está o pokémon atual para listar os próximos e o anterior, caso o pokémon em si seja uma evolução. A parte mais interessante do código é o looping de acessar a chave 'evolves_to' e comparar o nome da espécie para saber em que estágio estamos."
 >
@@ -207,3 +190,12 @@
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 </div>
+
+<h3 align="center">Comentarios dos Devs</h3>
+
+
+> [!NOTE] > **Comentários do Dev**
+>
+> "Fora a aba de evoluções, fiz a de variantes —a princípio, funciona igual— e alguns detalhes de decoração: separar os icons de cada tipo e fazer o gif de background que originalmente era uma imagem parada, mas com o uso da linguagem python e das bibliotecas opencv e pillow, salvei várias versões cortadas da imagem em partes diferentes e salvei na forma de gif, aparentando a movimentação."
+>
+> — [TrojanN63](https://github.com/TrojanN63)
