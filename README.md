@@ -7,6 +7,7 @@
 </div>
 
 ⚡ Aplicação web front-end desenvolvida com a PokeApi para a disciplina de Autoria Web do 3º ano do Ensino Médio Técnico em Informática (turma da manhã), com o objetivo de aplicar os conhecimentos adquiridos em Bootstrap.
+
 <h2 align="center">App Preview</h2>
 📃 Confira abaixo algumas das principais telas e recursos visuais presentes em nossa aplicação:
 
@@ -227,7 +228,7 @@
 <br>
 
 <div align="center">
-  <img src="src/assets/images/pages/detailsHeader.png" alt="Move Details Tab Preview" width="500" />
+  <img src="src/assets/images/pages/moveDetails.png" alt="Move Details Tab Preview" width="500" />
 </div>
 
 <br>
@@ -582,7 +583,6 @@
 	</div>
 </div>
 ```
-
 
 > [!NOTE] > **Comentários do Dev**
 >
