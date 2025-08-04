@@ -19,7 +19,9 @@
 <div align="center">
 
 <img src="src/assets/images/pokeapi.png">
+
 <br>
+
 <a href="https://pokeapi.co/" style="margin-top: 8px;">
   <img src="https://img.shields.io/badge/PokeAPI-REST%20API-3773a1?logo=pokemon&logoColor=white&style=for-the-badge" alt="PokeAPI Badge" />
 </a>
@@ -28,6 +30,9 @@
 <br>
 
 💾 Esta aplicação consome a API RESTful da [**PokeAPI**](https://pokeapi.co/) para buscar dados de Pokémon. A PokeAPI fornece objetos detalhados que facilitam a construção de aplicações temáticas de pokémon, especialmente Pokédex.
+
+<br>
+
 
 <h2 align="center">Paginas</h2>
 📺 Diagrama ilustrando o fluxo de navegação entre as principais páginas do projeto:
@@ -594,6 +599,9 @@
 👥 Esse projeto não seria possível sem os seguintes amigos feitos pelo caminho <3
 
 <div align="center">
+
+<br>
+
 
 | <a href="https://github.com/GustavoAndreyIF"><img src="https://github.com/GustavoAndreyIF.png" width="60" style="border-radius:50%"><br><b>GustavoAndreyIF</b></a> | <a href="https://github.com/TrojanN63"><img src="https://github.com/TrojanN63.png" width="60" style="border-radius:50%"><br><b>TrojanN63</b></a> | <a href="https://github.com/Leonardo1234321"><img src="https://github.com/Leonardo1234321.png" width="60" style="border-radius:50%"><br><b>Leonardo1234321</b></a> |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
