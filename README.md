@@ -7,12 +7,12 @@
 </div>
 
 ⚡ Aplicação web front-end desenvolvida com a PokeApi para a disciplina de Autoria Web do 3º ano do Ensino Médio Técnico em Informática (turma da manhã), com o objetivo de aplicar os conhecimentos adquiridos em Bootstrap.
-
 <h2 align="center">App Preview</h2>
+📃 Confira abaixo algumas das principais telas e recursos visuais presentes em nossa aplicação:
 
 |      ![Home Preview](src/assets/images/preview/home.png)      | ![Details Preview](src/assets/images/preview/details.png) |
 | :-----------------------------------------------------------: | :-------------------------------------------------------: |
-| ![Evolution Preview](src/assets/images/preview/evolution.png) |   ![Modal Preview](src/assets/images/preview/modal.png)   |
+| ![Evolution Preview](src/assets/images/preview/evolution.png) |   ![Modal Preview](src/assets/images/preview/moves.png)   |
 
 <h2 align="center">PokeAPI</h2>
 <div align="center">
@@ -24,19 +24,213 @@
 </a>
 </div>
 
+<br>
+
 💾 Esta aplicação consome a API RESTful da [**PokeAPI**](https://pokeapi.co/) para buscar dados de Pokémon. A PokeAPI fornece objetos detalhados que facilitam a construção de aplicações temáticas de pokémon, especialmente Pokédex.
 
 <h2 align="center">Paginas</h2>
 📺 Diagrama ilustrando o fluxo de navegação entre as principais páginas do projeto:
+
+<br>
+
 <div align="center">
-  <img src="src/assets/images/diagrama.svg" alt="Diagrama de fluxo de páginas" width="500" />
+  <img src="src/assets/images/diagrama_page.png" alt="Diagrama de fluxo de páginas" width="500" />
 </div>
 
-<h3 align="center">Move Details Tab</h3>
-⚡ Componente responsável por exibir os detalhes completos de um movimento (golpe) do Pokémon, incluindo atributos, efeitos e descrição visual.
+<h3 align="center">DetailsHeader</h3>
+
+🟡 Componente responsável por exibir o cabeçalho de detalhes do Pokémon, incluindo nome, ID, tipo, sprite animado, flavor text e botões de navegação. Também exibe as habilidades com modais explicativos.
+
+<br>
+
 <div align="center">
-  <img src="src/assets/images/pages/moveDetails.png" alt="Move Details Tab Preview" width="500" />
+  <img src="src/assets/images/pages/detailsHeader.png" alt="Details Header Preview" width="500" />
 </div>
+
+<br>
+
+```html
+<div
+	class="text-white py-3 py-md-4 pokemon-header-container"
+	style="background-image: url('src/assets/images/gifs/electric.gif');"
+>
+	<div class="container-fluid px-3 px-md-4">
+		<div class="row align-items-center mb-3 mb-md-4">
+			<div class="col">
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="d-flex align-items-center">
+						<a
+							class="pokemon-back-button back-electric me-2 me-md-3 btn p-0 border-0 bg-transparent"
+							href="index.html"
+							title="Back to Home"
+						>
+							<i class="bi bi-x-lg"></i>
+						</a>
+						<h1 class="pokemon-name-title mb-0">Pikachu</h1>
+					</div>
+					<small
+						class="badge pokemon-id-badge pokedex-number-details pokemon-type-electric fw-bold"
+						>#025</small
+					>
+				</div>
+			</div>
+		</div>
+		<div class="text-center mb-3 mb-md-4">
+			<div
+				class="position-relative d-flex align-items-center justify-content-center"
+			>
+				<button
+					class="btn pokemon-nav-button pokemon-nav-button--previous nav-electric position-absolute start-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+					title="Previous Pokémon (#24)"
+					aria-label="Previous Pokémon"
+				>
+					<i class="pokemon-nav-icon bi bi-chevron-left"></i>
+				</button>
+				<div class="position-relative d-inline-block">
+					<div
+						id="audio-indicator"
+						class="pokemon-audio-indicator audio-electric position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-lg"
+					>
+						<i
+							id="audio-icon"
+							class="pokemon-audio-icon audio-electric bi bi-volume-up-fill"
+						></i>
+					</div>
+					<img
+						id="pokemon-main-sprite"
+						src="https://raw.githubusercontent.com/wellrccity/pokedex-html-js/refs/heads/master/assets/img/pokemons/poke_25.gif"
+						alt="Pikachu"
+						class="pokemon-main-sprite img-fluid mb-3"
+					/>
+				</div>
+				<button
+					class="btn pokemon-nav-button pokemon-nav-button--next nav-electric position-absolute end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+					title="Next Pokémon (#26)"
+					aria-label="Next Pokémon"
+				>
+					<i class="pokemon-nav-icon bi bi-chevron-right"></i>
+				</button>
+			</div>
+		</div>
+		<div class="text-center mb-3 mb-md-4">
+			<div class="d-flex justify-content-center gap-1 gap-md-2 flex-wrap">
+				<span
+					class="badge text-white pokemon-type-badge px-2 px-md-3 py-2 rounded-pill me-1 me-md-2 d-flex align-items-center"
+					style="background-color: #F8D030;"
+				>
+					<img
+						src="src/assets/images/icons/electric.png"
+						alt="electric"
+						class="pokemon-type-badge__icon"
+					/>
+					Electric
+				</span>
+			</div>
+		</div>
+		<div class="text-center mb-3 mb-md-4 px-2 px-md-3">
+			<div class="pokemon-flavor-card flavor-electric">
+				<p class="pokemon-flavor-text mb-0">
+					"When several of these POKéMON gather, their electricity could build
+					and cause lightning storms."
+				</p>
+			</div>
+		</div>
+		<div class="text-center mb-3 mb-md-4 px-2 px-md-3">
+			<h6
+				class="text-white mb-2 fw-bold"
+				style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"
+			>
+				<i class="bi bi-stars me-1"></i>
+				Abilities
+			</h6>
+			<div class="d-flex justify-content-center gap-2 flex-wrap">
+				<button
+					type="button"
+					class="btn btn-ability ability-electric"
+					data-bs-toggle="modal"
+					data-bs-target="#abilityModal-static"
+				>
+					Static
+				</button>
+				<button
+					type="button"
+					class="btn btn-ability ability-electric"
+					data-bs-toggle="modal"
+					data-bs-target="#abilityModal-lightning-rod"
+				>
+					Lightning Rod
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div
+	class="modal fade"
+	id="abilityModal-static"
+	tabindex="-1"
+	aria-labelledby="abilityModalLabel-static"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="abilityModalLabel-static">Static</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<div class="modal-body">Contact with the Pokémon may cause paralysis.</div>
+		</div>
+	</div>
+</div>
+<div
+	class="modal fade"
+	id="abilityModal-lightning-rod"
+	tabindex="-1"
+	aria-labelledby="abilityModalLabel-lightning-rod"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="abilityModalLabel-lightning-rod">
+					Lightning Rod
+				</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<div class="modal-body">
+				Draws in all Electric-type moves to up its Special Attack stat.
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+```
+
+> [!NOTE] > **Comentários do Dev**
+>
+> "A pagina na qual foi investida mais tempo do projeto, fazer o details principalmente seu header foi trabalhoso não so pelo seu aspecto estatico mas tambem o seu dinamico, cada pokemon possue uma cor, um fundo, um sprite animado, sem contar os modais detalhas que reage a todas essas variaveis tambem, fora os tooltips, botões, hover, e os demais efeitos como o de audio ao clicar no pokemon."
+>
+> — [GustavoAndreyIF](https://github.com/GustavoAndreyIF)
+
+<h3 align="center">Move Details</h3>
+⚡ Componente responsável por exibir os detalhes completos de um movimento (golpe) do Pokémon, incluindo atributos, efeitos e descrição visual.
+
+<br>
+
+<div align="center">
+  <img src="src/assets/images/pages/detailsHeader.png" alt="Move Details Tab Preview" width="500" />
+</div>
+
+<br>
 
 ```html
 <div id="move-main-container">
@@ -117,14 +311,228 @@
 >
 > — [Leonardo1234321](https://github.com/Leonardo1234321)
 
-<h2 align="center">Componentes</h2>
+<h2 align="center">Sessões dos detalhes dos Pokemons</h2>
 🧱 Conheça os principais componentes reutilizáveis da nossa aplicação, apresentados com exemplos de HTML simples e prático.
 
+<h3 align="center">Stats Tab</h3>
+📊 Componente responsável por exibir as estatísticas base do Pokémon de forma visual, incluindo barras de progresso, altura, peso, geração, habitat e status especial.
+
+<br>
+
+<div align="center">
+  <img src="src/assets/images/components/statsTab.png" alt="Stats Tab Preview" width="500" />
+</div>
+
+<br>
+
+```html
+<div class="stats-tab stats-tab--psychic">
+	<h5 class="fw-semibold mb-3 stats-title">
+		<i class="bi bi-bar-chart-fill me-2"></i>Stats Base
+	</h5>
+	<div class="stats-info mb-3">
+		<div class="row g-2">
+			<div class="col-md-6">
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-rulers"></i> Height:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-number"
+						>2.0 m</span
+					>
+				</div>
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-speedometer2"></i> Weight:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-number"
+						>122.0 kg</span
+					>
+				</div>
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-box-seam"></i> Held Items:</small
+					>
+					<div>
+						<span class="badge stat-badge stat-badge--psychic stats-text"
+							>None</span
+						>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-gem"></i> Generation:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-text"
+						>Generation I</span
+					>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-tree"></i> Habitat:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-text"
+						>Rare</span
+					>
+				</div>
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-star"></i> Special Status:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-text"
+						>Legendary</span
+					>
+				</div>
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-bullseye"></i> Capture Rate:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-number"
+						>3/255 (1.2%)</span
+					>
+				</div>
+				<div class="d-flex justify-content-between align-items-center">
+					<small class="fw-bold stats-text"
+						><i class="bi bi-graph-up"></i> Growth Rate:</small
+					>
+					<span class="badge stat-badge stat-badge--psychic stats-text"
+						>Slow</span
+					>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="stats-container mt-3">
+		<div class="mb-3">
+			<div class="d-flex justify-content-between mb-1">
+				<small class="fw-bold stats-text"><i class="bi bi-heart"></i> HP</small>
+				<small class="badge stat-badge stat-badge--psychic stats-number"
+					>106</small
+				>
+			</div>
+			<div
+				class="progress stats-progress"
+				style="height: 8px; border-radius: 4px;"
+			>
+				<div
+					class="progress-bar stats-progress-bar stats-progress-bar--psychic"
+					style="width: 58.9%;"
+				></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<div class="d-flex justify-content-between mb-1">
+				<small class="fw-bold stats-text"
+					><i class="bi bi-caret-up"></i> Attack</small
+				>
+				<small class="badge stat-badge stat-badge--psychic stats-number"
+					>110</small
+				>
+			</div>
+			<div
+				class="progress stats-progress"
+				style="height: 8px; border-radius: 4px;"
+			>
+				<div
+					class="progress-bar stats-progress-bar stats-progress-bar--psychic"
+					style="width: 61.1%;"
+				></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<div class="d-flex justify-content-between mb-1">
+				<small class="fw-bold stats-text"
+					><i class="bi bi-shield"></i> Defense</small
+				>
+				<small class="badge stat-badge stat-badge--psychic stats-number"
+					>90</small
+				>
+			</div>
+			<div
+				class="progress stats-progress"
+				style="height: 8px; border-radius: 4px;"
+			>
+				<div
+					class="progress-bar stats-progress-bar stats-progress-bar--psychic"
+					style="width: 50.0%;"
+				></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<div class="d-flex justify-content-between mb-1">
+				<small class="fw-bold stats-text"
+					><i class="bi bi-lightning"></i> Special Attack</small
+				>
+				<small class="badge stat-badge stat-badge--psychic stats-number"
+					>154</small
+				>
+			</div>
+			<div
+				class="progress stats-progress"
+				style="height: 8px; border-radius: 4px;"
+			>
+				<div
+					class="progress-bar stats-progress-bar stats-progress-bar--psychic"
+					style="width: 85.6%;"
+				></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<div class="d-flex justify-content-between mb-1">
+				<small class="fw-bold stats-text"
+					><i class="bi bi-shield-check"></i> Special Defense</small
+				>
+				<small class="badge stat-badge stat-badge--psychic stats-number"
+					>90</small
+				>
+			</div>
+			<div
+				class="progress stats-progress"
+				style="height: 8px; border-radius: 4px;"
+			>
+				<div
+					class="progress-bar stats-progress-bar stats-progress-bar--psychic"
+					style="width: 50.0%;"
+				></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<div class="d-flex justify-content-between mb-1">
+				<small class="fw-bold stats-text"
+					><i class="bi bi-speedometer"></i> Speed</small
+				>
+				<small class="badge stat-badge stat-badge--psychic stats-number"
+					>130</small
+				>
+			</div>
+			<div
+				class="progress stats-progress"
+				style="height: 8px; border-radius: 4px;"
+			>
+				<div
+					class="progress-bar stats-progress-bar stats-progress-bar--psychic"
+					style="width: 72.2%;"
+				></div>
+			</div>
+		</div>
+	</div>
+</div>
+```
+
+> [!NOTE] > **Comentários do Dev**
+>
+> "Facilmente uma das partes mais legais de se explorar dentro da api do pokeapi, eu fiz algumas varias varições de como exibir essa sessão no html, brincar com as colunar e usar o componente de progress bar do bootstrap foi uma experiencia gratificante, mesmo desenhando diferente layout para a pagina, o escolhido foi quase como uma fusão de todos eles."
+>
+> — [GustavoAndreyIF](https://github.com/GustavoAndreyIF)
+
 <h3 align="center">Evolution Tab</h3>
-🧬 Componente responsável por exibir de forma visual e intuitiva as possíveis evoluções de cada Pokémon.
 <div align="center">
   <img src="src/assets/images/components/evolutionTab.png" alt="Evolution Tab Preview" width="500" />
 </div>
+
+<br>
 
 ```html
 <h5 class="fw-semibold mb-3 stats-title">
@@ -175,6 +583,7 @@
 </div>
 ```
 
+
 > [!NOTE] > **Comentários do Dev**
 >
 > "Primeiro, decidi como organizar as possível evoluções, escolhi estruturar em cards que podem te levar à página de detalhes da evolução. O código usa o id do pokémon que vemos para acessar sua api e procurar a chave 'evolution_chain' e sua url. A partir da cadeia evolutiva, determinei onde está o pokémon atual para listar os próximos e o anterior, caso o pokémon em si seja uma evolução. A parte mais interessante do código é o looping de acessar a chave 'evolves_to' e comparar o nome da espécie para saber em que estágio estamos."
@@ -193,6 +602,11 @@
 
 <h3 align="center">Comentarios dos Devs</h3>
 
+> [!NOTE] > **Comentários do Dev**
+>
+> "Esse entra em um dos trabalhos mais divertidos e malucos que eu fiz desde o ultimo trabalho na disciplina de PEOO do semestre passado do curso, evoluir minhas habilidades no front usando apenas JS foi um dificil, mas considero o resultado gratificante pois apesar de ser feito nos meus dias livres nos fins de semana, consegui entregar um trabalho incrivel com os meus amigos dentro do scope que era o trabalho pedido pelo nosso professor."
+>
+> — [GustavoAndreyIF](https://github.com/GustavoAndreyIF)
 
 > [!NOTE] > **Comentários do Dev**
 >
