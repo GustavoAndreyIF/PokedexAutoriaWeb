@@ -33,7 +33,6 @@
 
 <br>
 
-
 <h2 align="center">Paginas</h2>
 📺 Diagrama ilustrando o fluxo de navegação entre as principais páginas do projeto:
 
@@ -534,6 +533,11 @@
 > — [GustavoAndreyIF](https://github.com/GustavoAndreyIF)
 
 <h3 align="center">Evolution Tab</h3>
+
+🔁 Componente responsável por exibir a cadeia evolutiva do Pokémon de forma visual e interativa, permitindo navegar entre as diferentes formas evoluídas e pré-evoluídas.
+
+<br>
+
 <div align="center">
   <img src="src/assets/images/components/evolutionTab.png" alt="Evolution Tab Preview" width="500" />
 </div>
@@ -598,10 +602,10 @@
 <h2 align="center">Contribuição</h2>
 👥 Esse projeto não seria possível sem os seguintes amigos feitos pelo caminho <3
 
-<div align="center">
-
 <br>
 
+
+<div align="center">
 
 | <a href="https://github.com/GustavoAndreyIF"><img src="https://github.com/GustavoAndreyIF.png" width="60" style="border-radius:50%"><br><b>GustavoAndreyIF</b></a> | <a href="https://github.com/TrojanN63"><img src="https://github.com/TrojanN63.png" width="60" style="border-radius:50%"><br><b>TrojanN63</b></a> | <a href="https://github.com/Leonardo1234321"><img src="https://github.com/Leonardo1234321.png" width="60" style="border-radius:50%"><br><b>Leonardo1234321</b></a> |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
