@@ -58,7 +58,7 @@ export class MoveDetailsMain {
 
             mainContainer.innerHTML = `
                 
-                <div class="d-md-flex container mt-3 ">
+                <div class="d-md-flex container mt-3">
                     <div class="card border-0 mb-3 move-details-card">
                         <div class="card-body">
                             <h2 class="text-capitalize">${this.data.name}</h2>
@@ -121,34 +121,6 @@ export class MoveDetailsMain {
                         </div>
                     </div>
                 </div>
-                <footer>
-			<div class="bg-dark text-white py-3">
-				<div class="container text-center">
-					<p class="mb-0">
-						Copyright &copy; 2025 GustavoAndreyIF, Leonardo1234321,
-						TrojanN63
-					</p>
-					<p class="mb-0">
-						Desenvolvido por
-						<a href="https://github.com/GustavoAndreyIF" target="_blank"
-							>Gustavo Andrey</a
-						>
-						<a href="https://github.com/Leonardo1234321" target="_blank"
-							>Leonardo Furtado</a
-						>
-						<a href="https://github.com/TrojanN63" target="_blank"
-							>Arthur Alves</a
-						>
-					</p>
-					<p class="mb-0">
-						Link da API:
-						<a href="https://pokeapi.co/" target="_blank"
-							>https://pokeapi.co/</a
-						>
-					</p>
-				</div>
-			</div>
-		</footer>
             `;
         } catch (error) {
             mainContainer.innerHTML = `
