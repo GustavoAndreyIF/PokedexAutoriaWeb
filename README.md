@@ -11,6 +11,8 @@
 <h2 align="center">App Preview</h2>
 📃 Confira abaixo algumas das principais telas e recursos visuais presentes em nossa aplicação:
 
+<br>
+
 |      ![Home Preview](src/assets/images/preview/home.png)      | ![Details Preview](src/assets/images/preview/details.png) |
 | :-----------------------------------------------------------: | :-------------------------------------------------------: |
 | ![Evolution Preview](src/assets/images/preview/evolution.png) |   ![Modal Preview](src/assets/images/preview/moves.png)   |
@@ -45,6 +47,7 @@
 <h3 align="center">DetailsHeader</h3>
 
 🟡 Componente responsável por exibir o cabeçalho de detalhes do Pokémon, incluindo nome, ID, tipo, sprite animado, flavor text e botões de navegação. Também exibe as habilidades com modais explicativos.
+
 
 <br>
 
@@ -321,6 +324,7 @@
 
 <h3 align="center">Stats Tab</h3>
 📊 Componente responsável por exibir as estatísticas base do Pokémon de forma visual, incluindo barras de progresso, altura, peso, geração, habitat e status especial.
+
 
 <br>
 
